@@ -6,18 +6,18 @@
     <edmx:Diagrams>
       <Diagram DiagramId="026a9aac71724c52b88be737efb2bc2c" Name="Diagram1">
         <EntityTypeShape EntityType="db_weavingModel.AspNetRoles" PointX="5.375" PointY="9.75" Width="1.5" />
-        <EntityTypeShape EntityType="db_weavingModel.AspNetUsers" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="db_weavingModel.BorderQuality" Width="1.5" PointX="4.75" PointY="0.75" />
-        <EntityTypeShape EntityType="db_weavingModel.BorderSize" Width="1.5" PointX="4.75" PointY="3.75" />
+        <EntityTypeShape EntityType="db_weavingModel.AspNetUsers" Width="1.5" PointX="4.875" PointY="0.75" />
+        <EntityTypeShape EntityType="db_weavingModel.BorderQuality" Width="1.5" PointX="7.5" PointY="1" />
+        <EntityTypeShape EntityType="db_weavingModel.BorderSize" Width="1.5" PointX="7.25" PointY="3.625" />
         <EntityTypeShape EntityType="db_weavingModel.employeeDesignation" Width="1.5" PointX="1.25" PointY="4.75" />
         <EntityTypeShape EntityType="db_weavingModel.Modules" Width="1.5" PointX="4.75" PointY="6.75" />
         <EntityTypeShape EntityType="db_weavingModel.PagePermission" Width="1.5" PointX="3" PointY="6.625" />
-        <EntityTypeShape EntityType="db_weavingModel.Pages" Width="1.5" PointX="8.75" PointY="0.75" />
-        <EntityTypeShape EntityType="db_weavingModel.grayProductList" Width="1.5" PointX="3.375" PointY="9.75" />
+        <EntityTypeShape EntityType="db_weavingModel.Pages" Width="1.5" PointX="9.125" PointY="0.875" />
         <EntityTypeShape EntityType="db_weavingModel.AspNetUserRoles" Width="1.5" PointX="0.75" PointY="9.75" />
         <EntityTypeShape EntityType="db_weavingModel.employeeList" Width="1.5" PointX="7.375" PointY="9.75" />
         <EntityTypeShape EntityType="db_weavingModel.weavingUnit" Width="1.5" PointX="7.375" PointY="6.75" />
-        <EntityTypeShape EntityType="db_weavingModel.LoomList" Width="1.5" PointX="7.375" PointY="3.75" />
+        <EntityTypeShape EntityType="db_weavingModel.LoomList" Width="1.5" PointX="9.5" PointY="3.625" />
+        <EntityTypeShape EntityType="db_weavingModel.grayProductList" Width="4.125" PointX="0.5" PointY="0.875" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

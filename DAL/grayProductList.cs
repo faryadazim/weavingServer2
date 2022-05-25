@@ -20,7 +20,7 @@ namespace DAL
         public string PerPieceGrayWeightGram { get; set; }
         public string graySizeppWidth { get; set; }
         public string graySizeppLength { get; set; }
-        public string LoomNumbPieceInBorder76_ { get; set; }
+        public string LoomNumbPieceInBorder76 { get; set; }
         public string LoomNumbRatePerBorderWithDraw76 { get; set; }
         public string LoomNumbRatePerBorderWithoutDraw76 { get; set; }
         public string LoomNumbPieceInBorder96 { get; set; }

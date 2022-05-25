@@ -93,7 +93,7 @@
           <Property Name="PerPieceGrayWeightGram" Type="varchar(max)" />
           <Property Name="graySizeppWidth" Type="varchar(max)" />
           <Property Name="graySizeppLength" Type="varchar(max)" />
-          <Property Name="LoomNumbPieceInBorder76]" Type="varchar(max)" />
+          <Property Name="LoomNumbPieceInBorder76" Type="varchar(max)" />
           <Property Name="LoomNumbRatePerBorderWithDraw76" Type="varchar(max)" />
           <Property Name="LoomNumbRatePerBorderWithoutDraw76" Type="varchar(max)" />
           <Property Name="LoomNumbPieceInBorder96" Type="varchar(max)" />
@@ -177,11 +177,11 @@
           <EntitySet Name="Modules" EntityType="db_weavingModel.Modules" />
           <EntitySet Name="PagePermission" EntityType="db_weavingModel.PagePermission" />
           <EntitySet Name="Pages" EntityType="db_weavingModel.Pages" />
-          <EntitySet Name="grayProductList" EntityType="db_weavingModel.grayProductList" />
           <EntitySet Name="AspNetUserRoles" EntityType="db_weavingModel.AspNetUserRoles" />
           <EntitySet Name="employeeList" EntityType="db_weavingModel.employeeList" />
           <EntitySet Name="weavingUnit" EntityType="db_weavingModel.weavingUnit" />
           <EntitySet Name="LoomList" EntityType="db_weavingModel.LoomList" />
+          <EntitySet Name="grayProductList" EntityType="db_weavingModel.grayProductList" />
         </EntityContainer>
         <EntityType Name="AspNetRoles">
           <Key>
@@ -257,24 +257,6 @@
           <Property Name="page_link" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="module_id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="grayProductList">
-          <Key>
-            <PropertyRef Name="grayProduct_id" />
-          </Key>
-          <Property Name="grayProduct_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="itemName" Type="Int32" />
-          <Property Name="itemSize" Type="Int32" />
-          <Property Name="PerPieceGrayWeightGram" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="graySizeppWidth" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="graySizeppLength" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="LoomNumbPieceInBorder76_" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="LoomNumbRatePerBorderWithDraw76" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="LoomNumbRatePerBorderWithoutDraw76" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="LoomNumbPieceInBorder96" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="LoomNumbRatePerBorderWithDraw96" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="LoomNumbRatePerBorderWithoutDraw96" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="status" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="AspNetUserRoles">
           <Key>
             <PropertyRef Name="UserId" />
@@ -326,6 +308,24 @@
           <Property Name="drawBox" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="jacquard" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="weavingUnitId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="grayProductList">
+          <Key>
+            <PropertyRef Name="grayProduct_id" />
+          </Key>
+          <Property Name="grayProduct_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="itemName" Type="Int32" />
+          <Property Name="itemSize" Type="Int32" />
+          <Property Name="PerPieceGrayWeightGram" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="graySizeppWidth" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="graySizeppLength" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="LoomNumbPieceInBorder76" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="LoomNumbRatePerBorderWithDraw76" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="LoomNumbRatePerBorderWithoutDraw76" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="LoomNumbPieceInBorder96" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="LoomNumbRatePerBorderWithDraw96" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="LoomNumbRatePerBorderWithoutDraw96" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -415,25 +415,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="grayProductList">
-            <EntityTypeMapping TypeName="db_weavingModel.grayProductList">
-              <MappingFragment StoreEntitySet="grayProductList">
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="LoomNumbRatePerBorderWithoutDraw96" ColumnName="LoomNumbRatePerBorderWithoutDraw96" />
-                <ScalarProperty Name="LoomNumbRatePerBorderWithDraw96" ColumnName="LoomNumbRatePerBorderWithDraw96" />
-                <ScalarProperty Name="LoomNumbPieceInBorder96" ColumnName="LoomNumbPieceInBorder96" />
-                <ScalarProperty Name="LoomNumbRatePerBorderWithoutDraw76" ColumnName="LoomNumbRatePerBorderWithoutDraw76" />
-                <ScalarProperty Name="LoomNumbRatePerBorderWithDraw76" ColumnName="LoomNumbRatePerBorderWithDraw76" />
-                <ScalarProperty Name="LoomNumbPieceInBorder76_" ColumnName="LoomNumbPieceInBorder76]" />
-                <ScalarProperty Name="graySizeppLength" ColumnName="graySizeppLength" />
-                <ScalarProperty Name="graySizeppWidth" ColumnName="graySizeppWidth" />
-                <ScalarProperty Name="PerPieceGrayWeightGram" ColumnName="PerPieceGrayWeightGram" />
-                <ScalarProperty Name="itemSize" ColumnName="itemSize" />
-                <ScalarProperty Name="itemName" ColumnName="itemName" />
-                <ScalarProperty Name="grayProduct_id" ColumnName="grayProduct_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserRoles">
             <EntityTypeMapping TypeName="db_weavingModel.AspNetUserRoles">
               <MappingFragment StoreEntitySet="AspNetUserRoles">
@@ -486,6 +467,25 @@
                 <ScalarProperty Name="loomSize" ColumnName="loomSize" />
                 <ScalarProperty Name="loomNumber" ColumnName="loomNumber" />
                 <ScalarProperty Name="loom_id" ColumnName="loom_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="grayProductList">
+            <EntityTypeMapping TypeName="db_weavingModel.grayProductList">
+              <MappingFragment StoreEntitySet="grayProductList">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="LoomNumbRatePerBorderWithoutDraw96" ColumnName="LoomNumbRatePerBorderWithoutDraw96" />
+                <ScalarProperty Name="LoomNumbRatePerBorderWithDraw96" ColumnName="LoomNumbRatePerBorderWithDraw96" />
+                <ScalarProperty Name="LoomNumbPieceInBorder96" ColumnName="LoomNumbPieceInBorder96" />
+                <ScalarProperty Name="LoomNumbRatePerBorderWithoutDraw76" ColumnName="LoomNumbRatePerBorderWithoutDraw76" />
+                <ScalarProperty Name="LoomNumbRatePerBorderWithDraw76" ColumnName="LoomNumbRatePerBorderWithDraw76" />
+                <ScalarProperty Name="LoomNumbPieceInBorder76" ColumnName="LoomNumbPieceInBorder76" />
+                <ScalarProperty Name="graySizeppLength" ColumnName="graySizeppLength" />
+                <ScalarProperty Name="graySizeppWidth" ColumnName="graySizeppWidth" />
+                <ScalarProperty Name="PerPieceGrayWeightGram" ColumnName="PerPieceGrayWeightGram" />
+                <ScalarProperty Name="itemSize" ColumnName="itemSize" />
+                <ScalarProperty Name="itemName" ColumnName="itemName" />
+                <ScalarProperty Name="grayProduct_id" ColumnName="grayProduct_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

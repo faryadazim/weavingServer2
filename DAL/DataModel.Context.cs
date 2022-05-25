@@ -33,10 +33,10 @@ namespace DAL
         public virtual DbSet<Modules> Modules { get; set; }
         public virtual DbSet<PagePermission> PagePermission { get; set; }
         public virtual DbSet<Pages> Pages { get; set; }
-        public virtual DbSet<grayProductList> grayProductList { get; set; }
         public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
         public virtual DbSet<employeeList> employeeList { get; set; }
         public virtual DbSet<weavingUnit> weavingUnit { get; set; }
         public virtual DbSet<LoomList> LoomList { get; set; }
+        public virtual DbSet<grayProductList> grayProductList { get; set; }
     }
 }
