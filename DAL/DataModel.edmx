@@ -1,0 +1,515 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="db_weavingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BorderQuality">
+          <Key>
+            <PropertyRef Name="borderQuality_id" />
+          </Key>
+          <Property Name="borderQuality_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="borderQuality" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="BorderSize">
+          <Key>
+            <PropertyRef Name="borderSize_id" />
+          </Key>
+          <Property Name="borderSize_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="borderSize" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="employeeDesignation">
+          <Key>
+            <PropertyRef Name="designation_id" />
+          </Key>
+          <Property Name="designation_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="designationName" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="employeeList">
+          <Key>
+            <PropertyRef Name="employee_Id" />
+          </Key>
+          <Property Name="employee_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar(max)" />
+          <Property Name="fatherName" Type="varchar(max)" />
+          <Property Name="phoneNum1" Type="varchar(max)" />
+          <Property Name="phoneNum2" Type="varchar(max)" />
+          <Property Name="phoneNum3" Type="varchar(max)" />
+          <Property Name="homePhoneNum" Type="varchar(max)" />
+          <Property Name="cnicNum" Type="varchar(max)" />
+          <Property Name="address" Type="varchar(max)" />
+          <Property Name="referenceName" Type="varchar(max)" />
+          <Property Name="referencePhoneNum" Type="varchar(max)" />
+          <Property Name="jobStatus" Type="varchar(max)" />
+          <Property Name="designation" Type="int" Nullable="false" />
+          <Property Name="employeePic1" Type="varchar(max)" />
+          <Property Name="employeePic2" Type="varchar(max)" />
+          <Property Name="employeeCnicFront" Type="varchar(max)" />
+          <Property Name="employeeCnicBsck" Type="varchar(max)" />
+          <Property Name="recruitmentType" Type="varchar(max)" />
+          <Property Name="weeklySalary" Type="int" />
+          <Property Name="monthlySalary" Type="int" />
+        </EntityType>
+        <EntityType Name="grayProductList">
+          <Key>
+            <PropertyRef Name="grayProduct_id" />
+          </Key>
+          <Property Name="grayProduct_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="itemName" Type="int" />
+          <Property Name="itemSize" Type="int" />
+          <Property Name="PerPieceGrayWeightGram" Type="varchar(max)" />
+          <Property Name="graySizeppWidth" Type="varchar(max)" />
+          <Property Name="graySizeppLength" Type="varchar(max)" />
+          <Property Name="LoomNumbPieceInBorder76]" Type="varchar(max)" />
+          <Property Name="LoomNumbRatePerBorderWithDraw76" Type="varchar(max)" />
+          <Property Name="LoomNumbRatePerBorderWithoutDraw76" Type="varchar(max)" />
+          <Property Name="LoomNumbPieceInBorder96" Type="varchar(max)" />
+          <Property Name="LoomNumbRatePerBorderWithDraw96" Type="varchar(max)" />
+          <Property Name="LoomNumbRatePerBorderWithoutDraw96" Type="varchar(max)" />
+          <Property Name="status" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="LoomList">
+          <Key>
+            <PropertyRef Name="loom_id" />
+          </Key>
+          <Property Name="loom_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="loomNumber" Type="varchar(max)" />
+          <Property Name="loomSize" Type="varchar(max)" />
+          <Property Name="drawBox" Type="varchar(max)" />
+          <Property Name="jacquard" Type="varchar(max)" />
+          <Property Name="weavingUnitId" Type="int" />
+        </EntityType>
+        <EntityType Name="Modules">
+          <Key>
+            <PropertyRef Name="module_id" />
+          </Key>
+          <Property Name="module_id" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="module_name" Type="varchar(max)" />
+          <Property Name="module_icon" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="PagePermission">
+          <Key>
+            <PropertyRef Name="PermissionId" />
+          </Key>
+          <Property Name="PermissionId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="varchar(max)" />
+          <Property Name="PageId" Type="varchar(max)" />
+          <Property Name="EditPermission" Type="varchar(max)" />
+          <Property Name="viewPermission" Type="varchar(max)" />
+          <Property Name="DelPermission" Type="varchar(max)" />
+          <Property Name="AddPermission" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Pages">
+          <Key>
+            <PropertyRef Name="page_id" />
+          </Key>
+          <Property Name="page_id" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="page_name" Type="varchar(max)" />
+          <Property Name="page_link" Type="varchar(max)" />
+          <Property Name="module_id" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="weavingUnit">
+          <Key>
+            <PropertyRef Name="weavingUnit_id" />
+          </Key>
+          <Property Name="weavingUnit_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="weavingUnitName" Type="varchar(max)" />
+          <Property Name="weavingUnitShortCode" Type="varchar(max)" />
+        </EntityType>
+        <EntityContainer Name="db_weavingModelStoreContainer">
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BorderQuality" EntityType="Self.BorderQuality" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BorderSize" EntityType="Self.BorderSize" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="employeeDesignation" EntityType="Self.employeeDesignation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="employeeList" EntityType="Self.employeeList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="grayProductList" EntityType="Self.grayProductList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LoomList" EntityType="Self.LoomList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Modules" EntityType="Self.Modules" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PagePermission" EntityType="Self.PagePermission" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pages" EntityType="Self.Pages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="weavingUnit" EntityType="Self.weavingUnit" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="db_weavingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="db_weavingEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AspNetRoles" EntityType="db_weavingModel.AspNetRoles" />
+          <EntitySet Name="AspNetUsers" EntityType="db_weavingModel.AspNetUsers" />
+          <EntitySet Name="BorderQuality" EntityType="db_weavingModel.BorderQuality" />
+          <EntitySet Name="BorderSize" EntityType="db_weavingModel.BorderSize" />
+          <EntitySet Name="employeeDesignation" EntityType="db_weavingModel.employeeDesignation" />
+          <EntitySet Name="Modules" EntityType="db_weavingModel.Modules" />
+          <EntitySet Name="PagePermission" EntityType="db_weavingModel.PagePermission" />
+          <EntitySet Name="Pages" EntityType="db_weavingModel.Pages" />
+          <EntitySet Name="grayProductList" EntityType="db_weavingModel.grayProductList" />
+          <EntitySet Name="AspNetUserRoles" EntityType="db_weavingModel.AspNetUserRoles" />
+          <EntitySet Name="employeeList" EntityType="db_weavingModel.employeeList" />
+          <EntitySet Name="weavingUnit" EntityType="db_weavingModel.weavingUnit" />
+          <EntitySet Name="LoomList" EntityType="db_weavingModel.LoomList" />
+        </EntityContainer>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="Name" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" Type="String" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="BorderQuality">
+          <Key>
+            <PropertyRef Name="borderQuality_id" />
+          </Key>
+          <Property Name="borderQuality_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="borderQuality1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="BorderSize">
+          <Key>
+            <PropertyRef Name="borderSize_id" />
+          </Key>
+          <Property Name="borderSize_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="borderSize1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="employeeDesignation">
+          <Key>
+            <PropertyRef Name="designation_id" />
+          </Key>
+          <Property Name="designation_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="designationName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Modules">
+          <Key>
+            <PropertyRef Name="module_id" />
+          </Key>
+          <Property Name="module_id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="module_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="module_icon" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="PagePermission">
+          <Key>
+            <PropertyRef Name="PermissionId" />
+          </Key>
+          <Property Name="PermissionId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RoleId" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PageId" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="EditPermission" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="viewPermission" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DelPermission" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="AddPermission" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Pages">
+          <Key>
+            <PropertyRef Name="page_id" />
+          </Key>
+          <Property Name="page_id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="page_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="page_link" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="module_id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="grayProductList">
+          <Key>
+            <PropertyRef Name="grayProduct_id" />
+          </Key>
+          <Property Name="grayProduct_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="itemName" Type="Int32" />
+          <Property Name="itemSize" Type="Int32" />
+          <Property Name="PerPieceGrayWeightGram" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="graySizeppWidth" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="graySizeppLength" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="LoomNumbPieceInBorder76_" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="LoomNumbRatePerBorderWithDraw76" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="LoomNumbRatePerBorderWithoutDraw76" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="LoomNumbPieceInBorder96" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="LoomNumbRatePerBorderWithDraw96" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="LoomNumbRatePerBorderWithoutDraw96" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RoleId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="employeeList">
+          <Key>
+            <PropertyRef Name="employee_Id" />
+          </Key>
+          <Property Name="employee_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="fatherName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="phoneNum1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="phoneNum2" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="phoneNum3" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="homePhoneNum" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="cnicNum" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="referenceName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="referencePhoneNum" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="jobStatus" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="designation" Type="Int32" Nullable="false" />
+          <Property Name="employeePic1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="employeePic2" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="employeeCnicFront" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="employeeCnicBsck" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="recruitmentType" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="weeklySalary" Type="Int32" />
+          <Property Name="monthlySalary" Type="Int32" />
+        </EntityType>
+        <EntityType Name="weavingUnit">
+          <Key>
+            <PropertyRef Name="weavingUnit_id" />
+          </Key>
+          <Property Name="weavingUnit_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="weavingUnitName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="weavingUnitShortCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="LoomList">
+          <Key>
+            <PropertyRef Name="loom_id" />
+          </Key>
+          <Property Name="loom_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="loomNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="loomSize" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="drawBox" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="jacquard" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="weavingUnitId" Type="Int32" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="db_weavingModelStoreContainer" CdmEntityContainer="db_weavingEntities">
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="db_weavingModel.AspNetRoles">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="db_weavingModel.AspNetUsers">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BorderQuality">
+            <EntityTypeMapping TypeName="db_weavingModel.BorderQuality">
+              <MappingFragment StoreEntitySet="BorderQuality">
+                <ScalarProperty Name="borderQuality1" ColumnName="borderQuality" />
+                <ScalarProperty Name="borderQuality_id" ColumnName="borderQuality_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BorderSize">
+            <EntityTypeMapping TypeName="db_weavingModel.BorderSize">
+              <MappingFragment StoreEntitySet="BorderSize">
+                <ScalarProperty Name="borderSize1" ColumnName="borderSize" />
+                <ScalarProperty Name="borderSize_id" ColumnName="borderSize_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="employeeDesignation">
+            <EntityTypeMapping TypeName="db_weavingModel.employeeDesignation">
+              <MappingFragment StoreEntitySet="employeeDesignation">
+                <ScalarProperty Name="designationName" ColumnName="designationName" />
+                <ScalarProperty Name="designation_id" ColumnName="designation_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Modules">
+            <EntityTypeMapping TypeName="db_weavingModel.Modules">
+              <MappingFragment StoreEntitySet="Modules">
+                <ScalarProperty Name="module_icon" ColumnName="module_icon" />
+                <ScalarProperty Name="module_name" ColumnName="module_name" />
+                <ScalarProperty Name="module_id" ColumnName="module_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PagePermission">
+            <EntityTypeMapping TypeName="db_weavingModel.PagePermission">
+              <MappingFragment StoreEntitySet="PagePermission">
+                <ScalarProperty Name="AddPermission" ColumnName="AddPermission" />
+                <ScalarProperty Name="DelPermission" ColumnName="DelPermission" />
+                <ScalarProperty Name="viewPermission" ColumnName="viewPermission" />
+                <ScalarProperty Name="EditPermission" ColumnName="EditPermission" />
+                <ScalarProperty Name="PageId" ColumnName="PageId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="PermissionId" ColumnName="PermissionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pages">
+            <EntityTypeMapping TypeName="db_weavingModel.Pages">
+              <MappingFragment StoreEntitySet="Pages">
+                <ScalarProperty Name="module_id" ColumnName="module_id" />
+                <ScalarProperty Name="page_link" ColumnName="page_link" />
+                <ScalarProperty Name="page_name" ColumnName="page_name" />
+                <ScalarProperty Name="page_id" ColumnName="page_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="grayProductList">
+            <EntityTypeMapping TypeName="db_weavingModel.grayProductList">
+              <MappingFragment StoreEntitySet="grayProductList">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="LoomNumbRatePerBorderWithoutDraw96" ColumnName="LoomNumbRatePerBorderWithoutDraw96" />
+                <ScalarProperty Name="LoomNumbRatePerBorderWithDraw96" ColumnName="LoomNumbRatePerBorderWithDraw96" />
+                <ScalarProperty Name="LoomNumbPieceInBorder96" ColumnName="LoomNumbPieceInBorder96" />
+                <ScalarProperty Name="LoomNumbRatePerBorderWithoutDraw76" ColumnName="LoomNumbRatePerBorderWithoutDraw76" />
+                <ScalarProperty Name="LoomNumbRatePerBorderWithDraw76" ColumnName="LoomNumbRatePerBorderWithDraw76" />
+                <ScalarProperty Name="LoomNumbPieceInBorder76_" ColumnName="LoomNumbPieceInBorder76]" />
+                <ScalarProperty Name="graySizeppLength" ColumnName="graySizeppLength" />
+                <ScalarProperty Name="graySizeppWidth" ColumnName="graySizeppWidth" />
+                <ScalarProperty Name="PerPieceGrayWeightGram" ColumnName="PerPieceGrayWeightGram" />
+                <ScalarProperty Name="itemSize" ColumnName="itemSize" />
+                <ScalarProperty Name="itemName" ColumnName="itemName" />
+                <ScalarProperty Name="grayProduct_id" ColumnName="grayProduct_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserRoles">
+            <EntityTypeMapping TypeName="db_weavingModel.AspNetUserRoles">
+              <MappingFragment StoreEntitySet="AspNetUserRoles">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="employeeList">
+            <EntityTypeMapping TypeName="db_weavingModel.employeeList">
+              <MappingFragment StoreEntitySet="employeeList">
+                <ScalarProperty Name="monthlySalary" ColumnName="monthlySalary" />
+                <ScalarProperty Name="weeklySalary" ColumnName="weeklySalary" />
+                <ScalarProperty Name="recruitmentType" ColumnName="recruitmentType" />
+                <ScalarProperty Name="employeeCnicBsck" ColumnName="employeeCnicBsck" />
+                <ScalarProperty Name="employeeCnicFront" ColumnName="employeeCnicFront" />
+                <ScalarProperty Name="employeePic2" ColumnName="employeePic2" />
+                <ScalarProperty Name="employeePic1" ColumnName="employeePic1" />
+                <ScalarProperty Name="designation" ColumnName="designation" />
+                <ScalarProperty Name="jobStatus" ColumnName="jobStatus" />
+                <ScalarProperty Name="referencePhoneNum" ColumnName="referencePhoneNum" />
+                <ScalarProperty Name="referenceName" ColumnName="referenceName" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="cnicNum" ColumnName="cnicNum" />
+                <ScalarProperty Name="homePhoneNum" ColumnName="homePhoneNum" />
+                <ScalarProperty Name="phoneNum3" ColumnName="phoneNum3" />
+                <ScalarProperty Name="phoneNum2" ColumnName="phoneNum2" />
+                <ScalarProperty Name="phoneNum1" ColumnName="phoneNum1" />
+                <ScalarProperty Name="fatherName" ColumnName="fatherName" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="employee_Id" ColumnName="employee_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="weavingUnit">
+            <EntityTypeMapping TypeName="db_weavingModel.weavingUnit">
+              <MappingFragment StoreEntitySet="weavingUnit">
+                <ScalarProperty Name="weavingUnitShortCode" ColumnName="weavingUnitShortCode" />
+                <ScalarProperty Name="weavingUnitName" ColumnName="weavingUnitName" />
+                <ScalarProperty Name="weavingUnit_id" ColumnName="weavingUnit_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LoomList">
+            <EntityTypeMapping TypeName="db_weavingModel.LoomList">
+              <MappingFragment StoreEntitySet="LoomList">
+                <ScalarProperty Name="weavingUnitId" ColumnName="weavingUnitId" />
+                <ScalarProperty Name="jacquard" ColumnName="jacquard" />
+                <ScalarProperty Name="drawBox" ColumnName="drawBox" />
+                <ScalarProperty Name="loomSize" ColumnName="loomSize" />
+                <ScalarProperty Name="loomNumber" ColumnName="loomNumber" />
+                <ScalarProperty Name="loom_id" ColumnName="loom_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
