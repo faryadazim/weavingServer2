@@ -228,6 +228,7 @@
     <Compile Include="Controllers\BorderSizesController.cs" />
     <Compile Include="Controllers\employeeDesignationsController.cs" />
     <Compile Include="Controllers\employeeListsController.cs" />
+    <Compile Include="Controllers\Production\ProductionController.cs" />
     <Compile Include="Controllers\xxemployeeListsController.cs" />
     <Compile Include="Controllers\FileUploadController.cs" />
     <Compile Include="Controllers\grayProductListsController.cs" />
@@ -249,6 +250,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\FileUpload.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Production\ClsProduction.cs" />
     <Compile Include="Models\UserDataModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />

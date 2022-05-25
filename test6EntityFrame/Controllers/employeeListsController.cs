@@ -90,6 +90,29 @@ namespace test6EntityFrame.Controllers
             }
         }
 
+        [Route("api/employeeNativingListWithName")]
+        public HttpResponseMessage GetAllNativing()
+        {
+            var entity = from employeeListTable in db.employeeList
+                         where employeeListTable.designation == 22
+                         select new
+                         {
+                             employeeId = employeeListTable.employee_Id,
+                             employeeName = employeeListTable.name,
+                         };
+
+            if (entity == null)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not Found");
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, entity);
+            }
+        }
+
+
+
         [Route("api/employeeListsName")]
         public HttpResponseMessage GetEmployeeListName()
         {
