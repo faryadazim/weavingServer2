@@ -42,8 +42,8 @@ namespace DAL
         public virtual DbSet<chart_of_accounts> chart_of_accounts { get; set; }
         public virtual DbSet<finance_entries> finance_entries { get; set; }
         public virtual DbSet<finance_main> finance_main { get; set; }
-        public virtual DbSet<production> production { get; set; }
         public virtual DbSet<production_shift> production_shift { get; set; }
         public virtual DbSet<voucher_types> voucher_types { get; set; }
+        public virtual DbSet<production> production { get; set; }
     }
 }

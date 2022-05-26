@@ -205,7 +205,7 @@
           <Property Name="pile_to_pile_length" Type="decimal" Precision="18" Scale="3" />
           <Property Name="pile_to_pile_width" Type="decimal" Precision="18" Scale="3" Nullable="false" />
           <Property Name="cut_piece_size" Type="decimal" Precision="18" Scale="3" Nullable="false" />
-          <Property Name="cut_piece_width" Type="decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="cut_piece_wieght" Type="decimal" Precision="18" Scale="3" Nullable="false" />
           <Property Name="remarks" Type="varchar(max)" />
           <Property Name="total_border" Type="decimal" Precision="18" Scale="3" Nullable="false" />
           <Property Name="total_pieces" Type="decimal" Precision="18" Scale="3" Nullable="false" />
@@ -302,9 +302,9 @@
           <EntitySet Name="chart_of_accounts" EntityType="db_weavingModel.chart_of_accounts" />
           <EntitySet Name="finance_entries" EntityType="db_weavingModel.finance_entries" />
           <EntitySet Name="finance_main" EntityType="db_weavingModel.finance_main" />
-          <EntitySet Name="production" EntityType="db_weavingModel.production" />
           <EntitySet Name="production_shift" EntityType="db_weavingModel.production_shift" />
           <EntitySet Name="voucher_types" EntityType="db_weavingModel.voucher_types" />
+          <EntitySet Name="production" EntityType="db_weavingModel.production" />
         </EntityContainer>
         <EntityType Name="AspNetRoles">
           <Key>
@@ -498,39 +498,6 @@
           <Property Name="modified_datetime" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="production_id" Type="Int32" />
         </EntityType>
-        <EntityType Name="production">
-          <Key>
-            <PropertyRef Name="production_id" />
-          </Key>
-          <Property Name="production_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="roll_no" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="production_date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="roll_weight" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="loom_id" Type="Int32" Nullable="false" />
-          <Property Name="borderSize_id" Type="Int32" Nullable="false" />
-          <Property Name="borderQuality_id" Type="Int32" Nullable="false" />
-          <Property Name="programm_no" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="grayProduct_id" Type="Int32" Nullable="false" />
-          <Property Name="pile_to_pile_length" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="pile_to_pile_width" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="cut_piece_size" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="cut_piece_width" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="total_border" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="total_pieces" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="b_grade_pieces" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="a_grade_pieces" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="current_length_p_to_p" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="current_width_p_to_p" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="current_per_piece_a_weight" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="required_length_p_to_p" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="required_width_p_to_p" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="required_per_piece_a_weight" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="cretad_datetime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="modified_datetime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="created_by" Type="Int32" Nullable="false" />
-          <Property Name="modified_by" Type="Int32" Nullable="false" />
-        </EntityType>
         <EntityType Name="production_shift">
           <Key>
             <PropertyRef Name="production_shift_id" />
@@ -558,6 +525,39 @@
           <Property Name="abbreviation" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="status" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="autotime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="production">
+          <Key>
+            <PropertyRef Name="production_id" />
+          </Key>
+          <Property Name="production_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="roll_no" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="production_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="roll_weight" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="loom_id" Type="Int32" Nullable="false" />
+          <Property Name="borderSize_id" Type="Int32" Nullable="false" />
+          <Property Name="borderQuality_id" Type="Int32" Nullable="false" />
+          <Property Name="programm_no" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="grayProduct_id" Type="Int32" Nullable="false" />
+          <Property Name="pile_to_pile_length" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="pile_to_pile_width" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="cut_piece_size" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="cut_piece_wieght" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="total_border" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="total_pieces" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="b_grade_pieces" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="a_grade_pieces" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="current_length_p_to_p" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="current_width_p_to_p" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="current_per_piece_a_weight" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="required_length_p_to_p" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="required_width_p_to_p" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="required_per_piece_a_weight" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="cretad_datetime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modified_datetime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="created_by" Type="Int32" Nullable="false" />
+          <Property Name="modified_by" Type="Int32" Nullable="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -773,40 +773,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="production">
-            <EntityTypeMapping TypeName="db_weavingModel.production">
-              <MappingFragment StoreEntitySet="production">
-                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
-                <ScalarProperty Name="created_by" ColumnName="created_by" />
-                <ScalarProperty Name="modified_datetime" ColumnName="modified_datetime" />
-                <ScalarProperty Name="cretad_datetime" ColumnName="cretad_datetime" />
-                <ScalarProperty Name="required_per_piece_a_weight" ColumnName="required_per_piece_a_weight" />
-                <ScalarProperty Name="required_width_p_to_p" ColumnName="required_width_p_to_p" />
-                <ScalarProperty Name="required_length_p_to_p" ColumnName="required_length_p_to_p" />
-                <ScalarProperty Name="current_per_piece_a_weight" ColumnName="current_per_piece_a_weight" />
-                <ScalarProperty Name="current_width_p_to_p" ColumnName="current_width_p_to_p" />
-                <ScalarProperty Name="current_length_p_to_p" ColumnName="current_length_p_to_p" />
-                <ScalarProperty Name="a_grade_pieces" ColumnName="a_grade_pieces" />
-                <ScalarProperty Name="b_grade_pieces" ColumnName="b_grade_pieces" />
-                <ScalarProperty Name="total_pieces" ColumnName="total_pieces" />
-                <ScalarProperty Name="total_border" ColumnName="total_border" />
-                <ScalarProperty Name="remarks" ColumnName="remarks" />
-                <ScalarProperty Name="cut_piece_width" ColumnName="cut_piece_width" />
-                <ScalarProperty Name="cut_piece_size" ColumnName="cut_piece_size" />
-                <ScalarProperty Name="pile_to_pile_width" ColumnName="pile_to_pile_width" />
-                <ScalarProperty Name="pile_to_pile_length" ColumnName="pile_to_pile_length" />
-                <ScalarProperty Name="grayProduct_id" ColumnName="grayProduct_id" />
-                <ScalarProperty Name="programm_no" ColumnName="programm_no" />
-                <ScalarProperty Name="borderQuality_id" ColumnName="borderQuality_id" />
-                <ScalarProperty Name="borderSize_id" ColumnName="borderSize_id" />
-                <ScalarProperty Name="loom_id" ColumnName="loom_id" />
-                <ScalarProperty Name="roll_weight" ColumnName="roll_weight" />
-                <ScalarProperty Name="production_date" ColumnName="production_date" />
-                <ScalarProperty Name="roll_no" ColumnName="roll_no" />
-                <ScalarProperty Name="production_id" ColumnName="production_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="production_shift">
             <EntityTypeMapping TypeName="db_weavingModel.production_shift">
               <MappingFragment StoreEntitySet="production_shift">
@@ -834,6 +800,40 @@
                 <ScalarProperty Name="abbreviation" ColumnName="abbreviation" />
                 <ScalarProperty Name="type_name" ColumnName="type_name" />
                 <ScalarProperty Name="voucher_id" ColumnName="voucher_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="production">
+            <EntityTypeMapping TypeName="db_weavingModel.production">
+              <MappingFragment StoreEntitySet="production">
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="modified_datetime" ColumnName="modified_datetime" />
+                <ScalarProperty Name="cretad_datetime" ColumnName="cretad_datetime" />
+                <ScalarProperty Name="required_per_piece_a_weight" ColumnName="required_per_piece_a_weight" />
+                <ScalarProperty Name="required_width_p_to_p" ColumnName="required_width_p_to_p" />
+                <ScalarProperty Name="required_length_p_to_p" ColumnName="required_length_p_to_p" />
+                <ScalarProperty Name="current_per_piece_a_weight" ColumnName="current_per_piece_a_weight" />
+                <ScalarProperty Name="current_width_p_to_p" ColumnName="current_width_p_to_p" />
+                <ScalarProperty Name="current_length_p_to_p" ColumnName="current_length_p_to_p" />
+                <ScalarProperty Name="a_grade_pieces" ColumnName="a_grade_pieces" />
+                <ScalarProperty Name="b_grade_pieces" ColumnName="b_grade_pieces" />
+                <ScalarProperty Name="total_pieces" ColumnName="total_pieces" />
+                <ScalarProperty Name="total_border" ColumnName="total_border" />
+                <ScalarProperty Name="remarks" ColumnName="remarks" />
+                <ScalarProperty Name="cut_piece_wieght" ColumnName="cut_piece_wieght" />
+                <ScalarProperty Name="cut_piece_size" ColumnName="cut_piece_size" />
+                <ScalarProperty Name="pile_to_pile_width" ColumnName="pile_to_pile_width" />
+                <ScalarProperty Name="pile_to_pile_length" ColumnName="pile_to_pile_length" />
+                <ScalarProperty Name="grayProduct_id" ColumnName="grayProduct_id" />
+                <ScalarProperty Name="programm_no" ColumnName="programm_no" />
+                <ScalarProperty Name="borderQuality_id" ColumnName="borderQuality_id" />
+                <ScalarProperty Name="borderSize_id" ColumnName="borderSize_id" />
+                <ScalarProperty Name="loom_id" ColumnName="loom_id" />
+                <ScalarProperty Name="roll_weight" ColumnName="roll_weight" />
+                <ScalarProperty Name="production_date" ColumnName="production_date" />
+                <ScalarProperty Name="roll_no" ColumnName="roll_no" />
+                <ScalarProperty Name="production_id" ColumnName="production_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

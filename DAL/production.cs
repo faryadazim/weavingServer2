@@ -26,7 +26,7 @@ namespace DAL
         public Nullable<decimal> pile_to_pile_length { get; set; }
         public decimal pile_to_pile_width { get; set; }
         public decimal cut_piece_size { get; set; }
-        public decimal cut_piece_width { get; set; }
+        public decimal cut_piece_wieght { get; set; }
         public string remarks { get; set; }
         public decimal total_border { get; set; }
         public decimal total_pieces { get; set; }

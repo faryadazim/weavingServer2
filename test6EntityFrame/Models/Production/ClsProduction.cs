@@ -31,7 +31,7 @@ namespace test6EntityFrame.Models.Production
         [Required]
         public decimal cut_piece_size { get; set; }
         [Required]
-        public decimal cut_piece_width { get; set; }
+        public decimal cut_piece_weight { get; set; }
         public string remarks { get; set; }
         [Required]
         public decimal total_border { get; set; }
