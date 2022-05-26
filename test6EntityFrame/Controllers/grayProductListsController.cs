@@ -65,10 +65,11 @@ namespace test6EntityFrame.Controllers
                                                where grayProductTable76.itemName == BorderQualityId
                                                && grayProductTable76.itemSize == BorderSizeId
                                                select  new {
-                                                   noOfPieceInOneBorder = grayProductTable76.LoomNumbPieceInBorder76,
-                                          
+                                                   noOfPieceInOneBorder = grayProductTable76.LoomNumbPieceInBorder76, 
                                                    rateDrawBox = grayProductTable76.LoomNumbRatePerBorderWithDraw76,
                                                    rateWithoutDrawBox = grayProductTable76.LoomNumbRatePerBorderWithoutDraw76,
+                                                   pileToPileLength= grayProductTable76.graySizeppLength,
+                                                   pileToPileWidth=grayProductTable76.graySizeppWidth
                                                };
                                                return Request.CreateResponse(HttpStatusCode.OK, numbOfPieceInOneBorder76.FirstOrDefault());
             }
@@ -78,11 +79,13 @@ namespace test6EntityFrame.Controllers
                                                  where grayProductTable96.itemName == BorderQualityId
                                                  && grayProductTable96.itemSize == BorderSizeId
                                                  select new {
-                                                     noOfPieceInOneBorder  = grayProductTable96.LoomNumbPieceInBorder96,
-                                                  
+                                                     noOfPieceInOneBorder  = grayProductTable96.LoomNumbPieceInBorder96, 
                                                      rateDrawBox=grayProductTable96.LoomNumbRatePerBorderWithDraw96,
                                                      rateWithoutDrawBox =grayProductTable96.LoomNumbRatePerBorderWithoutDraw96,
-                                                     
+
+                                                     pileToPileLength = grayProductTable96.graySizeppLength,
+                                                     pileToPileWidth = grayProductTable96.graySizeppWidth
+
                                                  };
 
             return Request.CreateResponse(HttpStatusCode.OK, numberOfPieceInOneBorder96.FirstOrDefault());
