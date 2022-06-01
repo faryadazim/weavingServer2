@@ -27,5 +27,6 @@ namespace DAL
         public decimal total_amt { get; set; }
         public int natting_employee_Id { get; set; }
         public string known_faults_ids { get; set; }
+        public Nullable<int> production_id { get; set; }
     }
 }

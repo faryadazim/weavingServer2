@@ -32,15 +32,13 @@ namespace DAL
         public decimal total_pieces { get; set; }
         public decimal b_grade_pieces { get; set; }
         public decimal a_grade_pieces { get; set; }
-        public decimal current_length_p_to_p { get; set; }
-        public decimal current_width_p_to_p { get; set; }
         public decimal current_per_piece_a_weight { get; set; }
         public decimal required_length_p_to_p { get; set; }
         public decimal required_width_p_to_p { get; set; }
         public decimal required_per_piece_a_weight { get; set; }
         public System.DateTime cretad_datetime { get; set; }
         public System.DateTime modified_datetime { get; set; }
-        public int created_by { get; set; }
-        public int modified_by { get; set; }
+        public string created_by { get; set; }
+        public string modified_by { get; set; }
     }
 }

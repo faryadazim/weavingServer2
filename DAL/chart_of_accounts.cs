@@ -19,8 +19,9 @@ namespace DAL
         public string account_code { get; set; }
         public string description { get; set; }
         public Nullable<System.DateTime> created_datetime { get; set; }
-        public Nullable<int> created_by { get; set; }
+        public string created_by { get; set; }
         public Nullable<System.DateTime> modified_datetime { get; set; }
-        public Nullable<int> modified_by { get; set; }
+        public string modified_by { get; set; }
+        public Nullable<int> account_type_id { get; set; }
     }
 }

@@ -65,6 +65,7 @@ namespace test6EntityFrame.Controllers
                                                where grayProductTable76.itemName == BorderQualityId
                                                && grayProductTable76.itemSize == BorderSizeId
                                                select  new {
+                                                   grayProductId = grayProductTable76.grayProduct_id,
                                                    noOfPieceInOneBorder = grayProductTable76.LoomNumbPieceInBorder76, 
                                                    rateDrawBox = grayProductTable76.LoomNumbRatePerBorderWithDraw76,
                                                    rateWithoutDrawBox = grayProductTable76.LoomNumbRatePerBorderWithoutDraw76,
@@ -80,6 +81,7 @@ namespace test6EntityFrame.Controllers
                                                  where grayProductTable96.itemName == BorderQualityId
                                                  && grayProductTable96.itemSize == BorderSizeId
                                                  select new {
+                                                     grayProductId = grayProductTable96.grayProduct_id ,
                                                      noOfPieceInOneBorder  = grayProductTable96.LoomNumbPieceInBorder96, 
                                                      rateDrawBox=grayProductTable96.LoomNumbRatePerBorderWithDraw96,
                                                      rateWithoutDrawBox =grayProductTable96.LoomNumbRatePerBorderWithoutDraw96,

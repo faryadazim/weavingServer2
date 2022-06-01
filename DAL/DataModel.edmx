@@ -68,9 +68,10 @@
           <Property Name="account_code" Type="varchar(max)" />
           <Property Name="description" Type="varchar(max)" />
           <Property Name="created_datetime" Type="datetime" />
-          <Property Name="created_by" Type="int" />
+          <Property Name="created_by" Type="nvarchar" MaxLength="128" />
           <Property Name="modified_datetime" Type="datetime" />
-          <Property Name="modified_by" Type="int" />
+          <Property Name="modified_by" Type="nvarchar" MaxLength="128" />
+          <Property Name="account_type_id" Type="int" />
         </EntityType>
         <EntityType Name="employeeDesignation">
           <Key>
@@ -103,6 +104,7 @@
           <Property Name="recruitmentType" Type="varchar(max)" />
           <Property Name="weeklySalary" Type="int" />
           <Property Name="monthlySalary" Type="int" />
+          <Property Name="chart_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="finance_entries">
           <Key>
@@ -121,15 +123,15 @@
             <PropertyRef Name="finance_main_id" />
           </Key>
           <Property Name="finance_main_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="voucher_type_id" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="voucher_inv" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="voucher_date" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="description" Type="nchar" MaxLength="10" />
-          <Property Name="created_by" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="modified_by" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="created_datetime" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="modified_datetime" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="production_id" Type="int" />
+          <Property Name="voucher_type_id" Type="int" Nullable="false" />
+          <Property Name="voucher_inv" Type="varchar(max)" Nullable="false" />
+          <Property Name="voucher_date" Type="date" Nullable="false" />
+          <Property Name="description" Type="varchar(max)" />
+          <Property Name="created_by" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="modified_by" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="created_datetime" Type="datetime" Nullable="false" />
+          <Property Name="modified_datetime" Type="datetime" Nullable="false" />
+          <Property Name="production_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="grayProductList">
           <Key>
@@ -138,15 +140,15 @@
           <Property Name="grayProduct_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="itemName" Type="int" />
           <Property Name="itemSize" Type="int" />
-          <Property Name="PerPieceGrayWeightGram" Type="varchar(max)" />
-          <Property Name="graySizeppWidth" Type="varchar(max)" />
-          <Property Name="graySizeppLength" Type="varchar(max)" />
-          <Property Name="LoomNumbPieceInBorder76" Type="varchar(max)" />
-          <Property Name="LoomNumbRatePerBorderWithDraw76" Type="varchar(max)" />
-          <Property Name="LoomNumbRatePerBorderWithoutDraw76" Type="varchar(max)" />
-          <Property Name="LoomNumbPieceInBorder96" Type="varchar(max)" />
-          <Property Name="LoomNumbRatePerBorderWithDraw96" Type="varchar(max)" />
-          <Property Name="LoomNumbRatePerBorderWithoutDraw96" Type="varchar(max)" />
+          <Property Name="PerPieceGrayWeightGram" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="graySizeppWidth" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="graySizeppLength" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="LoomNumbPieceInBorder76" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="LoomNumbRatePerBorderWithDraw76" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="LoomNumbRatePerBorderWithoutDraw76" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="LoomNumbPieceInBorder96" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="LoomNumbRatePerBorderWithDraw96" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="LoomNumbRatePerBorderWithoutDraw96" Type="decimal" Precision="18" Scale="3" />
           <Property Name="status" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="LoomList">
@@ -211,16 +213,14 @@
           <Property Name="total_pieces" Type="decimal" Precision="18" Scale="3" Nullable="false" />
           <Property Name="b_grade_pieces" Type="decimal" Precision="18" Scale="3" Nullable="false" />
           <Property Name="a_grade_pieces" Type="decimal" Precision="18" Scale="3" Nullable="false" />
-          <Property Name="current_length_p_to_p" Type="decimal" Precision="18" Scale="3" Nullable="false" />
-          <Property Name="current_width_p_to_p" Type="decimal" Precision="18" Scale="3" Nullable="false" />
           <Property Name="current_per_piece_a_weight" Type="decimal" Precision="18" Scale="3" Nullable="false" />
           <Property Name="required_length_p_to_p" Type="decimal" Precision="18" Scale="3" Nullable="false" />
           <Property Name="required_width_p_to_p" Type="decimal" Precision="18" Scale="3" Nullable="false" />
           <Property Name="required_per_piece_a_weight" Type="decimal" Precision="18" Scale="3" Nullable="false" />
           <Property Name="cretad_datetime" Type="datetime" Nullable="false" />
           <Property Name="modified_datetime" Type="datetime" Nullable="false" />
-          <Property Name="created_by" Type="int" Nullable="false" />
-          <Property Name="modified_by" Type="int" Nullable="false" />
+          <Property Name="created_by" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="modified_by" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="production_shift">
           <Key>
@@ -239,6 +239,24 @@
           <Property Name="total_amt" Type="decimal" Precision="18" Scale="3" Nullable="false" />
           <Property Name="natting_employee_Id" Type="int" Nullable="false" />
           <Property Name="known_faults_ids" Type="varchar(max)" />
+          <Property Name="production_id" Type="int" />
+        </EntityType>
+        <EntityType Name="shiftFaults">
+          <Key>
+            <PropertyRef Name="fault_id" />
+          </Key>
+          <Property Name="fault_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fault_title" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="user_draft">
+          <Key>
+            <PropertyRef Name="draft_id" />
+          </Key>
+          <Property Name="draft_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="draft_name" Type="varchar(max)" />
+          <Property Name="user_id" Type="nvarchar(max)" />
+          <Property Name="page_name" Type="varchar(max)" />
+          <Property Name="draft_json" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="voucher_types">
           <Key>
@@ -277,6 +295,8 @@
           <EntitySet Name="Pages" EntityType="Self.Pages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="production" EntityType="Self.production" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="production_shift" EntityType="Self.production_shift" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="shiftFaults" EntityType="Self.shiftFaults" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user_draft" EntityType="Self.user_draft" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="voucher_types" EntityType="Self.voucher_types" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="weavingUnit" EntityType="Self.weavingUnit" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
@@ -294,17 +314,19 @@
           <EntitySet Name="PagePermission" EntityType="db_weavingModel.PagePermission" />
           <EntitySet Name="Pages" EntityType="db_weavingModel.Pages" />
           <EntitySet Name="AspNetUserRoles" EntityType="db_weavingModel.AspNetUserRoles" />
-          <EntitySet Name="employeeList" EntityType="db_weavingModel.employeeList" />
           <EntitySet Name="weavingUnit" EntityType="db_weavingModel.weavingUnit" />
           <EntitySet Name="LoomList" EntityType="db_weavingModel.LoomList" />
-          <EntitySet Name="grayProductList" EntityType="db_weavingModel.grayProductList" />
           <EntitySet Name="account_type" EntityType="db_weavingModel.account_type" />
-          <EntitySet Name="chart_of_accounts" EntityType="db_weavingModel.chart_of_accounts" />
           <EntitySet Name="finance_entries" EntityType="db_weavingModel.finance_entries" />
-          <EntitySet Name="finance_main" EntityType="db_weavingModel.finance_main" />
           <EntitySet Name="production_shift" EntityType="db_weavingModel.production_shift" />
           <EntitySet Name="voucher_types" EntityType="db_weavingModel.voucher_types" />
+          <EntitySet Name="grayProductList" EntityType="db_weavingModel.grayProductList" />
+          <EntitySet Name="user_draft" EntityType="db_weavingModel.user_draft" />
+          <EntitySet Name="shiftFaults" EntityType="db_weavingModel.shiftFaults" />
           <EntitySet Name="production" EntityType="db_weavingModel.production" />
+          <EntitySet Name="chart_of_accounts" EntityType="db_weavingModel.chart_of_accounts" />
+          <EntitySet Name="employeeList" EntityType="db_weavingModel.employeeList" />
+          <EntitySet Name="finance_main" EntityType="db_weavingModel.finance_main" />
         </EntityContainer>
         <EntityType Name="AspNetRoles">
           <Key>
@@ -388,6 +410,154 @@
           <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="RoleId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="weavingUnit">
+          <Key>
+            <PropertyRef Name="weavingUnit_id" />
+          </Key>
+          <Property Name="weavingUnit_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="weavingUnitName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="weavingUnitShortCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="LoomList">
+          <Key>
+            <PropertyRef Name="loom_id" />
+          </Key>
+          <Property Name="loom_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="loomNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="loomSize" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="drawBox" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="jacquard" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="weavingUnitId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="account_type">
+          <Key>
+            <PropertyRef Name="account_type_id" />
+          </Key>
+          <Property Name="account_type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="type_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="type_code" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="finance_entries">
+          <Key>
+            <PropertyRef Name="finance_entries_id" />
+          </Key>
+          <Property Name="finance_entries_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="debit" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="credit" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="finance_main_id" Type="Int32" Nullable="false" />
+          <Property Name="entry_type" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="chart_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="production_shift">
+          <Key>
+            <PropertyRef Name="production_shift_id" />
+          </Key>
+          <Property Name="production_shift_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="shift_name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="weaver_employee_Id" Type="Int32" Nullable="false" />
+          <Property Name="no_of_border" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="total_pieces" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="b_grade_piece" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="a_grade_piece" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="rate_per_border" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="extra_amt" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="extra_desc" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="total_amt" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="natting_employee_Id" Type="Int32" Nullable="false" />
+          <Property Name="known_faults_ids" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="production_id" Type="Int32" />
+        </EntityType>
+        <EntityType Name="voucher_types">
+          <Key>
+            <PropertyRef Name="voucher_id" />
+          </Key>
+          <Property Name="voucher_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="type_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="abbreviation" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="autotime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="grayProductList">
+          <Key>
+            <PropertyRef Name="grayProduct_id" />
+          </Key>
+          <Property Name="grayProduct_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="itemName" Type="Int32" />
+          <Property Name="itemSize" Type="Int32" />
+          <Property Name="PerPieceGrayWeightGram" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="graySizeppWidth" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="graySizeppLength" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="LoomNumbPieceInBorder76" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="LoomNumbRatePerBorderWithDraw76" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="LoomNumbRatePerBorderWithoutDraw76" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="LoomNumbPieceInBorder96" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="LoomNumbRatePerBorderWithDraw96" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="LoomNumbRatePerBorderWithoutDraw96" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="status" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="user_draft">
+          <Key>
+            <PropertyRef Name="draft_id" />
+          </Key>
+          <Property Name="draft_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="draft_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="user_id" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="page_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="draft_json" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="shiftFaults">
+          <Key>
+            <PropertyRef Name="fault_id" />
+          </Key>
+          <Property Name="fault_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fault_title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="production">
+          <Key>
+            <PropertyRef Name="production_id" />
+          </Key>
+          <Property Name="production_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="roll_no" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="production_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="roll_weight" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="loom_id" Type="Int32" Nullable="false" />
+          <Property Name="borderSize_id" Type="Int32" Nullable="false" />
+          <Property Name="borderQuality_id" Type="Int32" Nullable="false" />
+          <Property Name="programm_no" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="grayProduct_id" Type="Int32" Nullable="false" />
+          <Property Name="pile_to_pile_length" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="pile_to_pile_width" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="cut_piece_size" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="cut_piece_wieght" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="total_border" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="total_pieces" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="b_grade_pieces" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="a_grade_pieces" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="current_per_piece_a_weight" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="required_length_p_to_p" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="required_width_p_to_p" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="required_per_piece_a_weight" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="cretad_datetime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modified_datetime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="modified_by" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="chart_of_accounts">
+          <Key>
+            <PropertyRef Name="chart_id" />
+          </Key>
+          <Property Name="chart_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="account_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="account_code" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="created_datetime" Type="DateTime" Precision="3" />
+          <Property Name="created_by" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="modified_datetime" Type="DateTime" Precision="3" />
+          <Property Name="modified_by" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="account_type_id" Type="Int32" />
+        </EntityType>
         <EntityType Name="employeeList">
           <Key>
             <PropertyRef Name="employee_Id" />
@@ -412,75 +582,6 @@
           <Property Name="recruitmentType" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="weeklySalary" Type="Int32" />
           <Property Name="monthlySalary" Type="Int32" />
-        </EntityType>
-        <EntityType Name="weavingUnit">
-          <Key>
-            <PropertyRef Name="weavingUnit_id" />
-          </Key>
-          <Property Name="weavingUnit_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="weavingUnitName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="weavingUnitShortCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="LoomList">
-          <Key>
-            <PropertyRef Name="loom_id" />
-          </Key>
-          <Property Name="loom_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="loomNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="loomSize" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="drawBox" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="jacquard" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="weavingUnitId" Type="Int32" />
-        </EntityType>
-        <EntityType Name="grayProductList">
-          <Key>
-            <PropertyRef Name="grayProduct_id" />
-          </Key>
-          <Property Name="grayProduct_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="itemName" Type="Int32" />
-          <Property Name="itemSize" Type="Int32" />
-          <Property Name="PerPieceGrayWeightGram" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="graySizeppWidth" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="graySizeppLength" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="LoomNumbPieceInBorder76" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="LoomNumbRatePerBorderWithDraw76" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="LoomNumbRatePerBorderWithoutDraw76" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="LoomNumbPieceInBorder96" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="LoomNumbRatePerBorderWithDraw96" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="LoomNumbRatePerBorderWithoutDraw96" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="status" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="account_type">
-          <Key>
-            <PropertyRef Name="account_type_id" />
-          </Key>
-          <Property Name="account_type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="type_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="type_code" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="chart_of_accounts">
-          <Key>
-            <PropertyRef Name="chart_id" />
-          </Key>
-          <Property Name="chart_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="account_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="account_code" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="created_datetime" Type="DateTime" Precision="3" />
-          <Property Name="created_by" Type="Int32" />
-          <Property Name="modified_datetime" Type="DateTime" Precision="3" />
-          <Property Name="modified_by" Type="Int32" />
-        </EntityType>
-        <EntityType Name="finance_entries">
-          <Key>
-            <PropertyRef Name="finance_entries_id" />
-          </Key>
-          <Property Name="finance_entries_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="debit" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="credit" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="finance_main_id" Type="Int32" Nullable="false" />
-          <Property Name="entry_type" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="chart_id" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="finance_main">
@@ -488,76 +589,15 @@
             <PropertyRef Name="finance_main_id" />
           </Key>
           <Property Name="finance_main_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="voucher_type_id" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="voucher_inv" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="voucher_date" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="description" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="created_by" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="modified_by" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="created_datetime" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="modified_datetime" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="production_id" Type="Int32" />
-        </EntityType>
-        <EntityType Name="production_shift">
-          <Key>
-            <PropertyRef Name="production_shift_id" />
-          </Key>
-          <Property Name="production_shift_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="shift_name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="weaver_employee_Id" Type="Int32" Nullable="false" />
-          <Property Name="no_of_border" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="total_pieces" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="b_grade_piece" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="a_grade_piece" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="rate_per_border" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="extra_amt" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="extra_desc" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="total_amt" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="natting_employee_Id" Type="Int32" Nullable="false" />
-          <Property Name="known_faults_ids" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="voucher_types">
-          <Key>
-            <PropertyRef Name="voucher_id" />
-          </Key>
-          <Property Name="voucher_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="type_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="abbreviation" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="status" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="autotime" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="production">
-          <Key>
-            <PropertyRef Name="production_id" />
-          </Key>
-          <Property Name="production_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="roll_no" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="production_date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="roll_weight" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="loom_id" Type="Int32" Nullable="false" />
-          <Property Name="borderSize_id" Type="Int32" Nullable="false" />
-          <Property Name="borderQuality_id" Type="Int32" Nullable="false" />
-          <Property Name="programm_no" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="grayProduct_id" Type="Int32" Nullable="false" />
-          <Property Name="pile_to_pile_length" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="pile_to_pile_width" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="cut_piece_size" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="cut_piece_wieght" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="total_border" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="total_pieces" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="b_grade_pieces" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="a_grade_pieces" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="current_length_p_to_p" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="current_width_p_to_p" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="current_per_piece_a_weight" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="required_length_p_to_p" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="required_width_p_to_p" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="required_per_piece_a_weight" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
-          <Property Name="cretad_datetime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="voucher_type_id" Type="Int32" Nullable="false" />
+          <Property Name="voucher_inv" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="voucher_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="modified_by" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="created_datetime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="modified_datetime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="created_by" Type="Int32" Nullable="false" />
-          <Property Name="modified_by" Type="Int32" Nullable="false" />
+          <Property Name="production_id" Type="Int32" Nullable="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -655,32 +695,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="employeeList">
-            <EntityTypeMapping TypeName="db_weavingModel.employeeList">
-              <MappingFragment StoreEntitySet="employeeList">
-                <ScalarProperty Name="monthlySalary" ColumnName="monthlySalary" />
-                <ScalarProperty Name="weeklySalary" ColumnName="weeklySalary" />
-                <ScalarProperty Name="recruitmentType" ColumnName="recruitmentType" />
-                <ScalarProperty Name="employeeCnicBsck" ColumnName="employeeCnicBsck" />
-                <ScalarProperty Name="employeeCnicFront" ColumnName="employeeCnicFront" />
-                <ScalarProperty Name="employeePic2" ColumnName="employeePic2" />
-                <ScalarProperty Name="employeePic1" ColumnName="employeePic1" />
-                <ScalarProperty Name="designation" ColumnName="designation" />
-                <ScalarProperty Name="jobStatus" ColumnName="jobStatus" />
-                <ScalarProperty Name="referencePhoneNum" ColumnName="referencePhoneNum" />
-                <ScalarProperty Name="referenceName" ColumnName="referenceName" />
-                <ScalarProperty Name="address" ColumnName="address" />
-                <ScalarProperty Name="cnicNum" ColumnName="cnicNum" />
-                <ScalarProperty Name="homePhoneNum" ColumnName="homePhoneNum" />
-                <ScalarProperty Name="phoneNum3" ColumnName="phoneNum3" />
-                <ScalarProperty Name="phoneNum2" ColumnName="phoneNum2" />
-                <ScalarProperty Name="phoneNum1" ColumnName="phoneNum1" />
-                <ScalarProperty Name="fatherName" ColumnName="fatherName" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="employee_Id" ColumnName="employee_Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="weavingUnit">
             <EntityTypeMapping TypeName="db_weavingModel.weavingUnit">
               <MappingFragment StoreEntitySet="weavingUnit">
@@ -702,45 +716,12 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="grayProductList">
-            <EntityTypeMapping TypeName="db_weavingModel.grayProductList">
-              <MappingFragment StoreEntitySet="grayProductList">
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="LoomNumbRatePerBorderWithoutDraw96" ColumnName="LoomNumbRatePerBorderWithoutDraw96" />
-                <ScalarProperty Name="LoomNumbRatePerBorderWithDraw96" ColumnName="LoomNumbRatePerBorderWithDraw96" />
-                <ScalarProperty Name="LoomNumbPieceInBorder96" ColumnName="LoomNumbPieceInBorder96" />
-                <ScalarProperty Name="LoomNumbRatePerBorderWithoutDraw76" ColumnName="LoomNumbRatePerBorderWithoutDraw76" />
-                <ScalarProperty Name="LoomNumbRatePerBorderWithDraw76" ColumnName="LoomNumbRatePerBorderWithDraw76" />
-                <ScalarProperty Name="LoomNumbPieceInBorder76" ColumnName="LoomNumbPieceInBorder76" />
-                <ScalarProperty Name="graySizeppLength" ColumnName="graySizeppLength" />
-                <ScalarProperty Name="graySizeppWidth" ColumnName="graySizeppWidth" />
-                <ScalarProperty Name="PerPieceGrayWeightGram" ColumnName="PerPieceGrayWeightGram" />
-                <ScalarProperty Name="itemSize" ColumnName="itemSize" />
-                <ScalarProperty Name="itemName" ColumnName="itemName" />
-                <ScalarProperty Name="grayProduct_id" ColumnName="grayProduct_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="account_type">
             <EntityTypeMapping TypeName="db_weavingModel.account_type">
               <MappingFragment StoreEntitySet="account_type">
                 <ScalarProperty Name="type_code" ColumnName="type_code" />
                 <ScalarProperty Name="type_name" ColumnName="type_name" />
                 <ScalarProperty Name="account_type_id" ColumnName="account_type_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="chart_of_accounts">
-            <EntityTypeMapping TypeName="db_weavingModel.chart_of_accounts">
-              <MappingFragment StoreEntitySet="chart_of_accounts">
-                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
-                <ScalarProperty Name="modified_datetime" ColumnName="modified_datetime" />
-                <ScalarProperty Name="created_by" ColumnName="created_by" />
-                <ScalarProperty Name="created_datetime" ColumnName="created_datetime" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="account_code" ColumnName="account_code" />
-                <ScalarProperty Name="account_name" ColumnName="account_name" />
-                <ScalarProperty Name="chart_id" ColumnName="chart_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -757,25 +738,10 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="finance_main">
-            <EntityTypeMapping TypeName="db_weavingModel.finance_main">
-              <MappingFragment StoreEntitySet="finance_main">
-                <ScalarProperty Name="production_id" ColumnName="production_id" />
-                <ScalarProperty Name="modified_datetime" ColumnName="modified_datetime" />
-                <ScalarProperty Name="created_datetime" ColumnName="created_datetime" />
-                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
-                <ScalarProperty Name="created_by" ColumnName="created_by" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="voucher_date" ColumnName="voucher_date" />
-                <ScalarProperty Name="voucher_inv" ColumnName="voucher_inv" />
-                <ScalarProperty Name="voucher_type_id" ColumnName="voucher_type_id" />
-                <ScalarProperty Name="finance_main_id" ColumnName="finance_main_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="production_shift">
             <EntityTypeMapping TypeName="db_weavingModel.production_shift">
               <MappingFragment StoreEntitySet="production_shift">
+                <ScalarProperty Name="production_id" ColumnName="production_id" />
                 <ScalarProperty Name="known_faults_ids" ColumnName="known_faults_ids" />
                 <ScalarProperty Name="natting_employee_Id" ColumnName="natting_employee_Id" />
                 <ScalarProperty Name="total_amt" ColumnName="total_amt" />
@@ -803,6 +769,44 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="grayProductList">
+            <EntityTypeMapping TypeName="db_weavingModel.grayProductList">
+              <MappingFragment StoreEntitySet="grayProductList">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="LoomNumbRatePerBorderWithoutDraw96" ColumnName="LoomNumbRatePerBorderWithoutDraw96" />
+                <ScalarProperty Name="LoomNumbRatePerBorderWithDraw96" ColumnName="LoomNumbRatePerBorderWithDraw96" />
+                <ScalarProperty Name="LoomNumbPieceInBorder96" ColumnName="LoomNumbPieceInBorder96" />
+                <ScalarProperty Name="LoomNumbRatePerBorderWithoutDraw76" ColumnName="LoomNumbRatePerBorderWithoutDraw76" />
+                <ScalarProperty Name="LoomNumbRatePerBorderWithDraw76" ColumnName="LoomNumbRatePerBorderWithDraw76" />
+                <ScalarProperty Name="LoomNumbPieceInBorder76" ColumnName="LoomNumbPieceInBorder76" />
+                <ScalarProperty Name="graySizeppLength" ColumnName="graySizeppLength" />
+                <ScalarProperty Name="graySizeppWidth" ColumnName="graySizeppWidth" />
+                <ScalarProperty Name="PerPieceGrayWeightGram" ColumnName="PerPieceGrayWeightGram" />
+                <ScalarProperty Name="itemSize" ColumnName="itemSize" />
+                <ScalarProperty Name="itemName" ColumnName="itemName" />
+                <ScalarProperty Name="grayProduct_id" ColumnName="grayProduct_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user_draft">
+            <EntityTypeMapping TypeName="db_weavingModel.user_draft">
+              <MappingFragment StoreEntitySet="user_draft">
+                <ScalarProperty Name="draft_json" ColumnName="draft_json" />
+                <ScalarProperty Name="page_name" ColumnName="page_name" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="draft_name" ColumnName="draft_name" />
+                <ScalarProperty Name="draft_id" ColumnName="draft_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="shiftFaults">
+            <EntityTypeMapping TypeName="db_weavingModel.shiftFaults">
+              <MappingFragment StoreEntitySet="shiftFaults">
+                <ScalarProperty Name="fault_title" ColumnName="fault_title" />
+                <ScalarProperty Name="fault_id" ColumnName="fault_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="production">
             <EntityTypeMapping TypeName="db_weavingModel.production">
               <MappingFragment StoreEntitySet="production">
@@ -814,8 +818,6 @@
                 <ScalarProperty Name="required_width_p_to_p" ColumnName="required_width_p_to_p" />
                 <ScalarProperty Name="required_length_p_to_p" ColumnName="required_length_p_to_p" />
                 <ScalarProperty Name="current_per_piece_a_weight" ColumnName="current_per_piece_a_weight" />
-                <ScalarProperty Name="current_width_p_to_p" ColumnName="current_width_p_to_p" />
-                <ScalarProperty Name="current_length_p_to_p" ColumnName="current_length_p_to_p" />
                 <ScalarProperty Name="a_grade_pieces" ColumnName="a_grade_pieces" />
                 <ScalarProperty Name="b_grade_pieces" ColumnName="b_grade_pieces" />
                 <ScalarProperty Name="total_pieces" ColumnName="total_pieces" />
@@ -834,6 +836,64 @@
                 <ScalarProperty Name="production_date" ColumnName="production_date" />
                 <ScalarProperty Name="roll_no" ColumnName="roll_no" />
                 <ScalarProperty Name="production_id" ColumnName="production_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="chart_of_accounts">
+            <EntityTypeMapping TypeName="db_weavingModel.chart_of_accounts">
+              <MappingFragment StoreEntitySet="chart_of_accounts">
+                <ScalarProperty Name="account_type_id" ColumnName="account_type_id" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="modified_datetime" ColumnName="modified_datetime" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="created_datetime" ColumnName="created_datetime" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="account_code" ColumnName="account_code" />
+                <ScalarProperty Name="account_name" ColumnName="account_name" />
+                <ScalarProperty Name="chart_id" ColumnName="chart_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="employeeList">
+            <EntityTypeMapping TypeName="db_weavingModel.employeeList">
+              <MappingFragment StoreEntitySet="employeeList">
+                <ScalarProperty Name="chart_id" ColumnName="chart_id" />
+                <ScalarProperty Name="monthlySalary" ColumnName="monthlySalary" />
+                <ScalarProperty Name="weeklySalary" ColumnName="weeklySalary" />
+                <ScalarProperty Name="recruitmentType" ColumnName="recruitmentType" />
+                <ScalarProperty Name="employeeCnicBsck" ColumnName="employeeCnicBsck" />
+                <ScalarProperty Name="employeeCnicFront" ColumnName="employeeCnicFront" />
+                <ScalarProperty Name="employeePic2" ColumnName="employeePic2" />
+                <ScalarProperty Name="employeePic1" ColumnName="employeePic1" />
+                <ScalarProperty Name="designation" ColumnName="designation" />
+                <ScalarProperty Name="jobStatus" ColumnName="jobStatus" />
+                <ScalarProperty Name="referencePhoneNum" ColumnName="referencePhoneNum" />
+                <ScalarProperty Name="referenceName" ColumnName="referenceName" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="cnicNum" ColumnName="cnicNum" />
+                <ScalarProperty Name="homePhoneNum" ColumnName="homePhoneNum" />
+                <ScalarProperty Name="phoneNum3" ColumnName="phoneNum3" />
+                <ScalarProperty Name="phoneNum2" ColumnName="phoneNum2" />
+                <ScalarProperty Name="phoneNum1" ColumnName="phoneNum1" />
+                <ScalarProperty Name="fatherName" ColumnName="fatherName" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="employee_Id" ColumnName="employee_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="finance_main">
+            <EntityTypeMapping TypeName="db_weavingModel.finance_main">
+              <MappingFragment StoreEntitySet="finance_main">
+                <ScalarProperty Name="production_id" ColumnName="production_id" />
+                <ScalarProperty Name="modified_datetime" ColumnName="modified_datetime" />
+                <ScalarProperty Name="created_datetime" ColumnName="created_datetime" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="voucher_date" ColumnName="voucher_date" />
+                <ScalarProperty Name="voucher_inv" ColumnName="voucher_inv" />
+                <ScalarProperty Name="voucher_type_id" ColumnName="voucher_type_id" />
+                <ScalarProperty Name="finance_main_id" ColumnName="finance_main_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

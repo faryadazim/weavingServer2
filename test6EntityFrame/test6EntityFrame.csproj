@@ -229,10 +229,8 @@
     <Compile Include="Controllers\employeeDesignationsController.cs" />
     <Compile Include="Controllers\employeeListsController.cs" />
     <Compile Include="Controllers\Production\ProductionController.cs" />
-    <Compile Include="Controllers\xxemployeeListsController.cs" />
     <Compile Include="Controllers\FileUploadController.cs" />
     <Compile Include="Controllers\grayProductListsController.cs" />
-    <Compile Include="Controllers\xxgrayProductListsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoomListsController.cs" />
     <Compile Include="Controllers\ModulesController.cs" />
@@ -240,6 +238,8 @@
     <Compile Include="Controllers\PagePermissionsController.cs" />
     <Compile Include="Controllers\PagesController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\ShiftFaultsController.cs" />
+    <Compile Include="Controllers\userDraftController.cs" />
     <Compile Include="Controllers\UserRolesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\weavingUnitsController.cs" />
@@ -251,6 +251,8 @@
     <Compile Include="Models\FileUpload.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Production\ClsProduction.cs" />
+    <Compile Include="Models\Production\ClsUserDraft.cs" />
+    <Compile Include="Models\StaticValues.cs" />
     <Compile Include="Models\UserDataModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />

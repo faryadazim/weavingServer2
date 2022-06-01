@@ -17,15 +17,15 @@ namespace DAL
         public int grayProduct_id { get; set; }
         public Nullable<int> itemName { get; set; }
         public Nullable<int> itemSize { get; set; }
-        public string PerPieceGrayWeightGram { get; set; }
-        public string graySizeppWidth { get; set; }
-        public string graySizeppLength { get; set; }
-        public string LoomNumbPieceInBorder76 { get; set; }
-        public string LoomNumbRatePerBorderWithDraw76 { get; set; }
-        public string LoomNumbRatePerBorderWithoutDraw76 { get; set; }
-        public string LoomNumbPieceInBorder96 { get; set; }
-        public string LoomNumbRatePerBorderWithDraw96 { get; set; }
-        public string LoomNumbRatePerBorderWithoutDraw96 { get; set; }
+        public Nullable<decimal> PerPieceGrayWeightGram { get; set; }
+        public Nullable<decimal> graySizeppWidth { get; set; }
+        public Nullable<decimal> graySizeppLength { get; set; }
+        public Nullable<decimal> LoomNumbPieceInBorder76 { get; set; }
+        public Nullable<decimal> LoomNumbRatePerBorderWithDraw76 { get; set; }
+        public Nullable<decimal> LoomNumbRatePerBorderWithoutDraw76 { get; set; }
+        public Nullable<decimal> LoomNumbPieceInBorder96 { get; set; }
+        public Nullable<decimal> LoomNumbRatePerBorderWithDraw96 { get; set; }
+        public Nullable<decimal> LoomNumbRatePerBorderWithoutDraw96 { get; set; }
         public string status { get; set; }
     }
 }

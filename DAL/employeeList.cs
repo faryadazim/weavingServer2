@@ -34,5 +34,6 @@ namespace DAL
         public string recruitmentType { get; set; }
         public Nullable<int> weeklySalary { get; set; }
         public Nullable<int> monthlySalary { get; set; }
+        public int chart_id { get; set; }
     }
 }

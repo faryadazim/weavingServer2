@@ -15,14 +15,14 @@ namespace DAL
     public partial class finance_main
     {
         public int finance_main_id { get; set; }
-        public string voucher_type_id { get; set; }
+        public int voucher_type_id { get; set; }
         public string voucher_inv { get; set; }
-        public string voucher_date { get; set; }
+        public System.DateTime voucher_date { get; set; }
         public string description { get; set; }
         public string created_by { get; set; }
         public string modified_by { get; set; }
-        public string created_datetime { get; set; }
-        public string modified_datetime { get; set; }
-        public Nullable<int> production_id { get; set; }
+        public System.DateTime created_datetime { get; set; }
+        public System.DateTime modified_datetime { get; set; }
+        public int production_id { get; set; }
     }
 }
