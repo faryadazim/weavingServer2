@@ -40,11 +40,7 @@ namespace test6EntityFrame.Models.Production
         [Required]
         public decimal b_grade_pieces { get; set; }
         [Required]
-        public decimal a_grade_pieces { get; set; }
-        [Required]
-        public decimal current_length_p_to_p { get; set; }
-        [Required]
-        public decimal current_width_p_to_p { get; set; }
+        public decimal a_grade_pieces { get; set; } 
         [Required]
         public decimal current_per_piece_a_weight { get; set; }
         [Required]
@@ -53,6 +49,7 @@ namespace test6EntityFrame.Models.Production
         public decimal required_width_p_to_p { get; set; }
         [Required]
         public decimal required_per_piece_a_weight { get; set; }
+        public decimal piece_in_one_border { get; set; }
         public IEnumerable<ClsShifts> shifts { get; set; }
 
     }
@@ -82,6 +79,7 @@ namespace test6EntityFrame.Models.Production
         public int natting_employee_Id { get; set; }
         public string known_faults_ids { get; set; }
         public string known_faults_names{ get; set; }
+     
 
     }
 }

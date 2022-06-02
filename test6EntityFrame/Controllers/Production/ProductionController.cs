@@ -107,7 +107,7 @@ namespace test6EntityFrame.Controllers.Production
                     total_pieces = p.total_pieces,
                     b_grade_pieces = p.b_grade_pieces,
                     a_grade_pieces = p.a_grade_pieces,
-
+                   piece_in_one_border = p.piece_in_one_border, //newly Created
                     current_per_piece_a_weight = p.current_per_piece_a_weight,
                     required_length_p_to_p = p.required_length_p_to_p,
                     required_width_p_to_p = p.required_width_p_to_p,
@@ -316,6 +316,7 @@ namespace test6EntityFrame.Controllers.Production
                             where prouctionTable.production_id == id
                             select new
                             {
+
                                 production_id = prouctionTable.production_id,
                                 roll_no = prouctionTable.roll_no,
                                 production_date = prouctionTable.production_date,
@@ -326,10 +327,14 @@ namespace test6EntityFrame.Controllers.Production
                                                select new
                                                {
                                                    label = loomTable.loomNumber,
-                                                   value = loomTable.loom_id
+                                                   value = loomTable.loom_id,
+                                                   loomSize = loomTable.loomSize,
+                                                   loomJacquard = loomTable.jacquard,
+                                                   loomDrawBox = loomTable.drawBox,
+
                                                }).FirstOrDefault(),
 
-                                //    borderSize_id = ,
+                                piece_in_one_border = prouctionTable.piece_in_one_border,
                                 borderSizeLabelId = (from borderSizeTable in db.BorderSize
                                                      where
                                                      borderSizeTable.borderSize_id == prouctionTable.borderSize_id

@@ -40,5 +40,6 @@ namespace DAL
         public System.DateTime modified_datetime { get; set; }
         public string created_by { get; set; }
         public string modified_by { get; set; }
+        public Nullable<decimal> piece_in_one_border { get; set; }
     }
 }
