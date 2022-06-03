@@ -70,7 +70,7 @@ namespace test6EntityFrame.Controllers
         public HttpResponseMessage GetAllWeaver()
         {
             var entity = from employeeListTable in db.employeeList
-                         where employeeListTable.designation == 6
+                         where employeeListTable.designation == 24
                          select new
                          {
                              employeeId = employeeListTable.employee_Id,
@@ -93,7 +93,7 @@ namespace test6EntityFrame.Controllers
         public HttpResponseMessage GetAllNativing()
         {
             var entity = from employeeListTable in db.employeeList
-                         where employeeListTable.designation == 22
+                         where employeeListTable.designation == 25
                          select new
                          {
                              employeeId = employeeListTable.employee_Id,
