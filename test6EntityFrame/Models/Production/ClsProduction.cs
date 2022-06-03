@@ -78,7 +78,7 @@ namespace test6EntityFrame.Models.Production
         [Required]
         public int natting_employee_Id { get; set; }
         public string known_faults_ids { get; set; }
-        public string known_faults_names{ get; set; }
+      //  public string known_faults_names{ get; set; }
      
 
     }

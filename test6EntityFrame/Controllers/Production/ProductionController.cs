@@ -15,7 +15,7 @@ namespace test6EntityFrame.Controllers.Production
     [Authorize]
     public class ProductionController : ApiController
     {
-        private db_weavingEntities db = new db_weavingEntities(); 
+        private db_weavingEntities db = new db_weavingEntities();
 
         //simple api created for WPF firststep jfor role name [fetch on load]
         [Route("api/RoleName")]
@@ -107,7 +107,7 @@ namespace test6EntityFrame.Controllers.Production
                     total_pieces = p.total_pieces,
                     b_grade_pieces = p.b_grade_pieces,
                     a_grade_pieces = p.a_grade_pieces,
-                   piece_in_one_border = p.piece_in_one_border, //newly Created
+                    piece_in_one_border = p.piece_in_one_border, //newly Created
                     current_per_piece_a_weight = p.current_per_piece_a_weight,
                     required_length_p_to_p = p.required_length_p_to_p,
                     required_width_p_to_p = p.required_width_p_to_p,
@@ -144,18 +144,19 @@ namespace test6EntityFrame.Controllers.Production
                 foreach (var item in p.shifts)
                 {
                     //add new known faults
-                    string[] knowFaults = item.known_faults_names.Split(',');
+                 
+                    string[] knowFaults = item.known_faults_ids.Split(',');
                     foreach (var fault in knowFaults)
                     {
-                        var knownFault = (from fault1 in db.shiftFaults where fault1.fault_title == fault select fault1.fault_title).FirstOrDefault();
-                        if (knownFault == null)
+                        var knownFault = (from fault1 in db.shiftFaults where fault1.fault_title == fault select fault1.fault_id).FirstOrDefault();
+                        if (knownFault == 0)
                         {
                             shiftFaults sf = new shiftFaults()
                             {
                                 fault_title = fault
 
                             };
-                            db.shiftFaults.Add(sf);
+                            db.shiftFaults.Add(sf); 
                             db.SaveChanges();
 
                         }
@@ -179,6 +180,7 @@ namespace test6EntityFrame.Controllers.Production
                         total_amt = item.total_amt,
                         natting_employee_Id = item.natting_employee_Id,
                         known_faults_ids = item.known_faults_ids,
+                       // known_faults_names = item.known_faults_names,
                         production_id = production_id
 
                     };
@@ -312,6 +314,7 @@ namespace test6EntityFrame.Controllers.Production
         [Route("api/GetProductById")]
         public HttpResponseMessage GetProductionById(int id)
         {
+
             var joinGroup = from prouctionTable in db.production
                             where prouctionTable.production_id == id
                             select new
@@ -357,6 +360,7 @@ namespace test6EntityFrame.Controllers.Production
                                 pile_to_pile_length = prouctionTable.pile_to_pile_length,
                                 pile_to_pile_width = prouctionTable.pile_to_pile_width,
                                 cut_piece_weight = prouctionTable.cut_piece_wieght,
+                                cut_piece_size = prouctionTable.cut_piece_size,
                                 remarks = prouctionTable.remarks,
                                 total_border = prouctionTable.total_border,
                                 total_pieces = prouctionTable.total_pieces,
@@ -395,9 +399,9 @@ namespace test6EntityFrame.Controllers.Production
                                                                               label = employeeListTable.name,
                                                                               value = employeeListTable.employee_Id
                                                                           }).FirstOrDefault(),
-                                                known_faults_ids = productionShiftData.known_faults_ids, 
+                                                known_faults_ids = productionShiftData.known_faults_ids,
                                             }
-                                             
+
 
 
                             };
@@ -426,6 +430,7 @@ namespace test6EntityFrame.Controllers.Production
                 else
                 {
                     //updating production table 
+                    // roll name will be same
                     entity.production_date = pp.production_date;
                     entity.roll_weight = pp.roll_weight;
                     entity.loom_id = pp.loom_id;
@@ -446,11 +451,12 @@ namespace test6EntityFrame.Controllers.Production
                     entity.required_length_p_to_p = pp.required_length_p_to_p;
                     entity.required_width_p_to_p = pp.required_width_p_to_p;
                     entity.required_per_piece_a_weight = pp.required_per_piece_a_weight;
+                    entity.piece_in_one_border = pp.piece_in_one_border;
                     entity.modified_by = LogIn;
                     entity.modified_datetime = StaticValues.PakDateTime;
                     db.SaveChanges();
 
- 
+
 
                     //removing/deleting old shiftTable data against selected id
                     var shiftTableAgainstParticularId = from shiftTable in db.production_shift where shiftTable.production_id == id select shiftTable;
@@ -462,8 +468,32 @@ namespace test6EntityFrame.Controllers.Production
 
 
                     //adding shiftTable data against selected id
+
+
+                    var finance_main_entity = db.finance_main.FirstOrDefault(e => e.production_id == id);
+                    finance_main_entity.voucher_date = pp.production_date;
+                    finance_main_entity.description = pp.remarks;
+                    finance_main_entity.modified_datetime = StaticValues.PakDateTime;
+                      finance_main_entity.modified_by = LogIn;
+                    db.SaveChanges();
+
+
+                    int finance_main_id = finance_main_entity.finance_main_id;
+                    //creating shift and faults 
                     foreach (var item in pp.shifts)
                     {
+
+
+
+
+
+                        //here add code to create new fault and save them in shift table 
+
+
+
+
+
+
                         production_shift sh = new production_shift()
                         {
 
@@ -478,17 +508,58 @@ namespace test6EntityFrame.Controllers.Production
                             extra_desc = item.extra_desc,
                             total_amt = item.total_amt,
                             natting_employee_Id = item.natting_employee_Id,
-                            known_faults_ids = item.known_faults_ids,
-                            production_id = id,
+                            known_faults_ids = item.known_faults_ids, //here add new generated ids 
+                            production_id = id
+
                         };
                         db.production_shift.Add(sh);
                         db.SaveChanges();
-                    };
-                      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        //weaver finance entries
+                        var emp_chart_id = (from emp in db.employeeList where emp.employee_Id == item.weaver_employee_Id select emp.chart_id).FirstOrDefault();
+                        if (emp_chart_id == 0)
+                        {
+                            return Request.CreateResponse(HttpStatusCode.NotFound, "Employee chart_id not found");
+                        }
+
+
+                        var financeEntries = db.finance_entries.FirstOrDefault(e => e.chart_id == emp_chart_id);
+                        db.finance_entries.Remove(financeEntries);
+                        db.SaveChanges();
+
+
+                        finance_entries fe = new finance_entries()
+                        {
+                            chart_id = emp_chart_id,
+                            credit = item.total_amt,
+                            debit = 0,
+                            entry_type = "production",
+                            description = item.extra_desc,
+                            finance_main_id = finance_main_id,
+                        };
+                        db.finance_entries.Add(fe);
+                        db.SaveChanges();
+                    }
+
+
                 }
 
                 transaction.Commit();
-                return Request.CreateResponse(HttpStatusCode.OK, "done");
+                return Request.CreateResponse(HttpStatusCode.OK, "updated successfully");
 
 
 
