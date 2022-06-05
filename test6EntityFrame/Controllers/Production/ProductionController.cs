@@ -45,33 +45,6 @@ namespace test6EntityFrame.Controllers.Production
 
 
         //production Report history api 
-        [Route("api/ProductionHistory")]
-        public HttpResponseMessage GetProductionHistory(DateTime dateFrom, DateTime dateTo)
-        {
-
-
-            var productionReportHistory = from productionTable in db.production
-                                          where productionTable.production_date >= dateFrom
-    && productionTable.production_date <= dateTo
-                                          orderby productionTable.production_id
-                                          select new
-                                          {
-                                              productionId = productionTable.production_id,
-                                              rollName = productionTable.roll_no,
-                                              productionDate = productionTable.production_date,
-
-                                          };
-
-            if (productionReportHistory == null)
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, "");
-            }
-            else
-            {
-
-                return Request.CreateResponse(HttpStatusCode.OK, productionReportHistory);
-            }
-        }
 
         // productionPost api
         [Route("api/Production")]
@@ -144,7 +117,7 @@ namespace test6EntityFrame.Controllers.Production
                 foreach (var item in p.shifts)
                 {
                     //add new known faults
-                 
+
                     string[] knowFaults = item.known_faults_ids.Split(',');
                     foreach (var fault in knowFaults)
                     {
@@ -156,7 +129,7 @@ namespace test6EntityFrame.Controllers.Production
                                 fault_title = fault
 
                             };
-                            db.shiftFaults.Add(sf); 
+                            db.shiftFaults.Add(sf);
                             db.SaveChanges();
 
                         }
@@ -180,7 +153,7 @@ namespace test6EntityFrame.Controllers.Production
                         total_amt = item.total_amt,
                         natting_employee_Id = item.natting_employee_Id,
                         known_faults_ids = item.known_faults_ids,
-                       // known_faults_names = item.known_faults_names,
+                        // known_faults_names = item.known_faults_names,
                         production_id = production_id
 
                     };
@@ -311,102 +284,6 @@ namespace test6EntityFrame.Controllers.Production
         //}
 
 
-        [Route("api/GetProductById")]
-        public HttpResponseMessage GetProductionById(int id)
-        {
-
-            var joinGroup = from prouctionTable in db.production
-                            where prouctionTable.production_id == id
-                            select new
-                            {
-
-                                production_id = prouctionTable.production_id,
-                                roll_no = prouctionTable.roll_no,
-                                production_date = prouctionTable.production_date,
-                                roll_weight = prouctionTable.roll_weight,
-                                loomLabelId = (from loomTable in db.LoomList
-                                               where
-                                               loomTable.loom_id == prouctionTable.loom_id
-                                               select new
-                                               {
-                                                   label = loomTable.loomNumber,
-                                                   value = loomTable.loom_id,
-                                                   loomSize = loomTable.loomSize,
-                                                   loomJacquard = loomTable.jacquard,
-                                                   loomDrawBox = loomTable.drawBox,
-
-                                               }).FirstOrDefault(),
-
-                                piece_in_one_border = prouctionTable.piece_in_one_border,
-                                borderSizeLabelId = (from borderSizeTable in db.BorderSize
-                                                     where
-                                                     borderSizeTable.borderSize_id == prouctionTable.borderSize_id
-                                                     select new
-                                                     {
-                                                         label = borderSizeTable.borderSize1,
-                                                         value = borderSizeTable.borderSize_id
-                                                     }).FirstOrDefault(),
-                                // borderQuality_id = prouctionTable.borderQuality_id,
-                                borderQualityLabelId = (from borderQualityTable in db.BorderQuality
-                                                        where
-                                                        borderQualityTable.borderQuality_id == prouctionTable.borderQuality_id
-                                                        select new
-                                                        {
-                                                            label = borderQualityTable.borderQuality1,
-                                                            value = borderQualityTable.borderQuality_id,
-                                                        }).FirstOrDefault(),
-                                programm_no = prouctionTable.programm_no,
-                                grayProduct_id = prouctionTable.grayProduct_id,
-                                pile_to_pile_length = prouctionTable.pile_to_pile_length,
-                                pile_to_pile_width = prouctionTable.pile_to_pile_width,
-                                cut_piece_weight = prouctionTable.cut_piece_wieght,
-                                cut_piece_size = prouctionTable.cut_piece_size,
-                                remarks = prouctionTable.remarks,
-                                total_border = prouctionTable.total_border,
-                                total_pieces = prouctionTable.total_pieces,
-                                b_grade_pieces = prouctionTable.b_grade_pieces,
-                                a_grade_pieces = prouctionTable.a_grade_pieces,
-                                current_per_piece_a_weight = prouctionTable.current_per_piece_a_weight,
-                                required_length_p_to_p = prouctionTable.required_length_p_to_p,
-                                required_width_p_to_p = prouctionTable.required_width_p_to_p,
-                                required_per_piece_a_weight = prouctionTable.required_per_piece_a_weight,
-                                shiftData = from productionShiftData in db.production_shift
-                                            where productionShiftData.production_id == id
-                                            select new
-                                            {
-                                                shift_name = productionShiftData.shift_name,
-                                                weaver_EmployeeDNameId = (from employeeListTable in db.employeeList
-                                                                          where
-                                                                          employeeListTable.employee_Id == productionShiftData.weaver_employee_Id
-                                                                          select new
-                                                                          {
-                                                                              label = employeeListTable.name,
-                                                                              value = employeeListTable.employee_Id
-                                                                          }).FirstOrDefault(),
-                                                no_of_border = productionShiftData.no_of_border,
-                                                total_pieces = productionShiftData.total_pieces,
-                                                b_grade_piece = productionShiftData.b_grade_piece,
-                                                a_grade_piece = productionShiftData.a_grade_piece,
-                                                rate_per_border = productionShiftData.rate_per_border,
-                                                extra_amt = productionShiftData.extra_amt,
-                                                extra_des = productionShiftData.extra_desc,
-                                                total_amt = productionShiftData.total_amt,
-                                                natting_EmployeeNameId = (from employeeListTable in db.employeeList
-                                                                          where
-                                                                          employeeListTable.employee_Id == productionShiftData.natting_employee_Id
-                                                                          select new
-                                                                          {
-                                                                              label = employeeListTable.name,
-                                                                              value = employeeListTable.employee_Id
-                                                                          }).FirstOrDefault(),
-                                                known_faults_ids = productionShiftData.known_faults_ids,
-                                            }
-
-
-
-                            };
-            return Request.CreateResponse(HttpStatusCode.OK, joinGroup.FirstOrDefault());
-        }
         [Route("api/UpdateProduction")]
         public HttpResponseMessage PutProductionData(ClsProduction pp, int id)
         {//update prroduction detail and replace shift data
@@ -474,7 +351,7 @@ namespace test6EntityFrame.Controllers.Production
                     finance_main_entity.voucher_date = pp.production_date;
                     finance_main_entity.description = pp.remarks;
                     finance_main_entity.modified_datetime = StaticValues.PakDateTime;
-                      finance_main_entity.modified_by = LogIn;
+                    finance_main_entity.modified_by = LogIn;
                     db.SaveChanges();
 
 
@@ -573,8 +450,6 @@ namespace test6EntityFrame.Controllers.Production
             }
         }
 
-
-
         [Route("api/DeleteProduction")]
         public HttpResponseMessage DeleteProductionData(int id)
         {
@@ -605,6 +480,176 @@ namespace test6EntityFrame.Controllers.Production
 
             return Request.CreateResponse(HttpStatusCode.OK, "deleted successfully");
         }
+
+
+
+        //Production Report --------
+        [Route("api/ProductionHistory")]
+        public HttpResponseMessage GetProductionHistory(DateTime dateFrom, DateTime dateTo)
+        {
+
+
+            var productionReportHistory = from productionTable in db.production
+                                          where productionTable.production_date >= dateFrom
+    && productionTable.production_date <= dateTo
+                                          orderby productionTable.production_id
+                                          select new
+                                          {
+                                              productionId = productionTable.production_id,
+                                              rollName = productionTable.roll_no,
+                                              productionDate = productionTable.production_date,
+
+                                          };
+
+            if (productionReportHistory == null)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, "");
+            }
+            else
+            {
+
+                return Request.CreateResponse(HttpStatusCode.OK, productionReportHistory);
+            }
+        }
+
+        [Route("api/GetProductById")]
+        public HttpResponseMessage GetProductionById(int id)
+        {
+
+            var joinGroup = from prouctionTable in db.production
+                            where prouctionTable.production_id == id
+                            select new
+                            {
+
+                                production_id = prouctionTable.production_id,
+                                roll_no = prouctionTable.roll_no,
+                                production_date = prouctionTable.production_date,
+                                roll_weight = prouctionTable.roll_weight,
+                                loomLabelId = (from loomTable in db.LoomList
+                                               where
+                                               loomTable.loom_id == prouctionTable.loom_id
+                                               select new
+                                               {
+                                                   label = loomTable.loomNumber,
+                                                   value = loomTable.loom_id,
+                                                   loomSize = loomTable.loomSize,
+                                                   loomJacquard = loomTable.jacquard,
+                                                   loomDrawBox = loomTable.drawBox,
+
+                                               }).FirstOrDefault(),
+
+                                piece_in_one_border = prouctionTable.piece_in_one_border,
+                                borderSizeLabelId = (from borderSizeTable in db.BorderSize
+                                                     where
+                                                     borderSizeTable.borderSize_id == prouctionTable.borderSize_id
+                                                     select new
+                                                     {
+                                                         label = borderSizeTable.borderSize1,
+                                                         value = borderSizeTable.borderSize_id
+                                                     }).FirstOrDefault(),
+                                // borderQuality_id = prouctionTable.borderQuality_id,
+                                borderQualityLabelId = (from borderQualityTable in db.BorderQuality
+                                                        where
+                                                        borderQualityTable.borderQuality_id == prouctionTable.borderQuality_id
+                                                        select new
+                                                        {
+                                                            label = borderQualityTable.borderQuality1,
+                                                            value = borderQualityTable.borderQuality_id,
+                                                        }).FirstOrDefault(),
+                                programm_no = prouctionTable.programm_no,
+                                grayProduct_id = prouctionTable.grayProduct_id,
+                                pile_to_pile_length = prouctionTable.pile_to_pile_length,
+                                pile_to_pile_width = prouctionTable.pile_to_pile_width,
+                                cut_piece_weight = prouctionTable.cut_piece_wieght,
+                                cut_piece_size = prouctionTable.cut_piece_size,
+                                remarks = prouctionTable.remarks,
+                                total_border = prouctionTable.total_border,
+                                total_pieces = prouctionTable.total_pieces,
+                                b_grade_pieces = prouctionTable.b_grade_pieces,
+                                a_grade_pieces = prouctionTable.a_grade_pieces,
+                                current_per_piece_a_weight = prouctionTable.current_per_piece_a_weight,
+                                required_length_p_to_p = prouctionTable.required_length_p_to_p,
+                                required_width_p_to_p = prouctionTable.required_width_p_to_p,
+                                required_per_piece_a_weight = prouctionTable.required_per_piece_a_weight,
+                                shiftData = from productionShiftData in db.production_shift
+                                            where productionShiftData.production_id == id
+                                            select new
+                                            {
+                                                shift_name = productionShiftData.shift_name,
+                                                weaver_EmployeeDNameId = (from employeeListTable in db.employeeList
+                                                                          where
+                                                                          employeeListTable.employee_Id == productionShiftData.weaver_employee_Id
+                                                                          select new
+                                                                          {
+                                                                              label = employeeListTable.name,
+                                                                              value = employeeListTable.employee_Id
+                                                                          }).FirstOrDefault(),
+                                                no_of_border = productionShiftData.no_of_border,
+                                                total_pieces = productionShiftData.total_pieces,
+                                                b_grade_piece = productionShiftData.b_grade_piece,
+                                                a_grade_piece = productionShiftData.a_grade_piece,
+                                                rate_per_border = productionShiftData.rate_per_border,
+                                                extra_amt = productionShiftData.extra_amt,
+                                                extra_des = productionShiftData.extra_desc,
+                                                total_amt = productionShiftData.total_amt,
+                                                natting_EmployeeNameId = (from employeeListTable in db.employeeList
+                                                                          where
+                                                                          employeeListTable.employee_Id == productionShiftData.natting_employee_Id
+                                                                          select new
+                                                                          {
+                                                                              label = employeeListTable.name,
+                                                                              value = employeeListTable.employee_Id
+                                                                          }).FirstOrDefault(),
+                                                known_faults_ids = productionShiftData.known_faults_ids,
+                                            }
+
+
+
+                            };
+            return Request.CreateResponse(HttpStatusCode.OK, joinGroup.FirstOrDefault());
+        }
+        //Weaver Wise Report --------
+        [Route("api/WeaverWiseReport")]
+        public HttpResponseMessage GetWeaverWiseReport(int w_id, DateTime dateFrom, DateTime dateTo)
+        {
+            var dateTime = dateFrom;
+            var entity = from productionShiftTable in db.production_shift
+                         join productionTable in db.production on
+productionShiftTable.production_id equals productionTable.production_id
+                         where productionShiftTable.production_id == productionShiftTable.production_id && productionShiftTable.weaver_employee_Id == w_id
+                         && productionTable.production_date >= dateFrom && productionTable.production_date <= dateTo
+                         select new
+                         {
+
+
+
+                             productDate = productionTable.production_date,
+                             rollNumber = productionTable.roll_no,
+                             product = "Unknown",
+                             size = (from BorderSizeTable in db.BorderSize where BorderSizeTable.borderSize_id == productionTable.borderSize_id select BorderSizeTable.borderSize1).FirstOrDefault(),
+                             border = (from BorderQualityTable in db.BorderQuality where BorderQualityTable.borderQuality_id == productionTable.borderQuality_id select BorderQualityTable.borderQuality1).FirstOrDefault(),
+
+                             bGradePiece = productionTable.b_grade_pieces,
+                             aGradePieces = productionTable.a_grade_pieces,
+                             ratePerBorder = productionShiftTable.rate_per_border,
+                             extraAmount = productionShiftTable.extra_amt,
+                             totalAmount = productionShiftTable.total_amt,
+                             paidAmount = (from financeEntriesTable in db.finance_entries
+                                           join employeeListTable in db.employeeList on
+                                       financeEntriesTable.chart_id equals employeeListTable.chart_id
+                                           where employeeListTable.chart_id == financeEntriesTable.chart_id
+                                           orderby financeEntriesTable.finance_entries_id
+                                           select financeEntriesTable.credit).FirstOrDefault(), //it should 4 again 57 but its 16 mean total --also how to calculate them here //for now here im using first value
+                                                                                                //here to gwt chart id we use join cant we use any var from this obj
+
+
+
+                         };
+            return Request.CreateResponse(HttpStatusCode.OK, entity);
+        }
+
+
+
 
     }
 }

@@ -69,8 +69,9 @@ namespace test6EntityFrame.Controllers
         [Route("api/employeeWeaverListWithName")]
         public HttpResponseMessage GetAllWeaver()
         {
+            int weaverId = (db.employeeDesignation.FirstOrDefault(c => c.designationName == "Weaver").designation_id);
             var entity = from employeeListTable in db.employeeList
-                         where employeeListTable.designation == 24
+                         where employeeListTable.designation == weaverId
                          select new
                          {
                              employeeId = employeeListTable.employee_Id,
@@ -92,8 +93,9 @@ namespace test6EntityFrame.Controllers
         [Route("api/employeeNativingListWithName")]
         public HttpResponseMessage GetAllNativing()
         {
+            int nativingId = (db.employeeDesignation.FirstOrDefault(c => c.designationName == "Nativing").designation_id);
             var entity = from employeeListTable in db.employeeList
-                         where employeeListTable.designation == 25
+                         where employeeListTable.designation == nativingId
                          select new
                          {
                              employeeId = employeeListTable.employee_Id,
