@@ -27,6 +27,10 @@
         <EntityTypeShape EntityType="db_weavingModel.employeeList" Width="1.5" PointX="11.375" PointY="0.75" />
         <EntityTypeShape EntityType="db_weavingModel.finance_main" Width="1.5" PointX="13.375" PointY="0.75" />
         <EntityTypeShape EntityType="db_weavingModel.production" Width="1.5" PointX="9.5" PointY="9.875" />
+        <EntityTypeShape EntityType="db_weavingModel.C__MigrationHistory" Width="1.5" PointX="5.75" PointY="11.75" />
+        <EntityTypeShape EntityType="db_weavingModel.AspNetUserClaims" Width="1.5" PointX="13.75" PointY="4.75" />
+        <EntityTypeShape EntityType="db_weavingModel.AspNetUserLogins" Width="1.5" PointX="12.75" PointY="13.75" />
+        <EntityTypeShape EntityType="db_weavingModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="14.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

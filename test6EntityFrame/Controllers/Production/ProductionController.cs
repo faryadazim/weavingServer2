@@ -629,8 +629,8 @@ namespace test6EntityFrame.Controllers.Production
                              size = (from BorderSizeTable in db.BorderSize where BorderSizeTable.borderSize_id == productionTable.borderSize_id select BorderSizeTable.borderSize1).FirstOrDefault(),
                              border = (from BorderQualityTable in db.BorderQuality where BorderQualityTable.borderQuality_id == productionTable.borderQuality_id select BorderQualityTable.borderQuality1).FirstOrDefault(),
 
-                             bGradePiece = productionTable.b_grade_pieces,
-                             aGradePieces = productionTable.a_grade_pieces,
+                             bGradePiece = productionShiftTable.b_grade_piece,
+                             aGradePieces = productionShiftTable.a_grade_piece,
                              ratePerBorder = productionShiftTable.rate_per_border,
                              extraAmount = productionShiftTable.extra_amt,
                              totalAmount = productionShiftTable.total_amt,
@@ -657,7 +657,8 @@ namespace test6EntityFrame.Controllers.Production
                          select new
                          {
 
-                             loomNumber = (from LoomListTable in db.LoomList where LoomListTable.loom_id == productionTable.loom_id
+                             loomNumber = (from LoomListTable in db.LoomList
+                                           where LoomListTable.loom_id == productionTable.loom_id
                                            select LoomListTable.loomNumber).FirstOrDefault(),
                              weaverName = (from employeeListTable in db.employeeList
                                            where employeeListTable.employee_Id == productionShiftTable.weaver_employee_Id
@@ -668,17 +669,49 @@ namespace test6EntityFrame.Controllers.Production
                              border = (from BorderQualityTable in db.BorderQuality where BorderQualityTable.borderQuality_id == productionTable.borderQuality_id select BorderQualityTable.borderQuality1).FirstOrDefault(),
                              rollNumber = productionTable.roll_no,
                              reqWeight = productionTable.required_per_piece_a_weight,
-                             perPieceWeight=productionTable.current_per_piece_a_weight,
-                             rollWeight=productionTable.roll_weight,
-                             bGradePercentage = (productionShiftTable.b_grade_piece*100)/productionShiftTable.a_grade_piece,
+                             perPieceWeight = productionTable.current_per_piece_a_weight,
+                             rollWeight = productionTable.roll_weight,
+                             bGradePercentage = (productionShiftTable.b_grade_piece * 100) / productionShiftTable.a_grade_piece,
                              totalPieces = productionShiftTable.total_pieces,
-                             bGradePieces= productionShiftTable.b_grade_piece,
+                             bGradePieces = productionShiftTable.b_grade_piece,
                              aGradePieces = productionShiftTable.a_grade_piece,
                              amount = productionShiftTable.total_amt,
-                             detail=productionTable.remarks,
-                             productionDate=productionTable.production_date,
+                             detail = productionTable.remarks,
+                             productionDate = productionTable.production_date,
 
 
+                         };
+            return Request.CreateResponse(HttpStatusCode.OK, entity);
+        }
+
+        [Route("api/DetailSalaryReport")]
+        public HttpResponseMessage GetDetailSalaryReport(DateTime dateFrom, DateTime dateTo)
+        {
+            int weaverId = (db.employeeDesignation.FirstOrDefault(c => c.designationName == "Weaver").designation_id);
+            var entity = from employeeListTable in db.employeeList
+                         where employeeListTable.designation == weaverId
+                         select new
+                         {
+                             weaverName = employeeListTable.name,
+                             productionData = from productionShiftTable in db.production_shift
+                                              join productionTable in db.production on
+                                              productionShiftTable.production_id equals productionTable.production_id
+                                              where productionShiftTable.production_id == productionShiftTable.production_id && productionShiftTable.weaver_employee_Id == employeeListTable.employee_Id
+                                                 && productionTable.production_date >= dateFrom && productionTable.production_date <= dateTo
+                                              select new
+                                              {
+                                                  date = productionTable.production_date,
+                                                  rollNumber = productionTable.roll_no,
+                                                  product = "Unknown",
+                                                  size = (from BorderSizeTable in db.BorderSize where BorderSizeTable.borderSize_id == productionTable.borderSize_id select BorderSizeTable.borderSize1).FirstOrDefault(),
+                                                  border = (from BorderQualityTable in db.BorderQuality where BorderQualityTable.borderQuality_id == productionTable.borderQuality_id select BorderQualityTable.borderQuality1).FirstOrDefault(),
+                                                  bGradePieces = productionShiftTable.b_grade_piece,
+                                                  aGradePieces = productionShiftTable.a_grade_piece,
+                                                  ratePerBorder = productionShiftTable.rate_per_border,
+                                                  extraAmount = productionShiftTable.extra_amt,
+                                                  totalAmount = productionShiftTable.total_amt,
+
+                                              },
                          };
             return Request.CreateResponse(HttpStatusCode.OK, entity);
         }
