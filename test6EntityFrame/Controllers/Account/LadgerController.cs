@@ -26,14 +26,33 @@ namespace test6EntityFrame.Controllers.Account
                                         join financeEntry in db.finance_entries on financeMainTable.finance_main_id
                                         equals financeEntry.finance_main_id
                                         where financeMainTable.finance_main_id == financeEntry.finance_main_id
-                                        && financeEntry.chart_id == emp_chart_id && financeMainTable.voucher_date <= dateFrom
+                                        && financeEntry.chart_id == emp_chart_id && financeMainTable.voucher_date < dateFrom
                                         select financeEntry.debit).ToList()).Sum();
             var openingBalanceCredit =((from financeMainTable in db.finance_main
                                  join financeEntry in db.finance_entries on financeMainTable.finance_main_id
                                  equals financeEntry.finance_main_id
                                  where financeMainTable.finance_main_id == financeEntry.finance_main_id
-                                 && financeEntry.chart_id == emp_chart_id && financeMainTable.voucher_date <= dateFrom
-                                 select financeEntry.credit).ToList()).Sum(); 
+                                 && financeEntry.chart_id == emp_chart_id && financeMainTable.voucher_date < dateFrom
+                                 select financeEntry.credit).ToList()).Sum();
+
+
+
+
+            var closingBalanceDebit = ((from financeMainTable in db.finance_main
+                                        join financeEntry in db.finance_entries on financeMainTable.finance_main_id
+                                        equals financeEntry.finance_main_id
+                                        where financeMainTable.finance_main_id == financeEntry.finance_main_id
+                                        && financeEntry.chart_id == emp_chart_id && financeMainTable.voucher_date < dateTo
+                                        select financeEntry.debit).ToList()).Sum();
+            var closingBalanceCredit = ((from financeMainTable in db.finance_main
+                                         join financeEntry in db.finance_entries on financeMainTable.finance_main_id
+                                         equals financeEntry.finance_main_id
+                                         where financeMainTable.finance_main_id == financeEntry.finance_main_id
+                                         && financeEntry.chart_id == emp_chart_id && financeMainTable.voucher_date < dateTo
+                                         select financeEntry.credit).ToList()).Sum();
+
+
+
 
 
             var itemToSend = new
@@ -53,8 +72,10 @@ namespace test6EntityFrame.Controllers.Account
                                  credit = financeEntry.credit,
                                  id = financeEntry.finance_entries_id
                              },
-                     
-        };
+                closingBalance = closingBalanceDebit - closingBalanceCredit,
+
+
+            };
             return Request.CreateResponse(HttpStatusCode.OK, itemToSend);
         }
 
