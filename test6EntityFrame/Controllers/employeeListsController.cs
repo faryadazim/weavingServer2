@@ -66,6 +66,7 @@ namespace test6EntityFrame.Controllers
 
 
         // Employee Only Weaver 
+        [Authorize]
         [Route("api/employeeWeaverListWithName")]
         public HttpResponseMessage GetAllWeaver()
         {
