@@ -639,9 +639,7 @@ namespace test6EntityFrame.Controllers.Production
                                        financeEntriesTable.chart_id equals employeeListTable.chart_id
                                            where employeeListTable.chart_id == financeEntriesTable.chart_id
                                            orderby financeEntriesTable.finance_entries_id
-                                           select financeEntriesTable.credit).FirstOrDefault(), //it should 4 again 57 but its 16 mean total --also how to calculate them here //for now here im using first value
-                                                                                                //here to gwt chart id we use join cant we use any var from this obj
-
+                                           select financeEntriesTable.credit).FirstOrDefault(), //not correct yet
 
 
                          };
@@ -664,7 +662,7 @@ namespace test6EntityFrame.Controllers.Production
                                            where employeeListTable.employee_Id == productionShiftTable.weaver_employee_Id
                                            select employeeListTable.name).FirstOrDefault(),
                              programNumber = productionTable.programm_no,
-                             product = "Unknown",
+                             product = "Unknown",//not correct yet
                              size = (from BorderSizeTable in db.BorderSize where BorderSizeTable.borderSize_id == productionTable.borderSize_id select BorderSizeTable.borderSize1).FirstOrDefault(),
                              border = (from BorderQualityTable in db.BorderQuality where BorderQualityTable.borderQuality_id == productionTable.borderQuality_id select BorderQualityTable.borderQuality1).FirstOrDefault(),
                              rollNumber = productionTable.roll_no,
@@ -702,7 +700,7 @@ namespace test6EntityFrame.Controllers.Production
                                               {
                                                   date = productionTable.production_date,
                                                   rollNumber = productionTable.roll_no,
-                                                  product = "Unknown",
+                                                  product = "Unknown",//not correct yet
                                                   size = (from BorderSizeTable in db.BorderSize where BorderSizeTable.borderSize_id == productionTable.borderSize_id select BorderSizeTable.borderSize1).FirstOrDefault(),
                                                   border = (from BorderQualityTable in db.BorderQuality where BorderQualityTable.borderQuality_id == productionTable.borderQuality_id select BorderQualityTable.borderQuality1).FirstOrDefault(),
                                                   bGradePieces = productionShiftTable.b_grade_piece,
@@ -710,6 +708,12 @@ namespace test6EntityFrame.Controllers.Production
                                                   ratePerBorder = productionShiftTable.rate_per_border,
                                                   extraAmount = productionShiftTable.extra_amt,
                                                   totalAmount = productionShiftTable.total_amt,
+                                                  paidAmount = (from financeEntriesTable in db.finance_entries
+                                                                join employeeListTable1 in db.employeeList on
+                                                            financeEntriesTable.chart_id equals employeeListTable1.chart_id
+                                                                where employeeListTable1.chart_id == financeEntriesTable.chart_id
+                                                                orderby financeEntriesTable.finance_entries_id
+                                                                select financeEntriesTable.credit).FirstOrDefault(), //not correct yet
 
                                               },
                          };

@@ -12,12 +12,15 @@ using DAL;
 
 namespace test6EntityFrame.Controllers
 {
+    [Authorize]
     public class LoomListsController : ApiController
     {
+    
         private db_weavingEntities db = new db_weavingEntities();
 
 
-
+        
+    
         [Route("api/LoomLists")]
         public HttpResponseMessage GetLoomList()
         {
