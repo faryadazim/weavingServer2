@@ -13,9 +13,9 @@ namespace test6EntityFrame.Models.Account
        [Required] 
 public string description { get; set; }
        [Required] 
-public int debit { get; set; }
+public decimal debit { get; set; }
        [Required]
-        public int credit { get; set; } 
+        public decimal credit { get; set; } 
 
 
     }

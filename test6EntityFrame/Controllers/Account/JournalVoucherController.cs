@@ -16,8 +16,45 @@ namespace test6EntityFrame.Controllers.Account
 
         private db_weavingEntities db = new db_weavingEntities();
         [Authorize]
+        [Route("api/LadgerBalance")]
+        public HttpResponseMessage GetLadgerBalance(int weaverId)
+        {
+
+            var emp_chart_id = (from emp in db.employeeList where emp.employee_Id == weaverId select emp.chart_id).FirstOrDefault();
+
+            var lastBalanceDebit = ((from financeMainTable in db.finance_main
+                                     join financeEntry in db.finance_entries on financeMainTable.finance_main_id
+                                     equals financeEntry.finance_main_id
+                                     where financeMainTable.finance_main_id == financeEntry.finance_main_id
+                                     && financeEntry.chart_id == emp_chart_id
+                                     select financeEntry.debit).ToList()).Sum();
+            var lastBalanceCredit = ((from financeMainTable in db.finance_main
+                                      join financeEntry in db.finance_entries on financeMainTable.finance_main_id
+                                      equals financeEntry.finance_main_id
+                                      where financeMainTable.finance_main_id == financeEntry.finance_main_id
+                                      && financeEntry.chart_id == emp_chart_id
+                                      select financeEntry.credit).ToList()).Sum();
+
+            var ladgerBalance = lastBalanceDebit - lastBalanceCredit;
+
+            var inv = (from fm in db.finance_main
+                       join fe in db.finance_entries on fm.finance_main_id equals fe.finance_main_id
+                       where fe.entry_type == "production"
+                       orderby fm.finance_main_id descending
+                       select fm.voucher_inv).FirstOrDefault();
+            var joinEntity = new
+            {
+                ladgerBalance = ladgerBalance,
+                voucherNumber = inv
+
+            };
+            return Request.CreateResponse(HttpStatusCode.OK, joinEntity);
+
+        }
+
+        [Authorize]
         [Route("api/PostJV")]
-        public HttpResponseMessage PostJV(int weaverId , ClsJV data)
+        public HttpResponseMessage PostJV(int weaverId, ClsJV data)
         {
 
             var identity = (ClaimsIdentity)User.Identity;
@@ -67,32 +104,68 @@ namespace test6EntityFrame.Controllers.Account
 
             return Request.CreateResponse(HttpStatusCode.OK, "Added Successfully");
         }
-                [Authorize]
-        [Route("api/LadgerBalance")]
-        public HttpResponseMessage GetLadgerBalance(int weaverId)
+
+        [Authorize]
+        [Route("api/JVReportHistory")]
+        public HttpResponseMessage GetJVReportHistory(int weaverId, DateTime dateFrom, DateTime dateTo)
         {
 
-            var emp_chart_id = (from emp in db.employeeList where emp.employee_Id == weaverId select emp.chart_id).FirstOrDefault();
 
-            var lastBalanceDebit = ((from financeMainTable in db.finance_main
-                                        join financeEntry in db.finance_entries on financeMainTable.finance_main_id
-                                        equals financeEntry.finance_main_id
-                                        where financeMainTable.finance_main_id == financeEntry.finance_main_id
-                                        && financeEntry.chart_id == emp_chart_id
-                                     select financeEntry.debit).ToList()).Sum();
-            var lastBalanceCredit = ((from financeMainTable in db.finance_main
-                                         join financeEntry in db.finance_entries on financeMainTable.finance_main_id
-                                         equals financeEntry.finance_main_id
-                                         where financeMainTable.finance_main_id == financeEntry.finance_main_id
-                                         && financeEntry.chart_id == emp_chart_id
-                                      select financeEntry.credit).ToList()).Sum();
 
-            var ladgerBalance = lastBalanceDebit - lastBalanceCredit;
-            return Request.CreateResponse(HttpStatusCode.OK, ladgerBalance);
 
+            var employeeChartId = (from emp in db.employeeList where emp.employee_Id == weaverId select emp.chart_id).FirstOrDefault();
+
+            var entity = from fm in db.finance_main
+                         join fe in db.finance_entries on fm.finance_main_id equals fe.finance_main_id
+                         where fe.chart_id == employeeChartId && fm.production_id == 0 && fm.voucher_date >= dateFrom && fm.voucher_date <= dateTo
+                         select new
+                         {
+                             Voucherinv = fm.voucher_inv,
+                             date = fm.voucher_date,
+                             jvId = fm.finance_main_id,
+
+
+                         };
+
+
+            return Request.CreateResponse(HttpStatusCode.OK, entity);
         }
-        
 
+        [Authorize]
+        [Route("api/JVReport")]
+        public HttpResponseMessage GetJVReport(int weaverId, int financeMainId)
+        {
+
+
+
+
+            var employeeChartId = (from emp in db.employeeList where emp.employee_Id == weaverId select emp.chart_id).FirstOrDefault();
+
+            var entity = from fm in db.finance_main
+                         join fe in db.finance_entries on fm.finance_main_id equals fe.finance_main_id
+                         where fe.chart_id == employeeChartId && fm.production_id == 0 && fm.finance_main_id == financeMainId
+                         select new
+                         {
+                             weaverName = (from emp in db.employeeList where emp.employee_Id == weaverId select emp.name).FirstOrDefault(),
+                             date = fm.voucher_date,
+                             Voucherinv = fm.voucher_inv,
+                             description = fm.description,
+                             credit = fe.credit,
+                             devit = fe.debit,
+                             entryType = fe.entry_type,
+                             cretedBy = (from loginUser in db.AspNetUsers
+                                         join fm in db.finance_main on loginUser.Id equals fm.created_by
+                                         where
+                                        loginUser.Id == fm.created_by
+                                         select loginUser.UserName).FirstOrDefault(),
+                         };
+
+
+            return Request.CreateResponse(HttpStatusCode.OK, entity.FirstOrDefault());
+        }
+
+        [Authorize]
+        public HttpRequestMessage PutJVReport (int financeMainId)
 
     }
 }
