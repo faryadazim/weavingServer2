@@ -42,13 +42,13 @@ namespace test6EntityFrame.Controllers.Account
                                         join financeEntry in db.finance_entries on financeMainTable.finance_main_id
                                         equals financeEntry.finance_main_id
                                         where financeMainTable.finance_main_id == financeEntry.finance_main_id
-                                        && financeEntry.chart_id == emp_chart_id && financeMainTable.voucher_date < dateTo
+                                        && financeEntry.chart_id == emp_chart_id && financeMainTable.voucher_date <= dateTo
                                         select financeEntry.debit).ToList()).Sum();
             var closingBalanceCredit = ((from financeMainTable in db.finance_main
                                          join financeEntry in db.finance_entries on financeMainTable.finance_main_id
                                          equals financeEntry.finance_main_id
                                          where financeMainTable.finance_main_id == financeEntry.finance_main_id
-                                         && financeEntry.chart_id == emp_chart_id && financeMainTable.voucher_date < dateTo
+                                         && financeEntry.chart_id == emp_chart_id && financeMainTable.voucher_date <= dateTo
                                          select financeEntry.credit).ToList()).Sum();
 
 

@@ -53,6 +53,46 @@ namespace test6EntityFrame.Controllers.Account
         }
 
         [Authorize]
+        [Route("api/VoucherName")]
+        public HttpResponseMessage GetVoucherName()
+        {
+
+
+            var inv = (from fm in db.finance_main
+                       join fe in db.finance_entries on fm.finance_main_id equals fe.finance_main_id
+                       where fe.entry_type == "jv"
+                       orderby fm.finance_main_id descending
+                       select fm.voucher_inv).FirstOrDefault();
+  
+            int actuallVoucherNo;
+            if (inv == null)
+            {
+                actuallVoucherNo = 1;
+            }
+            else
+            {
+                string[] numberTo = inv.Split('-');
+                actuallVoucherNo = Int32.Parse(numberTo[2]) + 1;
+            }
+            string currentDate = string.Format("{0:yyyy}", DateTime.Now);
+            string GeneratedRollNo = "JV-" + currentDate + "-" + actuallVoucherNo.ToString();
+
+            return Request.CreateResponse(HttpStatusCode.OK, GeneratedRollNo);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        [Authorize]
         [Route("api/PostJV")]
         public HttpResponseMessage PostJV(int weaverId, ClsJV data)
         {
@@ -61,18 +101,12 @@ namespace test6EntityFrame.Controllers.Account
             var LogIn = (identity.Claims
                  .FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
-
-
-            var inv = (from fm in db.finance_main
-                       join fe in db.finance_entries on fm.finance_main_id equals fe.finance_main_id
-                       where fe.entry_type == "production"
-                       orderby fm.finance_main_id descending
-                       select fm.voucher_inv).FirstOrDefault();
+             
 
             finance_main financeNew = new finance_main()
             {
                 voucher_date = data.date,
-                voucher_inv = inv,
+                voucher_inv = data.voucherInv,
                 voucher_type_id = 10,
                 description = data.description,
                 production_id = 0, // its only for production
@@ -96,33 +130,41 @@ namespace test6EntityFrame.Controllers.Account
                 chart_id = employeeChartId,
                 credit = data.credit,
                 debit = data.debit,
-                entry_type = data.description,
+                description = data.description,
+                entry_type ="jv",
                 finance_main_id = financeNew.finance_main_id,
             };
             db.finance_entries.Add(financeEntry);
             db.SaveChanges();
+            var addedBody = new {
+                financeNew,
+                financeEntry ,
+                createdBy = from ut in db.AspNetUsers where ut.Id == financeNew.created_by select ut.UserName,
+            };
 
-            return Request.CreateResponse(HttpStatusCode.OK, "Added Successfully");
+            return Request.CreateResponse(HttpStatusCode.OK, addedBody);
         }
 
         [Authorize]
         [Route("api/JVReportHistory")]
-        public HttpResponseMessage GetJVReportHistory(int weaverId, DateTime dateFrom, DateTime dateTo)
+        public HttpResponseMessage GetJVReportHistory( DateTime dateFrom, DateTime dateTo)
         {
 
 
 
 
-            var employeeChartId = (from emp in db.employeeList where emp.employee_Id == weaverId select emp.chart_id).FirstOrDefault();
-
+            
             var entity = from fm in db.finance_main
                          join fe in db.finance_entries on fm.finance_main_id equals fe.finance_main_id
-                         where fe.chart_id == employeeChartId && fm.production_id == 0 && fm.voucher_date >= dateFrom && fm.voucher_date <= dateTo
+                         where  fm.production_id == 0 && fm.voucher_date >= dateFrom && fm.voucher_date <= dateTo
                          select new
                          {
                              Voucherinv = fm.voucher_inv,
                              date = fm.voucher_date,
                              jvId = fm.finance_main_id,
+                             weaverId= (from empT in db.employeeList where empT.chart_id==fe.chart_id select empT.employee_Id).FirstOrDefault(),
+                             debit = fe.debit,
+                             credit = fe.credit // it will only return value which one is not zero bcuz 2nd value have 0 will not effect it
 
 
                          };
@@ -151,8 +193,8 @@ namespace test6EntityFrame.Controllers.Account
                              Voucherinv = fm.voucher_inv,
                              description = fm.description,
                              credit = fe.credit,
-                             devit = fe.debit,
-                             entryType = fe.entry_type,
+                             debit = fe.debit,
+                             
                              cretedBy = (from loginUser in db.AspNetUsers
                                          join fm in db.finance_main on loginUser.Id equals fm.created_by
                                          where
@@ -165,7 +207,56 @@ namespace test6EntityFrame.Controllers.Account
         }
 
         [Authorize]
-        public HttpRequestMessage PutJVReport (int financeMainId)
+        [Route("api/PutJVReport")]
+        public HttpResponseMessage PutJVReport(int financeMainId,int weaverId ,  ClsJV data)
+        {
+
+            var identity = (ClaimsIdentity)User.Identity;
+            var LogIn = (identity.Claims
+                 .FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
+
+
+
+            var fmEntity = db.finance_main.FirstOrDefault(e => e.finance_main_id == financeMainId);
+            if (fmEntity == null)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Row not found");
+            }
+            else
+            {
+                fmEntity.description = data.description; 
+                fmEntity.modified_by = LogIn;
+                fmEntity.modified_datetime = StaticValues.PakDateTime;
+                fmEntity.voucher_date = data.date; 
+                db.SaveChanges();
+
+
+
+                var employeeChartId = (from emp in db.employeeList where emp.employee_Id == weaverId select emp.chart_id).FirstOrDefault();
+                if (employeeChartId == 0)
+                {
+                    return Request.CreateResponse(HttpStatusCode.NotFound, "Employee chart Id not Exist");
+                }
+
+                var feEntity = db.finance_entries.FirstOrDefault(e => e.finance_main_id == financeMainId);
+                db.finance_entries.Remove(feEntity);
+                finance_entries financeEntry = new finance_entries()
+                {
+                    chart_id = employeeChartId,
+                    credit = data.credit,
+                    debit = data.debit,
+                    description = data.description,
+                    entry_type = "jv",
+                    finance_main_id = financeMainId,
+                };
+                db.finance_entries.Add(financeEntry);
+                db.SaveChanges();
+
+
+            }
+                return Request.CreateResponse(HttpStatusCode.OK, "updated");
+        }
 
     }
 }
