@@ -44,6 +44,7 @@ namespace test6EntityFrame.Controllers
                                        pages = (from PageTable in db.Pages
                                                 join PrTable in db.PagePermission on PageTable.page_id equals PrTable.PageId
                                                 where PrTable.RoleId == RoleID.FirstOrDefault() && PageTable.module_id == moduleRow.module_id
+                                                orderby PageTable.page_order ascending
                                                 select new
                                                 {
                                                     pageName = PageTable.page_name,

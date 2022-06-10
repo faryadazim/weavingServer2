@@ -32,8 +32,7 @@ namespace DAL
         public string employeeCnicFront { get; set; }
         public string employeeCnicBsck { get; set; }
         public string recruitmentType { get; set; }
-        public Nullable<int> weeklySalary { get; set; }
-        public Nullable<int> monthlySalary { get; set; }
+        public Nullable<decimal> salary { get; set; }
         public int chart_id { get; set; }
     }
 }

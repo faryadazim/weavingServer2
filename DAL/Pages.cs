@@ -18,5 +18,6 @@ namespace DAL
         public string page_name { get; set; }
         public string page_link { get; set; }
         public string module_id { get; set; }
+        public Nullable<int> page_order { get; set; }
     }
 }

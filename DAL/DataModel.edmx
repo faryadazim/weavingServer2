@@ -131,8 +131,7 @@
           <Property Name="employeeCnicFront" Type="varchar(max)" />
           <Property Name="employeeCnicBsck" Type="varchar(max)" />
           <Property Name="recruitmentType" Type="varchar(max)" />
-          <Property Name="weeklySalary" Type="int" />
-          <Property Name="monthlySalary" Type="int" />
+          <Property Name="salary" Type="decimal" Precision="18" Scale="3" />
           <Property Name="chart_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="finance_entries">
@@ -198,6 +197,7 @@
           <Property Name="module_id" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="module_name" Type="varchar(max)" />
           <Property Name="module_icon" Type="varchar(max)" />
+          <Property Name="module_order" Type="int" />
         </EntityType>
         <EntityType Name="PagePermission">
           <Key>
@@ -219,6 +219,7 @@
           <Property Name="page_name" Type="varchar(max)" />
           <Property Name="page_link" Type="varchar(max)" />
           <Property Name="module_id" Type="nvarchar" MaxLength="50" />
+          <Property Name="page_order" Type="int" />
         </EntityType>
         <EntityType Name="production">
           <Key>
@@ -387,7 +388,6 @@
           <EntitySet Name="employeeDesignation" EntityType="db_weavingModel.employeeDesignation" />
           <EntitySet Name="Modules" EntityType="db_weavingModel.Modules" />
           <EntitySet Name="PagePermission" EntityType="db_weavingModel.PagePermission" />
-          <EntitySet Name="Pages" EntityType="db_weavingModel.Pages" />
           <EntitySet Name="AspNetUserRoles" EntityType="db_weavingModel.AspNetUserRoles" />
           <EntitySet Name="weavingUnit" EntityType="db_weavingModel.weavingUnit" />
           <EntitySet Name="LoomList" EntityType="db_weavingModel.LoomList" />
@@ -399,7 +399,6 @@
           <EntitySet Name="user_draft" EntityType="db_weavingModel.user_draft" />
           <EntitySet Name="shiftFaults" EntityType="db_weavingModel.shiftFaults" />
           <EntitySet Name="chart_of_accounts" EntityType="db_weavingModel.chart_of_accounts" />
-          <EntitySet Name="employeeList" EntityType="db_weavingModel.employeeList" />
           <EntitySet Name="finance_main" EntityType="db_weavingModel.finance_main" />
           <EntitySet Name="production" EntityType="db_weavingModel.production" />
           <EntitySet Name="C__MigrationHistory" EntityType="db_weavingModel.C__MigrationHistory" />
@@ -436,6 +435,8 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="Pages" EntityType="db_weavingModel.Pages" />
+          <EntitySet Name="employeeList" EntityType="db_weavingModel.employeeList" />
         </EntityContainer>
         <EntityType Name="AspNetRoles">
           <Key>
@@ -489,6 +490,7 @@
           <Property Name="module_id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="module_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="module_icon" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="module_order" Type="Int32" />
         </EntityType>
         <EntityType Name="PagePermission">
           <Key>
@@ -501,15 +503,6 @@
           <Property Name="viewPermission" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="DelPermission" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="AddPermission" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="Pages">
-          <Key>
-            <PropertyRef Name="page_id" />
-          </Key>
-          <Property Name="page_id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="page_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="page_link" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="module_id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="AspNetUserRoles">
           <Key>
@@ -636,32 +629,6 @@
           <Property Name="modified_by" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="account_type_id" Type="Int32" />
         </EntityType>
-        <EntityType Name="employeeList">
-          <Key>
-            <PropertyRef Name="employee_Id" />
-          </Key>
-          <Property Name="employee_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="fatherName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="phoneNum1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="phoneNum2" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="phoneNum3" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="homePhoneNum" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="cnicNum" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="referenceName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="referencePhoneNum" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="jobStatus" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="designation" Type="Int32" Nullable="false" />
-          <Property Name="employeePic1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="employeePic2" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="employeeCnicFront" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="employeeCnicBsck" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="recruitmentType" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="weeklySalary" Type="Int32" />
-          <Property Name="monthlySalary" Type="Int32" />
-          <Property Name="chart_id" Type="Int32" Nullable="false" />
-        </EntityType>
         <EntityType Name="finance_main">
           <Key>
             <PropertyRef Name="finance_main_id" />
@@ -759,6 +726,41 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <EntityType Name="Pages">
+          <Key>
+            <PropertyRef Name="page_id" />
+          </Key>
+          <Property Name="page_id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="page_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="page_link" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="module_id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="page_order" Type="Int32" />
+        </EntityType>
+        <EntityType Name="employeeList">
+          <Key>
+            <PropertyRef Name="employee_Id" />
+          </Key>
+          <Property Name="employee_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="fatherName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="phoneNum1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="phoneNum2" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="phoneNum3" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="homePhoneNum" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="cnicNum" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="referenceName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="referencePhoneNum" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="jobStatus" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="designation" Type="Int32" Nullable="false" />
+          <Property Name="employeePic1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="employeePic2" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="employeeCnicFront" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="employeeCnicBsck" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="recruitmentType" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="salary" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="chart_id" Type="Int32" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -818,6 +820,7 @@
           <EntitySetMapping Name="Modules">
             <EntityTypeMapping TypeName="db_weavingModel.Modules">
               <MappingFragment StoreEntitySet="Modules">
+                <ScalarProperty Name="module_order" ColumnName="module_order" />
                 <ScalarProperty Name="module_icon" ColumnName="module_icon" />
                 <ScalarProperty Name="module_name" ColumnName="module_name" />
                 <ScalarProperty Name="module_id" ColumnName="module_id" />
@@ -834,16 +837,6 @@
                 <ScalarProperty Name="PageId" ColumnName="PageId" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="PermissionId" ColumnName="PermissionId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Pages">
-            <EntityTypeMapping TypeName="db_weavingModel.Pages">
-              <MappingFragment StoreEntitySet="Pages">
-                <ScalarProperty Name="module_id" ColumnName="module_id" />
-                <ScalarProperty Name="page_link" ColumnName="page_link" />
-                <ScalarProperty Name="page_name" ColumnName="page_name" />
-                <ScalarProperty Name="page_id" ColumnName="page_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -982,33 +975,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="employeeList">
-            <EntityTypeMapping TypeName="db_weavingModel.employeeList">
-              <MappingFragment StoreEntitySet="employeeList">
-                <ScalarProperty Name="chart_id" ColumnName="chart_id" />
-                <ScalarProperty Name="monthlySalary" ColumnName="monthlySalary" />
-                <ScalarProperty Name="weeklySalary" ColumnName="weeklySalary" />
-                <ScalarProperty Name="recruitmentType" ColumnName="recruitmentType" />
-                <ScalarProperty Name="employeeCnicBsck" ColumnName="employeeCnicBsck" />
-                <ScalarProperty Name="employeeCnicFront" ColumnName="employeeCnicFront" />
-                <ScalarProperty Name="employeePic2" ColumnName="employeePic2" />
-                <ScalarProperty Name="employeePic1" ColumnName="employeePic1" />
-                <ScalarProperty Name="designation" ColumnName="designation" />
-                <ScalarProperty Name="jobStatus" ColumnName="jobStatus" />
-                <ScalarProperty Name="referencePhoneNum" ColumnName="referencePhoneNum" />
-                <ScalarProperty Name="referenceName" ColumnName="referenceName" />
-                <ScalarProperty Name="address" ColumnName="address" />
-                <ScalarProperty Name="cnicNum" ColumnName="cnicNum" />
-                <ScalarProperty Name="homePhoneNum" ColumnName="homePhoneNum" />
-                <ScalarProperty Name="phoneNum3" ColumnName="phoneNum3" />
-                <ScalarProperty Name="phoneNum2" ColumnName="phoneNum2" />
-                <ScalarProperty Name="phoneNum1" ColumnName="phoneNum1" />
-                <ScalarProperty Name="fatherName" ColumnName="fatherName" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="employee_Id" ColumnName="employee_Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="finance_main">
             <EntityTypeMapping TypeName="db_weavingModel.finance_main">
               <MappingFragment StoreEntitySet="finance_main">
@@ -1122,6 +1088,43 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="db_weavingModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="db_weavingModel.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="Pages">
+            <EntityTypeMapping TypeName="db_weavingModel.Pages">
+              <MappingFragment StoreEntitySet="Pages">
+                <ScalarProperty Name="page_order" ColumnName="page_order" />
+                <ScalarProperty Name="module_id" ColumnName="module_id" />
+                <ScalarProperty Name="page_link" ColumnName="page_link" />
+                <ScalarProperty Name="page_name" ColumnName="page_name" />
+                <ScalarProperty Name="page_id" ColumnName="page_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="employeeList">
+            <EntityTypeMapping TypeName="db_weavingModel.employeeList">
+              <MappingFragment StoreEntitySet="employeeList">
+                <ScalarProperty Name="chart_id" ColumnName="chart_id" />
+                <ScalarProperty Name="salary" ColumnName="salary" />
+                <ScalarProperty Name="recruitmentType" ColumnName="recruitmentType" />
+                <ScalarProperty Name="employeeCnicBsck" ColumnName="employeeCnicBsck" />
+                <ScalarProperty Name="employeeCnicFront" ColumnName="employeeCnicFront" />
+                <ScalarProperty Name="employeePic2" ColumnName="employeePic2" />
+                <ScalarProperty Name="employeePic1" ColumnName="employeePic1" />
+                <ScalarProperty Name="designation" ColumnName="designation" />
+                <ScalarProperty Name="jobStatus" ColumnName="jobStatus" />
+                <ScalarProperty Name="referencePhoneNum" ColumnName="referencePhoneNum" />
+                <ScalarProperty Name="referenceName" ColumnName="referenceName" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="cnicNum" ColumnName="cnicNum" />
+                <ScalarProperty Name="homePhoneNum" ColumnName="homePhoneNum" />
+                <ScalarProperty Name="phoneNum3" ColumnName="phoneNum3" />
+                <ScalarProperty Name="phoneNum2" ColumnName="phoneNum2" />
+                <ScalarProperty Name="phoneNum1" ColumnName="phoneNum1" />
+                <ScalarProperty Name="fatherName" ColumnName="fatherName" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="employee_Id" ColumnName="employee_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

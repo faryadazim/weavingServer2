@@ -34,7 +34,6 @@ namespace DAL
         public virtual DbSet<employeeDesignation> employeeDesignation { get; set; }
         public virtual DbSet<Modules> Modules { get; set; }
         public virtual DbSet<PagePermission> PagePermission { get; set; }
-        public virtual DbSet<Pages> Pages { get; set; }
         public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
         public virtual DbSet<weavingUnit> weavingUnit { get; set; }
         public virtual DbSet<LoomList> LoomList { get; set; }
@@ -46,13 +45,14 @@ namespace DAL
         public virtual DbSet<user_draft> user_draft { get; set; }
         public virtual DbSet<shiftFaults> shiftFaults { get; set; }
         public virtual DbSet<chart_of_accounts> chart_of_accounts { get; set; }
-        public virtual DbSet<employeeList> employeeList { get; set; }
         public virtual DbSet<finance_main> finance_main { get; set; }
         public virtual DbSet<production> production { get; set; }
         public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<Pages> Pages { get; set; }
+        public virtual DbSet<employeeList> employeeList { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

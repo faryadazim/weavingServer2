@@ -45,8 +45,7 @@ namespace test6EntityFrame.Controllers
                              employeeCnicFront = employeeTable.employeeCnicFront,
                              employeeCnicBsck = employeeTable.employeeCnicBsck,
                              recruitmentType = employeeTable.recruitmentType,
-                             weeklySalary = employeeTable.weeklySalary,
-                             monthlySalary = employeeTable.monthlySalary,
+                             salary = employeeTable.salary, 
                              designationName = designationTable.designationName
                          };
             return Request.CreateResponse(HttpStatusCode.OK, entity);
@@ -90,9 +89,62 @@ namespace test6EntityFrame.Controllers
         }
 
 
+
+        // Employee Only Weaver 
+        [Authorize]
+        [Route("api/employeeActiveWeaverListWithName")]
+        public HttpResponseMessage GetAllWeaverActive()
+        {
+            int weaverId = (db.employeeDesignation.FirstOrDefault(c => c.designationName == "Weaver").designation_id);
+            var entity = from employeeListTable in db.employeeList
+                         where employeeListTable.designation == weaverId && employeeListTable.jobStatus=="Active"
+                         select new
+                         {
+                             employeeId = employeeListTable.employee_Id,
+                             employeeName = employeeListTable.name,
+                         };
+
+            if (entity == null)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not Found");
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, entity);
+            }
+        }
+
+
+
+
         // Employee Only Nativing
         [Route("api/employeeNativingListWithName")]
         public HttpResponseMessage GetAllNativing()
+        {
+            int nativingId = (db.employeeDesignation.FirstOrDefault(c => c.designationName == "Nativing").designation_id);
+            var entity = from employeeListTable in db.employeeList
+                         where employeeListTable.designation == nativingId
+                         select new
+                         {
+                             employeeId = employeeListTable.employee_Id,
+                             employeeName = employeeListTable.name,
+                         };
+
+            if (entity == null)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not Found");
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, entity);
+            }
+        }
+
+
+
+        // Employee Only Nativing
+        [Route("api/employeeActiveNativingListWithName")]
+        public HttpResponseMessage GetAllNativingActive()
         {
             int nativingId = (db.employeeDesignation.FirstOrDefault(c => c.designationName == "Nativing").designation_id);
             var entity = from employeeListTable in db.employeeList
@@ -162,9 +214,8 @@ namespace test6EntityFrame.Controllers
                         entity.employeePic2 = employeeList.employeePic1;
                         entity.employeeCnicFront = employeeList.employeeCnicFront;
                         entity.employeeCnicBsck = employeeList.employeeCnicBsck;
-                        entity.recruitmentType = employeeList.recruitmentType;
-                        entity.weeklySalary = employeeList.weeklySalary;
-                        entity.monthlySalary = employeeList.monthlySalary;
+                        entity.recruitmentType = employeeList.recruitmentType; 
+                        entity.salary = employeeList.salary;
                         entity.chart_id = employeeList.chart_id;
 
 
@@ -255,9 +306,8 @@ namespace test6EntityFrame.Controllers
                     employeePic2 = employeeListForPost.employeePic2,
                     employeeCnicFront = employeeListForPost.employeeCnicFront,
                     employeeCnicBsck = employeeListForPost.employeeCnicBsck,
-                    recruitmentType = employeeListForPost.recruitmentType,
-                    weeklySalary = employeeListForPost.weeklySalary,
-                    monthlySalary = employeeListForPost.monthlySalary,
+                    recruitmentType = employeeListForPost.recruitmentType, 
+                    salary = employeeListForPost.salary,
                     chart_id = employeeInChartsAccount.chart_id
                 };
 

@@ -17,5 +17,6 @@ namespace DAL
         public string module_id { get; set; }
         public string module_name { get; set; }
         public string module_icon { get; set; }
+        public Nullable<int> module_order { get; set; }
     }
 }
