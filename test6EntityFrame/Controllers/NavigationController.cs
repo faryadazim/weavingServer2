@@ -35,7 +35,7 @@ namespace test6EntityFrame.Controllers
                 LoginName = LogIn,
                 RoleName = RoleName,
                 userName = Name,
-                navigationResult = from moduleRow in db.Modules
+                navigationResult = from moduleRow in db.Modules orderby moduleRow.module_order ascending
                                    select new
                                    {
                                        moduleRow.module_name,
