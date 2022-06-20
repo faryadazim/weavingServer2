@@ -563,13 +563,54 @@ namespace test6EntityFrame.Controllers.Production
                          };
             return Request.CreateResponse(HttpStatusCode.OK, entity);
         }
+
+        [Authorize]
         [Route("api/ProductionReport")]
-        public HttpResponseMessage GetProductionReport(DateTime dateToFind)
+        public HttpResponseMessage GetProductionReport(DateTime dateToFind , DateTime dateToEnd , int BorderID , int BorderSize) 
         {
+
+            if (BorderID==0 && BorderSize ==0 )
+            {
+                var entity = from productionShiftTable in db.production_shift
+                             join productionTable in db.production on
+                             productionShiftTable.production_id equals productionTable.production_id
+                             where productionShiftTable.production_id == productionShiftTable.production_id && productionTable.production_date >= dateToFind && productionTable.production_date <= dateToEnd
+                             select new
+                             {
+                                 productionId = productionTable.production_id,
+                                 loomNumber = (from LoomListTable in db.LoomList
+                                               where LoomListTable.loom_id == productionTable.loom_id
+                                               select LoomListTable.loomNumber).FirstOrDefault(),
+                                 weaverName = (from employeeListTable in db.employeeList
+                                               where employeeListTable.employee_Id == productionShiftTable.weaver_employee_Id
+                                               select employeeListTable.name).FirstOrDefault(),
+                                 programNumber = productionTable.programm_no,
+                                 product = (from BorderQualityTable in db.BorderQuality where BorderQualityTable.borderQuality_id == productionTable.borderQuality_id select BorderQualityTable.borderQuality1).FirstOrDefault() + "-" + (from BorderSizeTable in db.BorderSize where BorderSizeTable.borderSize_id == productionTable.borderSize_id select BorderSizeTable.borderSize1).FirstOrDefault(),
+                                 size = (from BorderSizeTable in db.BorderSize where BorderSizeTable.borderSize_id == productionTable.borderSize_id select BorderSizeTable.borderSize1).FirstOrDefault(),
+                                 border = (from BorderQualityTable in db.BorderQuality where BorderQualityTable.borderQuality_id == productionTable.borderQuality_id select BorderQualityTable.borderQuality1).FirstOrDefault(),
+                                 rollNumber = productionTable.roll_no,
+                                 reqWeight = productionTable.required_per_piece_a_weight,
+                                 perPieceWeight = productionTable.current_per_piece_a_weight,
+                                 rollWeight = productionTable.roll_weight,
+                                 bGradePercentage = (productionShiftTable.b_grade_piece * 100) / productionShiftTable.a_grade_piece,
+                                 totalPieces = productionShiftTable.total_pieces,
+                                 bGradePieces = productionShiftTable.b_grade_piece,
+                                 aGradePieces = productionShiftTable.a_grade_piece,
+                                 amount = productionShiftTable.total_amt,
+                                 detail = productionTable.remarks,
+                                 productionDate = productionTable.production_date,
+
+
+                             };
+                return Request.CreateResponse(HttpStatusCode.OK, entity);
+            }
+            else{ 
             var entity = from productionShiftTable in db.production_shift
                          join productionTable in db.production on
                          productionShiftTable.production_id equals productionTable.production_id
-                         where productionShiftTable.production_id == productionShiftTable.production_id && productionTable.production_date == dateToFind
+                         where productionShiftTable.production_id == productionShiftTable.production_id 
+                         && productionTable.production_date >= dateToFind && productionTable.production_date <= dateToEnd
+                         && productionTable.borderQuality_id==BorderID && productionTable.borderSize_id == BorderSize
                          select new
                          {
                              productionId=productionTable.production_id,
@@ -597,7 +638,9 @@ namespace test6EntityFrame.Controllers.Production
 
 
                          };
-            return Request.CreateResponse(HttpStatusCode.OK, entity);
+                return Request.CreateResponse(HttpStatusCode.OK, entity);
+            };
+           
         }
 
         [Route("api/DetailSalaryReport")]

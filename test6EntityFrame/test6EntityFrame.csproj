@@ -239,6 +239,7 @@
     <Compile Include="Controllers\NavigationController.cs" />
     <Compile Include="Controllers\PagePermissionsController.cs" />
     <Compile Include="Controllers\PagesController.cs" />
+    <Compile Include="Controllers\productListController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\ShiftFaultsController.cs" />
     <Compile Include="Controllers\userDraftController.cs" />
