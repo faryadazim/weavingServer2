@@ -24,7 +24,7 @@ namespace test6EntityFrame.Controllers
         {
             var entity = from employeeTable in db.employeeList
                          join designationTable in db.employeeDesignation on employeeTable.designation equals designationTable.designation_id
-                         where employeeTable.designation == designationTable.designation_id
+                         where employeeTable.designation == designationTable.designation_id orderby employeeTable.name ascending
                          select new
                          {
                              employee_Id = employeeTable.employee_Id,
@@ -45,8 +45,9 @@ namespace test6EntityFrame.Controllers
                              employeeCnicFront = employeeTable.employeeCnicFront,
                              employeeCnicBsck = employeeTable.employeeCnicBsck,
                              recruitmentType = employeeTable.recruitmentType,
-                             salary = employeeTable.salary, 
-                             designationName = designationTable.designationName
+                             salary = employeeTable.salary,
+                             designationName = designationTable.designationName,
+                             chartID= employeeTable.chart_id
                          };
             return Request.CreateResponse(HttpStatusCode.OK, entity);
         }
@@ -60,7 +61,33 @@ namespace test6EntityFrame.Controllers
             {
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Record Not Found");
             }
-            return Request.CreateResponse(HttpStatusCode.OK, entity);
+            var joinResult = new
+
+            {
+                employee_Id = entity.employee_Id,
+                name = entity.name,
+                fatherName = entity.fatherName,
+                phoneNum1 = entity.phoneNum1,
+                phoneNum2 = entity.phoneNum2,
+                phoneNum3 = entity.phoneNum3,
+                homePhoneNum = entity.homePhoneNum,
+                cnicNum = entity.cnicNum,
+                address = entity.address,
+                referenceName = entity.referenceName,
+                referencePhoneNum = entity.referencePhoneNum,
+                jobStatus = entity.jobStatus,
+                designation = entity.designation,
+                designationLabel = (from designationTb in db.employeeDesignation where designationTb.designation_id == entity.designation
+                                    select designationTb.designationName).FirstOrDefault(),
+                employeePic1 = entity.employeePic1,
+                employeePic2 = entity.employeePic2,
+                employeeCnicFront = entity.employeeCnicFront,
+                employeeCnicBsck = entity.employeeCnicBsck,
+                recruitmentType = entity.recruitmentType,
+                salary = entity.salary,
+                chart_id = entity.chart_id,
+            };
+            return Request.CreateResponse(HttpStatusCode.OK, joinResult);
         }
 
 
@@ -90,18 +117,20 @@ namespace test6EntityFrame.Controllers
 
 
 
-        // Employee Only Weaver 
+        // Employee Only Weaver  active
         [Authorize]
         [Route("api/employeeActiveWeaverListWithName")]
         public HttpResponseMessage GetAllWeaverActive()
         {
+        
             int weaverId = (db.employeeDesignation.FirstOrDefault(c => c.designationName == "Weaver").designation_id);
-            var entity = from employeeListTable in db.employeeList
-                         where employeeListTable.designation == weaverId && employeeListTable.jobStatus=="Active"
+            var entity = from employeeListTable in db.employeeList join chartAccountTable in db.chart_of_accounts on employeeListTable.chart_id equals chartAccountTable.chart_id
+                         where employeeListTable.designation == weaverId && employeeListTable.jobStatus == "Active" 
                          select new
                          {
                              employeeId = employeeListTable.employee_Id,
                              employeeName = employeeListTable.name,
+                             employeeSerialNumber= chartAccountTable.account_code
                          };
 
             if (entity == null)
@@ -123,11 +152,13 @@ namespace test6EntityFrame.Controllers
         {
             int nativingId = (db.employeeDesignation.FirstOrDefault(c => c.designationName == "Nativing").designation_id);
             var entity = from employeeListTable in db.employeeList
+                         join chartAccountTable in db.chart_of_accounts on employeeListTable.chart_id equals chartAccountTable.chart_id
                          where employeeListTable.designation == nativingId
                          select new
                          {
                              employeeId = employeeListTable.employee_Id,
                              employeeName = employeeListTable.name,
+                             employeeSerialNumber = chartAccountTable.account_code
                          };
 
             if (entity == null)
@@ -148,11 +179,13 @@ namespace test6EntityFrame.Controllers
         {
             int nativingId = (db.employeeDesignation.FirstOrDefault(c => c.designationName == "Nativing").designation_id);
             var entity = from employeeListTable in db.employeeList
+                         join chartAccountTable in db.chart_of_accounts on employeeListTable.chart_id equals chartAccountTable.chart_id
                          where employeeListTable.designation == nativingId
                          select new
                          {
                              employeeId = employeeListTable.employee_Id,
                              employeeName = employeeListTable.name,
+                             employeeSerialNumber = chartAccountTable.account_code
                          };
 
             if (entity == null)
@@ -169,7 +202,9 @@ namespace test6EntityFrame.Controllers
         [Route("api/employeeListsName")]
         public HttpResponseMessage GetEmployeeListName()
         {
-            var employeeList = from employeeTable in db.employeeList select new { employeeTable.name, employeeTable.employee_Id };
+            var employeeList = from employeeTable in db.employeeList
+                               join chartAccountTable in db.chart_of_accounts on employeeTable.chart_id equals chartAccountTable.chart_id
+                               select new { employeeTable.name, employeeTable.employee_Id , serialNumber = chartAccountTable.account_code };
             return Request.CreateResponse(HttpStatusCode.OK, employeeList);
         }
 
@@ -214,7 +249,7 @@ namespace test6EntityFrame.Controllers
                         entity.employeePic2 = employeeList.employeePic1;
                         entity.employeeCnicFront = employeeList.employeeCnicFront;
                         entity.employeeCnicBsck = employeeList.employeeCnicBsck;
-                        entity.recruitmentType = employeeList.recruitmentType; 
+                        entity.recruitmentType = employeeList.recruitmentType;
                         entity.salary = employeeList.salary;
                         entity.chart_id = employeeList.chart_id;
 
@@ -224,14 +259,50 @@ namespace test6EntityFrame.Controllers
                         var chartAccountEmployee = db.chart_of_accounts.FirstOrDefault(e => e.chart_id == employeeList.chart_id);
                         //updating chart account employee 
                         chartAccountEmployee.chart_id = chartAccountEmployee.chart_id;
-                        chartAccountEmployee.account_name= employeeList.name;
+                        chartAccountEmployee.account_name = employeeList.name;
                         chartAccountEmployee.account_code = chartAccountEmployee.account_code;
                         chartAccountEmployee.description = chartAccountEmployee.description;
                         chartAccountEmployee.created_datetime = chartAccountEmployee.created_datetime;
                         chartAccountEmployee.created_by = chartAccountEmployee.created_by;
                         chartAccountEmployee.modified_by = LogIn;
-                        chartAccountEmployee.modified_datetime = StaticValues.PakDateTime; 
-                    } 
+                        chartAccountEmployee.modified_datetime = StaticValues.PakDateTime;
+                    }
+                    db.SaveChanges();
+                    return Request.CreateResponse(HttpStatusCode.OK, entity);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
+        [Authorize]
+        [Route("api/updateEmpStatus")]
+        public HttpResponseMessage PutJobStatus(int id )
+        {
+            
+
+            try
+            {
+                using (db_weavingEntities db = new db_weavingEntities())
+                {
+                    var entity = db.employeeList.FirstOrDefault(e => e.employee_Id ==id);
+                    if (entity == null)
+                    {
+                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Record not Found");
+                    }
+                    else
+                    {
+                         
+                        if (entity.jobStatus == "Active") {
+                            entity.jobStatus = "Left";
+                        } else
+                        {
+                            entity.jobStatus = "Active";
+                        }
+                    };
                     db.SaveChanges();
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
 
@@ -306,7 +377,7 @@ namespace test6EntityFrame.Controllers
                     employeePic2 = employeeListForPost.employeePic2,
                     employeeCnicFront = employeeListForPost.employeeCnicFront,
                     employeeCnicBsck = employeeListForPost.employeeCnicBsck,
-                    recruitmentType = employeeListForPost.recruitmentType, 
+                    recruitmentType = employeeListForPost.recruitmentType,
                     salary = employeeListForPost.salary,
                     chart_id = employeeInChartsAccount.chart_id
                 };

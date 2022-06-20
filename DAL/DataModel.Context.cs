@@ -41,7 +41,6 @@ namespace DAL
         public virtual DbSet<finance_entries> finance_entries { get; set; }
         public virtual DbSet<production_shift> production_shift { get; set; }
         public virtual DbSet<voucher_types> voucher_types { get; set; }
-        public virtual DbSet<grayProductList> grayProductList { get; set; }
         public virtual DbSet<user_draft> user_draft { get; set; }
         public virtual DbSet<shiftFaults> shiftFaults { get; set; }
         public virtual DbSet<chart_of_accounts> chart_of_accounts { get; set; }
@@ -53,6 +52,7 @@ namespace DAL
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Pages> Pages { get; set; }
         public virtual DbSet<employeeList> employeeList { get; set; }
+        public virtual DbSet<grayProductList> grayProductList { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

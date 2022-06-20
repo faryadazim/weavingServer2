@@ -25,6 +25,8 @@ namespace test6EntityFrame.Controllers
                             productListTable.itemName
                             equals borderNameTable.borderQuality_id
                             join borderSizeTable in db.BorderSize on productListTable.itemSize equals borderSizeTable.borderSize_id
+                            where productListTable.itemSize== borderSizeTable.borderSize_id && productListTable.itemName == borderNameTable.borderQuality_id 
+                            orderby borderNameTable.borderQuality1 ascending
                             select new
                             {
                                 productListTable.grayProduct_id,
@@ -38,10 +40,13 @@ namespace test6EntityFrame.Controllers
                                 productListTable.LoomNumbPieceInBorder76,
                                 productListTable.LoomNumbRatePerBorderWithDraw76,
                                 productListTable.LoomNumbRatePerBorderWithoutDraw76,
+                                productListTable.nativingRate76,
                                 productListTable.LoomNumbPieceInBorder96,
                                 productListTable.LoomNumbRatePerBorderWithDraw96,
                                 productListTable.LoomNumbRatePerBorderWithoutDraw96,
+                                productListTable.nativingRate96,
                                 productListTable.status,
+                                
 
                             };
             return Request.CreateResponse(HttpStatusCode.OK, joinGroup);
@@ -64,39 +69,41 @@ namespace test6EntityFrame.Controllers
                 var numbOfPieceInOneBorder76 = from grayProductTable76 in db.grayProductList
                                                where grayProductTable76.itemName == BorderQualityId
                                                && grayProductTable76.itemSize == BorderSizeId
-                                               select  new {
+                                               select new
+                                               {
                                                    grayProductId = grayProductTable76.grayProduct_id,
-                                                   noOfPieceInOneBorder = grayProductTable76.LoomNumbPieceInBorder76, 
+                                                   noOfPieceInOneBorder = grayProductTable76.LoomNumbPieceInBorder76,
                                                    rateDrawBox = grayProductTable76.LoomNumbRatePerBorderWithDraw76,
                                                    rateWithoutDrawBox = grayProductTable76.LoomNumbRatePerBorderWithoutDraw76,
-                                                   pileToPileLength= grayProductTable76.graySizeppLength,
-                                                   pileToPileWidth=grayProductTable76.graySizeppWidth,
+                                                   pileToPileLength = grayProductTable76.graySizeppLength,
+                                                   pileToPileWidth = grayProductTable76.graySizeppWidth,
                                                    perPieceWeightInGrams = grayProductTable76.PerPieceGrayWeightGram
                                                };
-                                               return Request.CreateResponse(HttpStatusCode.OK, numbOfPieceInOneBorder76.FirstOrDefault());
+                return Request.CreateResponse(HttpStatusCode.OK, numbOfPieceInOneBorder76.FirstOrDefault());
             }
             else if (LoomSize == "96")
             {
                 var numberOfPieceInOneBorder96 = from grayProductTable96 in db.grayProductList
                                                  where grayProductTable96.itemName == BorderQualityId
                                                  && grayProductTable96.itemSize == BorderSizeId
-                                                 select new {
-                                                     grayProductId = grayProductTable96.grayProduct_id ,
-                                                     noOfPieceInOneBorder  = grayProductTable96.LoomNumbPieceInBorder96, 
-                                                     rateDrawBox=grayProductTable96.LoomNumbRatePerBorderWithDraw96,
-                                                     rateWithoutDrawBox =grayProductTable96.LoomNumbRatePerBorderWithoutDraw96,
+                                                 select new
+                                                 {
+                                                     grayProductId = grayProductTable96.grayProduct_id,
+                                                     noOfPieceInOneBorder = grayProductTable96.LoomNumbPieceInBorder96,
+                                                     rateDrawBox = grayProductTable96.LoomNumbRatePerBorderWithDraw96,
+                                                     rateWithoutDrawBox = grayProductTable96.LoomNumbRatePerBorderWithoutDraw96,
 
                                                      pileToPileLength = grayProductTable96.graySizeppLength,
                                                      pileToPileWidth = grayProductTable96.graySizeppWidth,
-                                                     perPieceWeightInGrams= grayProductTable96.PerPieceGrayWeightGram
+                                                     perPieceWeightInGrams = grayProductTable96.PerPieceGrayWeightGram
 
                                                  };
 
-            return Request.CreateResponse(HttpStatusCode.OK, numberOfPieceInOneBorder96.FirstOrDefault());
+                return Request.CreateResponse(HttpStatusCode.OK, numberOfPieceInOneBorder96.FirstOrDefault());
             }
 
 
-              else
+            else
             {
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Record Not Found");
             }
@@ -105,97 +112,97 @@ namespace test6EntityFrame.Controllers
 
         }
 
-// GET: api/grayProductLists/5
-[ResponseType(typeof(grayProductList))]
-public IHttpActionResult GetgrayProductList(int id)
-{
-    grayProductList grayProductList = db.grayProductList.Find(id);
-    if (grayProductList == null)
-    {
-        return NotFound();
-    }
-
-    return Ok(grayProductList);
-}
-
-// PUT: api/grayProductLists/5
-[ResponseType(typeof(void))]
-public IHttpActionResult PutgrayProductList(int id, grayProductList grayProductList)
-{
-    if (!ModelState.IsValid)
-    {
-        return BadRequest(ModelState);
-    }
-
-    if (id != grayProductList.grayProduct_id)
-    {
-        return BadRequest();
-    }
-
-    db.Entry(grayProductList).State = EntityState.Modified;
-
-    try
-    {
-        db.SaveChanges();
-    }
-    catch (DbUpdateConcurrencyException)
-    {
-        if (!grayProductListExists(id))
+        // GET: api/grayProductLists/5
+        [ResponseType(typeof(grayProductList))]
+        public IHttpActionResult GetgrayProductList(int id)
         {
-            return NotFound();
+            grayProductList grayProductList = db.grayProductList.Find(id);
+            if (grayProductList == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(grayProductList);
         }
-        else
+
+        // PUT: api/grayProductLists/5
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutgrayProductList(int id, grayProductList grayProductList)
         {
-            throw;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != grayProductList.grayProduct_id)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(grayProductList).State = EntityState.Modified;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!grayProductListExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
         }
-    }
 
-    return StatusCode(HttpStatusCode.NoContent);
-}
+        // POST: api/grayProductLists
+        [ResponseType(typeof(grayProductList))]
+        public IHttpActionResult PostgrayProductList(grayProductList grayProductList)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-// POST: api/grayProductLists
-[ResponseType(typeof(grayProductList))]
-public IHttpActionResult PostgrayProductList(grayProductList grayProductList)
-{
-    if (!ModelState.IsValid)
-    {
-        return BadRequest(ModelState);
-    }
+            db.grayProductList.Add(grayProductList);
+            db.SaveChanges();
 
-    db.grayProductList.Add(grayProductList);
-    db.SaveChanges();
+            return CreatedAtRoute("DefaultApi", new { id = grayProductList.grayProduct_id }, grayProductList);
+        }
 
-    return CreatedAtRoute("DefaultApi", new { id = grayProductList.grayProduct_id }, grayProductList);
-}
+        // DELETE: api/grayProductLists/5
+        [ResponseType(typeof(grayProductList))]
+        public IHttpActionResult DeletegrayProductList(int id)
+        {
+            grayProductList grayProductList = db.grayProductList.Find(id);
+            if (grayProductList == null)
+            {
+                return NotFound();
+            }
 
-// DELETE: api/grayProductLists/5
-[ResponseType(typeof(grayProductList))]
-public IHttpActionResult DeletegrayProductList(int id)
-{
-    grayProductList grayProductList = db.grayProductList.Find(id);
-    if (grayProductList == null)
-    {
-        return NotFound();
-    }
+            db.grayProductList.Remove(grayProductList);
+            db.SaveChanges();
 
-    db.grayProductList.Remove(grayProductList);
-    db.SaveChanges();
+            return Ok(grayProductList);
+        }
 
-    return Ok(grayProductList);
-}
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-protected override void Dispose(bool disposing)
-{
-    if (disposing)
-    {
-        db.Dispose();
-    }
-    base.Dispose(disposing);
-}
-
-private bool grayProductListExists(int id)
-{
-    return db.grayProductList.Count(e => e.grayProduct_id == id) > 0;
-}
+        private bool grayProductListExists(int id)
+        {
+            return db.grayProductList.Count(e => e.grayProduct_id == id) > 0;
+        }
     }
 }

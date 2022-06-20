@@ -69,14 +69,14 @@ namespace test6EntityFrame.Models.Production
         [Required]
         public decimal a_grade_piece { get; set; }
         [Required]
-        public decimal rate_per_border { get; set; }
-        [Required]
+        public decimal rate_per_border { get; set; } 
         public decimal extra_amt { get; set; }
         public string extra_desc { get; set; }
         [Required]
         public decimal total_amt { get; set; }
         [Required]
         public int natting_employee_Id { get; set; }
+        public decimal nativing_rate { get; set; }
         public string known_faults_ids { get; set; }
       //  public string known_faults_names{ get; set; }
      

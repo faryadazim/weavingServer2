@@ -34,12 +34,11 @@ namespace test6EntityFrame.Controllers.Production
             }
             else
             {
-                string[] numberTo = lastRoleCreated.Split('-');
-                actuallRoleNo = Int32.Parse(numberTo[2]) + 1;
+                string actuallRoleNo2 = lastRoleCreated.Substring(4);
+                actuallRoleNo = Int32.Parse(actuallRoleNo2) + 1;
             }
-            string currentDate = string.Format("{0:yyyy}", DateTime.Now);
-            string GeneratedRollNo = "RL-" + currentDate + "-" + actuallRoleNo.ToString();
-
+            string GeneratedRollNo = DateTime.Now.ToString("yyMM") + actuallRoleNo.ToString();
+            //220601
             return Request.CreateResponse(HttpStatusCode.OK, GeneratedRollNo);
         }
 
@@ -111,8 +110,10 @@ namespace test6EntityFrame.Controllers.Production
                     modified_by = LogIn,
                 };
                 db.finance_main.Add(fm);
-                db.SaveChanges();
+                db.SaveChanges(); 
                 int finance_main_id = fm.finance_main_id;
+
+
                 //creating shift and faults 
                 foreach (var item in p.shifts)
                 {
@@ -177,6 +178,46 @@ namespace test6EntityFrame.Controllers.Production
                     };
                     db.finance_entries.Add(fe);
                     db.SaveChanges();
+
+
+                    //Nativing finance entries 
+
+                    var nativing_chart_id = (from emp in db.employeeList where emp.employee_Id == item.natting_employee_Id select emp.chart_id).FirstOrDefault();
+                    if (nativing_chart_id == 0)
+                    {
+                        //do nothing 
+                    }
+                    else { 
+                    var loomSize = (from lmTable in db.LoomList where lmTable.loom_id == p.loom_id select lmTable.loomSize).FirstOrDefault();
+
+                    decimal? nativingRate = 0;   //nullable value
+                    if (loomSize=="96") {
+                        nativingRate = (from gplTable in db.grayProductList
+                                        where gplTable.itemName == p.borderQuality_id &&
+                                            gplTable.itemSize == p.borderSize_id
+                                        select gplTable.nativingRate96).FirstOrDefault();
+                    }
+                    else
+                    {
+                        nativingRate = (from gplTable in db.grayProductList
+                                        where gplTable.itemName == p.borderQuality_id &&
+                                            gplTable.itemSize == p.borderSize_id
+                                        select gplTable.nativingRate76).FirstOrDefault();
+                    }
+                  
+                    finance_entries feNativing = new finance_entries()
+                    {
+                        chart_id = nativing_chart_id,
+                        credit = nativingRate??1,
+                        debit = 0,
+                        entry_type = "production",
+                        description = "nativing rate",
+                        finance_main_id = finance_main_id,
+                    };
+                    db.finance_entries.Add(feNativing);
+                    db.SaveChanges();
+                    }
+
                 }
                 transaction.Commit();
 
@@ -191,7 +232,7 @@ namespace test6EntityFrame.Controllers.Production
 
             return Request.CreateResponse(HttpStatusCode.OK, p);
         }
-         
+
         [Route("api/UpdateProduction")]
         public HttpResponseMessage PutProductionData(ClsProduction pp, int id)
         {//update prroduction detail and replace shift data
@@ -240,9 +281,6 @@ namespace test6EntityFrame.Controllers.Production
                     entity.modified_by = LogIn;
                     entity.modified_datetime = StaticValues.PakDateTime;
                     db.SaveChanges();
-
-
-
                     //removing/deleting old shiftTable data against selected id
                     var shiftTableAgainstParticularId = from shiftTable in db.production_shift where shiftTable.production_id == id select shiftTable;
                     foreach (var item in shiftTableAgainstParticularId)
@@ -250,11 +288,7 @@ namespace test6EntityFrame.Controllers.Production
                         db.production_shift.Remove(item);
                         db.SaveChanges();
                     };
-
-
-                    //adding shiftTable data against selected id
-
-
+                    //adding shiftTable data against selected id  
                     var finance_main_entity = db.finance_main.FirstOrDefault(e => e.production_id == id);
                     finance_main_entity.voucher_date = pp.production_date;
                     finance_main_entity.description = pp.remarks;
@@ -267,18 +301,7 @@ namespace test6EntityFrame.Controllers.Production
                     //creating shift and faults 
                     foreach (var item in pp.shifts)
                     {
-
-
-
-
-
-                        //here add code to create new fault and save them in shift table 
-
-
-
-
-
-
+                        //here add code to create new fault and save them in shift table  
                         production_shift sh = new production_shift()
                         {
 
@@ -299,20 +322,6 @@ namespace test6EntityFrame.Controllers.Production
                         };
                         db.production_shift.Add(sh);
                         db.SaveChanges();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                         //weaver finance entries
                         var emp_chart_id = (from emp in db.employeeList where emp.employee_Id == item.weaver_employee_Id select emp.chart_id).FirstOrDefault();
@@ -338,6 +347,7 @@ namespace test6EntityFrame.Controllers.Production
                         };
                         db.finance_entries.Add(fe);
                         db.SaveChanges();
+
                     }
 
 
@@ -536,7 +546,7 @@ namespace test6EntityFrame.Controllers.Production
                              product = "Unknown",
                              size = (from BorderSizeTable in db.BorderSize where BorderSizeTable.borderSize_id == productionTable.borderSize_id select BorderSizeTable.borderSize1).FirstOrDefault(),
                              border = (from BorderQualityTable in db.BorderQuality where BorderQualityTable.borderQuality_id == productionTable.borderQuality_id select BorderQualityTable.borderQuality1).FirstOrDefault(),
-
+                             shiftName = productionShiftTable.shift_name,
                              bGradePiece = productionShiftTable.b_grade_piece,
                              aGradePieces = productionShiftTable.a_grade_piece,
                              ratePerBorder = productionShiftTable.rate_per_border,
@@ -562,7 +572,7 @@ namespace test6EntityFrame.Controllers.Production
                          where productionShiftTable.production_id == productionShiftTable.production_id && productionTable.production_date == dateToFind
                          select new
                          {
-
+                             productionId=productionTable.production_id,
                              loomNumber = (from LoomListTable in db.LoomList
                                            where LoomListTable.loom_id == productionTable.loom_id
                                            select LoomListTable.loomNumber).FirstOrDefault(),
@@ -570,7 +580,7 @@ namespace test6EntityFrame.Controllers.Production
                                            where employeeListTable.employee_Id == productionShiftTable.weaver_employee_Id
                                            select employeeListTable.name).FirstOrDefault(),
                              programNumber = productionTable.programm_no,
-                             product = "Unknown",//not correct yet
+                             product = (from BorderQualityTable in db.BorderQuality where BorderQualityTable.borderQuality_id == productionTable.borderQuality_id select BorderQualityTable.borderQuality1).FirstOrDefault() + "-"+ (from BorderSizeTable in db.BorderSize where BorderSizeTable.borderSize_id == productionTable.borderSize_id select BorderSizeTable.borderSize1).FirstOrDefault(),
                              size = (from BorderSizeTable in db.BorderSize where BorderSizeTable.borderSize_id == productionTable.borderSize_id select BorderSizeTable.borderSize1).FirstOrDefault(),
                              border = (from BorderQualityTable in db.BorderQuality where BorderQualityTable.borderQuality_id == productionTable.borderQuality_id select BorderQualityTable.borderQuality1).FirstOrDefault(),
                              rollNumber = productionTable.roll_no,
@@ -606,6 +616,7 @@ namespace test6EntityFrame.Controllers.Production
                                                  && productionTable.production_date >= dateFrom && productionTable.production_date <= dateTo
                                               select new
                                               {
+                                                  shiftName = productionShiftTable.shift_name,
                                                   date = productionTable.production_date,
                                                   rollNumber = productionTable.roll_no,
                                                   product = "Unknown",//not correct yet

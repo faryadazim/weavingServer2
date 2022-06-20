@@ -76,12 +76,72 @@ namespace test6EntityFrame.Controllers
         {
             try
             {
+
+
+                //border Design post
                 db.BorderQuality.Add(borderQualityForPost);
                 db.SaveChanges();
+
+             
+
+                //now creating product in productlist against that border design for all sizes
+
+                var listOfAllBorderSizes = (from borderSizeTb in db.BorderSize select borderSizeTb).ToList();
+
+                foreach (var item in listOfAllBorderSizes)
+                {
+
+
+                    grayProductList gpl = new grayProductList()
+                    {
+
+                        itemName = borderQualityForPost.borderQuality_id,
+                        itemSize = item.borderSize_id,
+                        PerPieceGrayWeightGram =0,
+                        graySizeppWidth=0,
+                        graySizeppLength=0,
+                        LoomNumbPieceInBorder76=0,
+                        LoomNumbRatePerBorderWithDraw76=0,
+                        LoomNumbRatePerBorderWithoutDraw76=0,
+                        LoomNumbPieceInBorder96=0,
+                        LoomNumbRatePerBorderWithDraw96=0,
+                        LoomNumbRatePerBorderWithoutDraw96=0,
+                        nativingRate76=0,
+                        nativingRate96=0,
+                        status= "Activate"
+
+                    };
+                    db.grayProductList.Add(gpl);
+                    db.SaveChanges();
+
+
+
+
+                };
+
+
+
+
+
+
+
+
 
                 var message = Request.CreateResponse(HttpStatusCode.Created, borderQualityForPost);
                 message.Headers.Location = new Uri(Request.RequestUri + borderQualityForPost.borderQuality_id.ToString());
                 return message;
+
+
+
+
+
+
+
+
+
+
+
+
             }
             catch (Exception ex)
             {

@@ -129,45 +129,54 @@ namespace test6EntityFrame.Controllers
         {
             try
             {
-                var lastLoomIdInThatPartiularWeavingUnit = from loomTable in db.LoomList
-                                                           where loomTable.weavingUnitId == loomListForPost.weavingUnitId
-                                                           orderby loomTable.loom_id descending
-                                                           select loomTable.loomNumber;
-                string newListLoom = lastLoomIdInThatPartiularWeavingUnit.FirstOrDefault();
+                //var lastLoomIdInThatPartiularWeavingUnit = from loomTable in db.LoomList
+                //                                           where loomTable.weavingUnitId == loomListForPost.weavingUnitId
+                //                                           orderby loomTable.loom_id descending
+                //                                           select loomTable.loomNumber;
+                //string newListLoom = lastLoomIdInThatPartiularWeavingUnit.FirstOrDefault();
 
-                int actualLoomNumber;
-                if (newListLoom == null)
+                //int actualLoomNumber;
+                //if (newListLoom == null)
+                //{
+                //    actualLoomNumber = 1;
+                //}
+                //else
+                //{
+                //    string[] numberTo = newListLoom.Split('-');
+                //    actualLoomNumber = Int32.Parse(numberTo[2]) + 1;
+                //}
+
+                //var weavingUnitShortCode = from weavingUnitTable in
+                //        db.weavingUnit
+                //                           where weavingUnitTable.weavingUnit_id == loomListForPost.weavingUnitId
+                //                           select weavingUnitTable.weavingUnitShortCode;
+
+
+                //string GeneratedLoomNumber = "LN-" + weavingUnitShortCode.FirstOrDefault() + "-" + actualLoomNumber.ToString();
+                var entity = db.LoomList.FirstOrDefault(e => e.loomNumber == loomListForPost.loomNumber);
+                if (entity == null)
                 {
-                    actualLoomNumber = 1;
+                    var newLoomListWithCustomLoomNumber = new LoomList()
+                    {
+
+                        loomNumber = loomListForPost.loomNumber,
+                        loomSize = loomListForPost.loomSize,
+                        drawBox = loomListForPost.drawBox,
+                        jacquard = loomListForPost.jacquard,
+                        weavingUnitId = loomListForPost.weavingUnitId
+
+                    };
+                    db.LoomList.Add(newLoomListWithCustomLoomNumber);
+                    db.SaveChanges();
+                    var message = Request.CreateResponse(HttpStatusCode.Created, newLoomListWithCustomLoomNumber);
+                    message.Headers.Location = new Uri(Request.RequestUri + newLoomListWithCustomLoomNumber.loom_id.ToString());
+                    return message;
                 }
                 else
                 {
-                    string[] numberTo = newListLoom.Split('-');
-                    actualLoomNumber = Int32.Parse(numberTo[2]) + 1;
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Loom Number Already Exist ");
                 }
-
-                var weavingUnitShortCode = from weavingUnitTable in
-                        db.weavingUnit
-                                           where weavingUnitTable.weavingUnit_id == loomListForPost.weavingUnitId
-                                           select weavingUnitTable.weavingUnitShortCode;
-
-
-                string GeneratedLoomNumber = "LN-" + weavingUnitShortCode.FirstOrDefault() + "-" + actualLoomNumber.ToString();
-                var newLoomListWithCustomLoomNumber = new LoomList()
-                {
-
-                    loomNumber = GeneratedLoomNumber,
-                    loomSize = loomListForPost.loomSize,
-                    drawBox = loomListForPost.drawBox,
-                    jacquard = loomListForPost.jacquard,
-                    weavingUnitId = loomListForPost.weavingUnitId
-
-                };
-                db.LoomList.Add(newLoomListWithCustomLoomNumber);
-                db.SaveChanges();
-                var message = Request.CreateResponse(HttpStatusCode.Created, newLoomListWithCustomLoomNumber);
-                message.Headers.Location = new Uri(Request.RequestUri + newLoomListWithCustomLoomNumber.loom_id.ToString());
-                return message;
+        
             }
             catch (Exception ex)
             {

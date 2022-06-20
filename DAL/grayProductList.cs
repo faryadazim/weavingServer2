@@ -27,5 +27,7 @@ namespace DAL
         public Nullable<decimal> LoomNumbRatePerBorderWithDraw96 { get; set; }
         public Nullable<decimal> LoomNumbRatePerBorderWithoutDraw96 { get; set; }
         public string status { get; set; }
+        public Nullable<decimal> nativingRate76 { get; set; }
+        public Nullable<decimal> nativingRate96 { get; set; }
     }
 }
