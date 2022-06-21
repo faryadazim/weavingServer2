@@ -45,7 +45,6 @@ namespace DAL
         public virtual DbSet<shiftFaults> shiftFaults { get; set; }
         public virtual DbSet<chart_of_accounts> chart_of_accounts { get; set; }
         public virtual DbSet<finance_main> finance_main { get; set; }
-        public virtual DbSet<production> production { get; set; }
         public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
@@ -53,6 +52,9 @@ namespace DAL
         public virtual DbSet<Pages> Pages { get; set; }
         public virtual DbSet<employeeList> employeeList { get; set; }
         public virtual DbSet<grayProductList> grayProductList { get; set; }
+        public virtual DbSet<gate_pass_entries> gate_pass_entries { get; set; }
+        public virtual DbSet<gate_pass_main> gate_pass_main { get; set; }
+        public virtual DbSet<production> production { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

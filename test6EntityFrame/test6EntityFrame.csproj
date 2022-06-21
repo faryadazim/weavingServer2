@@ -226,10 +226,12 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Account\JournalVoucherController.cs" />
     <Compile Include="Controllers\Account\LadgerController.cs" />
+    <Compile Include="Controllers\Account\TransactionReportController.cs" />
     <Compile Include="Controllers\BorderQualityController.cs" />
     <Compile Include="Controllers\BorderSizesController.cs" />
     <Compile Include="Controllers\employeeDesignationsController.cs" />
     <Compile Include="Controllers\employeeListsController.cs" />
+    <Compile Include="Controllers\GatePass\GatePassController.cs" />
     <Compile Include="Controllers\Production\ProductionController.cs" />
     <Compile Include="Controllers\FileUploadController.cs" />
     <Compile Include="Controllers\grayProductListsController.cs" />
@@ -253,6 +255,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Account\ClsJV.cs" />
     <Compile Include="Models\FileUpload.cs" />
+    <Compile Include="Models\GatePass\ClsGatePass.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Production\ClsProduction.cs" />
     <Compile Include="Models\Production\ClsUserDraft.cs" />

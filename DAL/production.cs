@@ -41,5 +41,6 @@ namespace DAL
         public string created_by { get; set; }
         public string modified_by { get; set; }
         public Nullable<decimal> piece_in_one_border { get; set; }
+        public Nullable<int> status { get; set; }
     }
 }

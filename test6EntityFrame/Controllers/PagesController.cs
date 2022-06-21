@@ -23,7 +23,7 @@ namespace test6EntityFrame.Controllers
                 from pagesTable in db.Pages
                 join modulesTable in db.Modules on pagesTable.module_id equals modulesTable.module_id
                 where
-                    pagesTable.module_id == modulesTable.module_id
+                    pagesTable.module_id == modulesTable.module_id orderby pagesTable.page_name ascending
                 select new
                 {
                     id = pagesTable.page_id,
@@ -152,19 +152,18 @@ namespace test6EntityFrame.Controllers
             }
 
             db.Pages.Remove(pages);
-            var pagesPermissionDeleteAgainstPage = from permissionTable in db.PagePermission where permissionTable.PageId == id
-                                                   select permissionTable.PermissionId;
+            var pagesPermissionDeleteAgainstPage = (from permissionTable in db.PagePermission where permissionTable.PageId == id
+                                                   select permissionTable.PermissionId).ToList();
 
             
+        
+             
             foreach (var ch in pagesPermissionDeleteAgainstPage)
             {
-
-
-                // here i'm trying to delete all pages permission crossponding to this permission id but i couldnot
-                //db.PagePermission.ForEachAsync.
-                //db.Database.SqlQuery<dynamic>("");
-
-            }
+              PagePermission pageToDelete = db.PagePermission.Find(ch);
+             db.PagePermission.Remove(pageToDelete); 
+            db.SaveChanges();
+         }
 
 
 

@@ -40,7 +40,7 @@ namespace test6EntityFrame.Models.Production
         [Required]
         public decimal b_grade_pieces { get; set; }
         [Required]
-        public decimal a_grade_pieces { get; set; } 
+        public decimal a_grade_pieces { get; set; }
         [Required]
         public decimal current_per_piece_a_weight { get; set; }
         [Required]
@@ -54,7 +54,7 @@ namespace test6EntityFrame.Models.Production
 
     }
 
-   public class ClsShifts
+    public class ClsShifts
     {
         [Required]
         public string shift_name { get; set; }
@@ -69,7 +69,7 @@ namespace test6EntityFrame.Models.Production
         [Required]
         public decimal a_grade_piece { get; set; }
         [Required]
-        public decimal rate_per_border { get; set; } 
+        public decimal rate_per_border { get; set; }
         public decimal extra_amt { get; set; }
         public string extra_desc { get; set; }
         [Required]
@@ -78,8 +78,8 @@ namespace test6EntityFrame.Models.Production
         public int natting_employee_Id { get; set; }
         public decimal nativing_rate { get; set; }
         public string known_faults_ids { get; set; }
-      //  public string known_faults_names{ get; set; }
-     
+        //  public string known_faults_names{ get; set; }
+
 
     }
 }

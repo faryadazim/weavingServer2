@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="026a9aac71724c52b88be737efb2bc2c" Name="Diagram1" ZoomLevel="86">
+      <Diagram DiagramId="026a9aac71724c52b88be737efb2bc2c" Name="Diagram1" ZoomLevel="64">
         <EntityTypeShape EntityType="db_weavingModel.AspNetRoles" PointX="3.375" PointY="8.875" Width="1.5" />
         <EntityTypeShape EntityType="db_weavingModel.AspNetUsers" Width="1.5" PointX="2.625" PointY="0.75" />
         <EntityTypeShape EntityType="db_weavingModel.BorderQuality" Width="1.5" PointX="4.625" PointY="0.875" />
@@ -23,7 +23,6 @@
         <EntityTypeShape EntityType="db_weavingModel.shiftFaults" Width="1.5" PointX="7" PointY="14.75" />
         <EntityTypeShape EntityType="db_weavingModel.chart_of_accounts" Width="1.5" PointX="11.625" PointY="9.5" />
         <EntityTypeShape EntityType="db_weavingModel.finance_main" Width="1.5" PointX="13.375" PointY="0.75" />
-        <EntityTypeShape EntityType="db_weavingModel.production" Width="1.5" PointX="9.5" PointY="9.875" />
         <EntityTypeShape EntityType="db_weavingModel.C__MigrationHistory" Width="1.5" PointX="5.75" PointY="11.75" />
         <EntityTypeShape EntityType="db_weavingModel.AspNetUserClaims" Width="1.5" PointX="13.75" PointY="4.75" />
         <EntityTypeShape EntityType="db_weavingModel.AspNetUserLogins" Width="1.5" PointX="12.75" PointY="13.75" />
@@ -31,6 +30,9 @@
         <EntityTypeShape EntityType="db_weavingModel.Pages" Width="1.5" PointX="3.375" PointY="14.75" />
         <EntityTypeShape EntityType="db_weavingModel.employeeList" Width="1.5" PointX="14.375" PointY="7.75" />
         <EntityTypeShape EntityType="db_weavingModel.grayProductList" Width="1.5" PointX="15.375" PointY="13.75" />
+        <EntityTypeShape EntityType="db_weavingModel.gate_pass_entries" Width="1.5" PointX="15.375" PointY="0.75" />
+        <EntityTypeShape EntityType="db_weavingModel.gate_pass_main" Width="1.5" PointX="16.375" PointY="4.75" />
+        <EntityTypeShape EntityType="db_weavingModel.production" Width="1.5" PointX="9.375" PointY="13.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

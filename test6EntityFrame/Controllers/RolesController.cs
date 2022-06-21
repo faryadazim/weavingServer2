@@ -122,15 +122,7 @@ namespace test6EntityFrame.Controllers
                 db.SaveChanges();
             }
             catch (DbUpdateException)
-            {
-                //if (AspNetRolesExists(aspNetRoles.Id))
-                //{
-                //    return Conflict();
-                //}
-                //else
-                //{
-                //    throw;
-                //}
+            { 
                 return NotFound();
             }
 

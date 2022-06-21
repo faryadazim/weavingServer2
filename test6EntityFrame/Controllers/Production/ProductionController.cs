@@ -88,6 +88,7 @@ namespace test6EntityFrame.Controllers.Production
                     modified_datetime = StaticValues.PakDateTime,
                     created_by = LogIn,
                     modified_by = LogIn,
+                    status=0,
 
                 };
 
