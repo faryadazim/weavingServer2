@@ -8,16 +8,16 @@ namespace test6EntityFrame.Models.Account
 {
     public class ClsJV
     {
-      [Required]
-       public DateTime date { get; set; }
+        [Required]
+        public DateTime date { get; set; }
         [Required]
         public string voucherInv { get; set; }
-        [Required] 
-public string description { get; set; }
-       [Required] 
-public decimal debit { get; set; }
-       [Required]
-        public decimal credit { get; set; } 
+        [Required]
+        public string description { get; set; }
+        [Required]
+        public decimal debit { get; set; }
+        [Required]
+        public decimal credit { get; set; }
 
 
     }

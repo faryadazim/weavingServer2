@@ -52,9 +52,11 @@ namespace DAL
         public virtual DbSet<Pages> Pages { get; set; }
         public virtual DbSet<employeeList> employeeList { get; set; }
         public virtual DbSet<grayProductList> grayProductList { get; set; }
+        public virtual DbSet<production> production { get; set; }
+        public virtual DbSet<ColorConfig> ColorConfig { get; set; }
+        public virtual DbSet<partyList> partyList { get; set; }
         public virtual DbSet<gate_pass_entries> gate_pass_entries { get; set; }
         public virtual DbSet<gate_pass_main> gate_pass_main { get; set; }
-        public virtual DbSet<production> production { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

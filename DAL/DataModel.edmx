@@ -102,6 +102,13 @@
           <Property Name="modified_by" Type="nvarchar" MaxLength="128" />
           <Property Name="account_type_id" Type="int" />
         </EntityType>
+        <EntityType Name="ColorConfig">
+          <Key>
+            <PropertyRef Name="color_id" />
+          </Key>
+          <Property Name="color_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="color_name" Type="varchar(max)" />
+        </EntityType>
         <EntityType Name="employeeDesignation">
           <Key>
             <PropertyRef Name="designation_id" />
@@ -168,7 +175,7 @@
           <Property Name="gate_pass_entries_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="borderSize_id" Type="int" />
           <Property Name="borderQuality_id" Type="int" />
-          <Property Name="roll_no" Type="varchar(max)" />
+          <Property Name="roll_no" Type="int" />
           <Property Name="pieces" Type="int" />
           <Property Name="weight" Type="decimal" Precision="18" Scale="3" />
           <Property Name="gate_pass_id" Type="int" />
@@ -179,9 +186,7 @@
           </Key>
           <Property Name="gate_pass_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="gate_pass_no" Type="varchar(max)" />
-          <Property Name="party_name" Type="varchar(max)" />
-          <Property Name="party_cell" Type="varchar(max)" />
-          <Property Name="party_address" Type="varchar(max)" />
+          <Property Name="party_id" Type="int" />
           <Property Name="total_rolls" Type="int" />
           <Property Name="total_pieces" Type="int" />
           <Property Name="total_sharing_weight" Type="decimal" Precision="18" Scale="3" />
@@ -196,6 +201,7 @@
           <Property Name="modified_datetime" Type="datetime" />
           <Property Name="created_by" Type="nvarchar(max)" />
           <Property Name="modified_by" Type="nvarchar(max)" />
+          <Property Name="total_weight" Type="decimal" Precision="18" Scale="3" />
         </EntityType>
         <EntityType Name="grayProductList">
           <Key>
@@ -258,6 +264,16 @@
           <Property Name="page_link" Type="varchar(max)" />
           <Property Name="module_id" Type="nvarchar" MaxLength="50" />
           <Property Name="page_order" Type="int" />
+        </EntityType>
+        <EntityType Name="partyList">
+          <Key>
+            <PropertyRef Name="party_id" />
+          </Key>
+          <Property Name="party_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="party_name" Type="varchar(max)" />
+          <Property Name="party_cnic" Type="varchar(max)" />
+          <Property Name="party_cell" Type="varchar(max)" />
+          <Property Name="party_address" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="production">
           <Key>
@@ -398,6 +414,7 @@
           <EntitySet Name="BorderQuality" EntityType="Self.BorderQuality" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BorderSize" EntityType="Self.BorderSize" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="chart_of_accounts" EntityType="Self.chart_of_accounts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ColorConfig" EntityType="Self.ColorConfig" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="employeeDesignation" EntityType="Self.employeeDesignation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="employeeList" EntityType="Self.employeeList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="finance_entries" EntityType="Self.finance_entries" Schema="dbo" store:Type="Tables" />
@@ -409,6 +426,7 @@
           <EntitySet Name="Modules" EntityType="Self.Modules" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PagePermission" EntityType="Self.PagePermission" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pages" EntityType="Self.Pages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="partyList" EntityType="Self.partyList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="production" EntityType="Self.production" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="production_shift" EntityType="Self.production_shift" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="shiftFaults" EntityType="Self.shiftFaults" Schema="dbo" store:Type="Tables" />
@@ -477,9 +495,11 @@
           <EntitySet Name="Pages" EntityType="db_weavingModel.Pages" />
           <EntitySet Name="employeeList" EntityType="db_weavingModel.employeeList" />
           <EntitySet Name="grayProductList" EntityType="db_weavingModel.grayProductList" />
+          <EntitySet Name="production" EntityType="db_weavingModel.production" />
+          <EntitySet Name="ColorConfig" EntityType="db_weavingModel.ColorConfig" />
+          <EntitySet Name="partyList" EntityType="db_weavingModel.partyList" />
           <EntitySet Name="gate_pass_entries" EntityType="db_weavingModel.gate_pass_entries" />
           <EntitySet Name="gate_pass_main" EntityType="db_weavingModel.gate_pass_main" />
-          <EntitySet Name="production" EntityType="db_weavingModel.production" />
         </EntityContainer>
         <EntityType Name="AspNetRoles">
           <Key>
@@ -774,42 +794,6 @@
           <Property Name="nativingRate76" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="nativingRate96" Type="Decimal" Precision="18" Scale="3" />
         </EntityType>
-        <EntityType Name="gate_pass_entries">
-          <Key>
-            <PropertyRef Name="gate_pass_entries_id" />
-          </Key>
-          <Property Name="gate_pass_entries_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="borderSize_id" Type="Int32" />
-          <Property Name="borderQuality_id" Type="Int32" />
-          <Property Name="roll_no" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="pieces" Type="Int32" />
-          <Property Name="weight" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="gate_pass_id" Type="Int32" />
-        </EntityType>
-        <EntityType Name="gate_pass_main">
-          <Key>
-            <PropertyRef Name="gate_pass_id" />
-          </Key>
-          <Property Name="gate_pass_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="gate_pass_no" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="party_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="party_cell" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="party_address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="total_rolls" Type="Int32" />
-          <Property Name="total_pieces" Type="Int32" />
-          <Property Name="total_sharing_weight" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="color" Type="Int32" />
-          <Property Name="dying_process" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="total_dying_weight" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="driver_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="vehicle_no" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="time" Type="DateTime" Precision="3" />
-          <Property Name="created_datetime" Type="DateTime" Precision="3" />
-          <Property Name="modified_datetime" Type="DateTime" Precision="3" />
-          <Property Name="created_by" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="modified_by" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="production">
           <Key>
             <PropertyRef Name="production_id" />
@@ -842,6 +826,58 @@
           <Property Name="modified_by" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="piece_in_one_border" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="status" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ColorConfig">
+          <Key>
+            <PropertyRef Name="color_id" />
+          </Key>
+          <Property Name="color_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="color_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="partyList">
+          <Key>
+            <PropertyRef Name="party_id" />
+          </Key>
+          <Property Name="party_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="party_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="party_cnic" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="party_cell" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="party_address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="gate_pass_entries">
+          <Key>
+            <PropertyRef Name="gate_pass_entries_id" />
+          </Key>
+          <Property Name="gate_pass_entries_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="borderSize_id" Type="Int32" />
+          <Property Name="borderQuality_id" Type="Int32" />
+          <Property Name="roll_no" Type="Int32" />
+          <Property Name="pieces" Type="Int32" />
+          <Property Name="weight" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="gate_pass_id" Type="Int32" />
+        </EntityType>
+        <EntityType Name="gate_pass_main">
+          <Key>
+            <PropertyRef Name="gate_pass_id" />
+          </Key>
+          <Property Name="gate_pass_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="gate_pass_no" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="party_id" Type="Int32" />
+          <Property Name="total_rolls" Type="Int32" />
+          <Property Name="total_pieces" Type="Int32" />
+          <Property Name="total_sharing_weight" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="color" Type="Int32" />
+          <Property Name="dying_process" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="total_dying_weight" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="driver_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="vehicle_no" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="time" Type="DateTime" Precision="3" />
+          <Property Name="created_datetime" Type="DateTime" Precision="3" />
+          <Property Name="modified_datetime" Type="DateTime" Precision="3" />
+          <Property Name="created_by" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="modified_by" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="total_weight" Type="Decimal" Precision="18" Scale="3" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1176,44 +1212,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="gate_pass_entries">
-            <EntityTypeMapping TypeName="db_weavingModel.gate_pass_entries">
-              <MappingFragment StoreEntitySet="gate_pass_entries">
-                <ScalarProperty Name="gate_pass_id" ColumnName="gate_pass_id" />
-                <ScalarProperty Name="weight" ColumnName="weight" />
-                <ScalarProperty Name="pieces" ColumnName="pieces" />
-                <ScalarProperty Name="roll_no" ColumnName="roll_no" />
-                <ScalarProperty Name="borderQuality_id" ColumnName="borderQuality_id" />
-                <ScalarProperty Name="borderSize_id" ColumnName="borderSize_id" />
-                <ScalarProperty Name="gate_pass_entries_id" ColumnName="gate_pass_entries_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="gate_pass_main">
-            <EntityTypeMapping TypeName="db_weavingModel.gate_pass_main">
-              <MappingFragment StoreEntitySet="gate_pass_main">
-                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
-                <ScalarProperty Name="created_by" ColumnName="created_by" />
-                <ScalarProperty Name="modified_datetime" ColumnName="modified_datetime" />
-                <ScalarProperty Name="created_datetime" ColumnName="created_datetime" />
-                <ScalarProperty Name="time" ColumnName="time" />
-                <ScalarProperty Name="vehicle_no" ColumnName="vehicle_no" />
-                <ScalarProperty Name="driver_name" ColumnName="driver_name" />
-                <ScalarProperty Name="remarks" ColumnName="remarks" />
-                <ScalarProperty Name="total_dying_weight" ColumnName="total_dying_weight" />
-                <ScalarProperty Name="dying_process" ColumnName="dying_process" />
-                <ScalarProperty Name="color" ColumnName="color" />
-                <ScalarProperty Name="total_sharing_weight" ColumnName="total_sharing_weight" />
-                <ScalarProperty Name="total_pieces" ColumnName="total_pieces" />
-                <ScalarProperty Name="total_rolls" ColumnName="total_rolls" />
-                <ScalarProperty Name="party_address" ColumnName="party_address" />
-                <ScalarProperty Name="party_cell" ColumnName="party_cell" />
-                <ScalarProperty Name="party_name" ColumnName="party_name" />
-                <ScalarProperty Name="gate_pass_no" ColumnName="gate_pass_no" />
-                <ScalarProperty Name="gate_pass_id" ColumnName="gate_pass_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="production">
             <EntityTypeMapping TypeName="db_weavingModel.production">
               <MappingFragment StoreEntitySet="production">
@@ -1245,6 +1243,62 @@
                 <ScalarProperty Name="production_date" ColumnName="production_date" />
                 <ScalarProperty Name="roll_no" ColumnName="roll_no" />
                 <ScalarProperty Name="production_id" ColumnName="production_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ColorConfig">
+            <EntityTypeMapping TypeName="db_weavingModel.ColorConfig">
+              <MappingFragment StoreEntitySet="ColorConfig">
+                <ScalarProperty Name="color_name" ColumnName="color_name" />
+                <ScalarProperty Name="color_id" ColumnName="color_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="partyList">
+            <EntityTypeMapping TypeName="db_weavingModel.partyList">
+              <MappingFragment StoreEntitySet="partyList">
+                <ScalarProperty Name="party_address" ColumnName="party_address" />
+                <ScalarProperty Name="party_cell" ColumnName="party_cell" />
+                <ScalarProperty Name="party_cnic" ColumnName="party_cnic" />
+                <ScalarProperty Name="party_name" ColumnName="party_name" />
+                <ScalarProperty Name="party_id" ColumnName="party_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="gate_pass_entries">
+            <EntityTypeMapping TypeName="db_weavingModel.gate_pass_entries">
+              <MappingFragment StoreEntitySet="gate_pass_entries">
+                <ScalarProperty Name="gate_pass_id" ColumnName="gate_pass_id" />
+                <ScalarProperty Name="weight" ColumnName="weight" />
+                <ScalarProperty Name="pieces" ColumnName="pieces" />
+                <ScalarProperty Name="roll_no" ColumnName="roll_no" />
+                <ScalarProperty Name="borderQuality_id" ColumnName="borderQuality_id" />
+                <ScalarProperty Name="borderSize_id" ColumnName="borderSize_id" />
+                <ScalarProperty Name="gate_pass_entries_id" ColumnName="gate_pass_entries_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="gate_pass_main">
+            <EntityTypeMapping TypeName="db_weavingModel.gate_pass_main">
+              <MappingFragment StoreEntitySet="gate_pass_main">
+                <ScalarProperty Name="total_weight" ColumnName="total_weight" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="modified_datetime" ColumnName="modified_datetime" />
+                <ScalarProperty Name="created_datetime" ColumnName="created_datetime" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="vehicle_no" ColumnName="vehicle_no" />
+                <ScalarProperty Name="driver_name" ColumnName="driver_name" />
+                <ScalarProperty Name="remarks" ColumnName="remarks" />
+                <ScalarProperty Name="total_dying_weight" ColumnName="total_dying_weight" />
+                <ScalarProperty Name="dying_process" ColumnName="dying_process" />
+                <ScalarProperty Name="color" ColumnName="color" />
+                <ScalarProperty Name="total_sharing_weight" ColumnName="total_sharing_weight" />
+                <ScalarProperty Name="total_pieces" ColumnName="total_pieces" />
+                <ScalarProperty Name="total_rolls" ColumnName="total_rolls" />
+                <ScalarProperty Name="party_id" ColumnName="party_id" />
+                <ScalarProperty Name="gate_pass_no" ColumnName="gate_pass_no" />
+                <ScalarProperty Name="gate_pass_id" ColumnName="gate_pass_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

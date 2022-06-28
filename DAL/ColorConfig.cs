@@ -12,14 +12,9 @@ namespace DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class gate_pass_entries
+    public partial class ColorConfig
     {
-        public int gate_pass_entries_id { get; set; }
-        public Nullable<int> borderSize_id { get; set; }
-        public Nullable<int> borderQuality_id { get; set; }
-        public Nullable<int> roll_no { get; set; }
-        public Nullable<int> pieces { get; set; }
-        public Nullable<decimal> weight { get; set; }
-        public Nullable<int> gate_pass_id { get; set; }
+        public int color_id { get; set; }
+        public string color_name { get; set; }
     }
 }

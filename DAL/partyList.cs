@@ -12,14 +12,12 @@ namespace DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class gate_pass_entries
+    public partial class partyList
     {
-        public int gate_pass_entries_id { get; set; }
-        public Nullable<int> borderSize_id { get; set; }
-        public Nullable<int> borderQuality_id { get; set; }
-        public Nullable<int> roll_no { get; set; }
-        public Nullable<int> pieces { get; set; }
-        public Nullable<decimal> weight { get; set; }
-        public Nullable<int> gate_pass_id { get; set; }
+        public int party_id { get; set; }
+        public string party_name { get; set; }
+        public string party_cnic { get; set; }
+        public string party_cell { get; set; }
+        public string party_address { get; set; }
     }
 }

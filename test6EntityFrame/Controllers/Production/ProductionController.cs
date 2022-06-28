@@ -683,7 +683,17 @@ namespace test6EntityFrame.Controllers.Production
             return Request.CreateResponse(HttpStatusCode.OK, entity);
         }
 
+        [Route("api/GatePassProduction")]
+        public HttpResponseMessage GetProductionGatePass(int prID)
+        {
+            var productionDetail = (from prTb in db.production where prTb.production_id == prID select new
+            {
+                pieces = prTb.total_pieces,
+                totalWeight = prTb.roll_weight,
+            }).FirstOrDefault();
 
+            return Request.CreateResponse(HttpStatusCode.OK, productionDetail);
+        }
 
     }
 }

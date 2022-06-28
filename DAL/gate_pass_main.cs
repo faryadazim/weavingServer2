@@ -16,9 +16,7 @@ namespace DAL
     {
         public int gate_pass_id { get; set; }
         public string gate_pass_no { get; set; }
-        public string party_name { get; set; }
-        public string party_cell { get; set; }
-        public string party_address { get; set; }
+        public Nullable<int> party_id { get; set; }
         public Nullable<int> total_rolls { get; set; }
         public Nullable<int> total_pieces { get; set; }
         public Nullable<decimal> total_sharing_weight { get; set; }
@@ -33,5 +31,6 @@ namespace DAL
         public Nullable<System.DateTime> modified_datetime { get; set; }
         public string created_by { get; set; }
         public string modified_by { get; set; }
+        public Nullable<decimal> total_weight { get; set; }
     }
 }
