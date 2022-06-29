@@ -20,7 +20,7 @@ namespace test6EntityFrame.Controllers.GatePass
         {
 
             var entity = from gpm in db.gate_pass_main
-                         where gpm.created_datetime >= dateFrom && gpm.created_datetime <= dateTo
+                         where gpm.time >= dateFrom && gpm.time <= dateTo
                          select new
                          {
                              Date = gpm.created_datetime,
