@@ -17,7 +17,7 @@ namespace test6EntityFrame.Controllers
         private db_weavingEntities db = new db_weavingEntities();
 
         // GET: api/PagePermissions/5
-        [ResponseType(typeof(PagePermission))]
+        [Route("api/PagePermissions")]
         public IHttpActionResult GetPagePermission(string roleId)
         {
 
@@ -36,6 +36,7 @@ namespace test6EntityFrame.Controllers
                                          {
                                              pageName = PageTable.page_name,
                                              pageID = PageTable.page_id,
+                                             pagePermissionId = PrTable.PermissionId,
                                              //moduleName = moduleRow.module_name,
                                              //moduleID = moduleRow.module_id, 
                                              pageURL = PageTable.page_link,
@@ -54,54 +55,23 @@ namespace test6EntityFrame.Controllers
 
 
         // PUT: api/PagePermissions/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutPagePermission(string id, PagePermission pagePermission)
+        [Route("api/updatePagePermissions")]
+        public HttpResponseMessage PutPagePermission(string roleId, PagePermission pagePermissionP)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
-            if (id != pagePermission.PermissionId)
-            {
-                return BadRequest();
-            }
+            var entity = db.PagePermission.FirstOrDefault(e => e.PermissionId == pagePermissionP.PermissionId && e.RoleId== roleId && e.PageId==pagePermissionP.PageId);
+            entity.AddPermission = pagePermissionP.AddPermission;
+            entity.DelPermission = pagePermissionP.DelPermission;
+            entity.EditPermission = pagePermissionP.EditPermission;
+            entity.viewPermission = pagePermissionP.viewPermission;
 
-            db.Entry(pagePermission).State = EntityState.Modified;
 
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PagePermissionExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
+            db.SaveChanges();
+            return Request.CreateResponse(HttpStatusCode.OK, "Page Permission Updated");
         }
 
 
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool PagePermissionExists(string id)
-        {
-            return db.PagePermission.Count(e => e.PermissionId == id) > 0;
-        }
+        
     }
 }
