@@ -77,7 +77,8 @@ namespace test6EntityFrame.Controllers
                                                    rateWithoutDrawBox = grayProductTable76.LoomNumbRatePerBorderWithoutDraw76,
                                                    pileToPileLength = grayProductTable76.graySizeppLength,
                                                    pileToPileWidth = grayProductTable76.graySizeppWidth,
-                                                   perPieceWeightInGrams = grayProductTable76.PerPieceGrayWeightGram
+                                                   perPieceWeightInGrams = grayProductTable76.PerPieceGrayWeightGram,
+                                                   productStatus= grayProductTable76.status,
                                                };
                 return Request.CreateResponse(HttpStatusCode.OK, numbOfPieceInOneBorder76.FirstOrDefault());
             }
@@ -95,8 +96,8 @@ namespace test6EntityFrame.Controllers
 
                                                      pileToPileLength = grayProductTable96.graySizeppLength,
                                                      pileToPileWidth = grayProductTable96.graySizeppWidth,
-                                                     perPieceWeightInGrams = grayProductTable96.PerPieceGrayWeightGram
-
+                                                     perPieceWeightInGrams = grayProductTable96.PerPieceGrayWeightGram,
+                                                          productStatus = grayProductTable96.status,
                                                  };
 
                 return Request.CreateResponse(HttpStatusCode.OK, numberOfPieceInOneBorder96.FirstOrDefault());

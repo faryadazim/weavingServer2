@@ -24,6 +24,28 @@ namespace test6EntityFrame.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, db.BorderQuality);
         }
 
+        public class QualityList
+        {
+            public int borderQuality_id { get; set; }
+            public string borderQuality { get; set; }
+        }
+
+        [Route("api/BorderQualityStatus")]
+        public HttpResponseMessage GetBorderQualityStatus()
+        {
+            //var entity = from bQ in db.BorderQuality join pL in db.grayProductList
+            //             on bQ.borderQuality_id equals pL.itemName where pL.status == "Activate"
+            //             select new
+            //             {
+            //                 borderQuality1 = bQ.borderQuality1,
+            //                 borderQuality_id = bQ.borderQuality_id
+            //             };
+
+        var entity = db.Database.SqlQuery<QualityList>("select a.borderQuality,a.borderQuality_id from BorderQuality a join grayProductList b on a.borderQuality_id = b.itemName where b.status='Activate' group by  a.borderQuality,a.borderQuality_id").ToList();
+
+            return Request.CreateResponse(HttpStatusCode.OK, entity);
+        }
+
 
 
         [Route("api/BorderQualityById")]

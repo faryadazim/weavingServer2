@@ -22,6 +22,34 @@ namespace test6EntityFrame.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, db.BorderSize);
         }
 
+
+        public class SizeList
+        {
+            public int borderSize_id { get; set; }
+            public string borderSize { get; set; }
+        }
+
+        [Route("api/BorderSizesStatus")]
+        public HttpResponseMessage GetBorderSizeStatus()
+        {
+            //            var entity = from bQ in db.BorderSize
+            //                         join pL in db.grayProductList 
+            //on bQ.borderSize_id equals pL.itemSize 
+            //                         where pL.status == "Activate" group bQ by bQ.borderSize_id into y
+            //                         select new
+            //                         {
+            //                             borderSize1 = y.Sum(z=>z.borderSize1),
+            //                             borderSize_id = y.Sum(x => x.borderSize_id)
+            //                         };
+
+            var entity = db.Database.SqlQuery<SizeList>("select a.borderSize_id,a.borderSize from BorderSize a join grayProductList b on a.borderSize_id = b.itemSize where b.status='Activate' group by  a.borderSize,a.borderSize_id").ToList();
+         
+
+            return Request.CreateResponse(HttpStatusCode.OK, entity);
+        }
+
+
+
         [Route("api/BorderSizesById")]
 
         public HttpResponseMessage GetBorderSizeById(int id)

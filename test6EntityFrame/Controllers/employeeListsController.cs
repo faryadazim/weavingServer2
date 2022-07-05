@@ -22,11 +22,26 @@ namespace test6EntityFrame.Controllers
         [Route("api/employeeLists")]
         public HttpResponseMessage GetemployeeList()
         {
+
+            //var entity = from employeeListTable in db.employeeList
+            //             join chartAccountTable in db.chart_of_accounts on employeeListTable.chart_id equals chartAccountTable.chart_id
+            //             where employeeListTable.designation == weaverId && employeeListTable.jobStatus == "Active"
+            //             select new
+            //             { 
+            //                 employeeSerialNumber = chartAccountTable.account_code
+            //             };
+
+
+
+
+
             var entity = from employeeTable in db.employeeList
                          join designationTable in db.employeeDesignation on employeeTable.designation equals designationTable.designation_id
+                         join chartAccountTable in db.chart_of_accounts on employeeTable.chart_id equals chartAccountTable.chart_id
                          where employeeTable.designation == designationTable.designation_id orderby employeeTable.name ascending
                          select new
                          {
+                             employeeSerialNumber = chartAccountTable.account_code,
                              employee_Id = employeeTable.employee_Id,
                              name = employeeTable.name,
                              fatherName = employeeTable.fatherName,
