@@ -96,6 +96,7 @@ namespace test6EntityFrame.Controllers
             };
 
             db.Pages.Add(newPages);
+            db.SaveChanges();
             var ListOfRole = (from dataTAble in db.AspNetRoles select dataTAble.Id);
 
             
